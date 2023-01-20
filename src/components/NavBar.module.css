@@ -1,0 +1,134 @@
+.smallDevice {
+	display: flex;
+	flex-direction: row;
+}
+.mainSmall {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	width: 100%;
+}
+
+.burgerIcon {
+	display: block;
+	font-size: 2em;
+	cursor: pointer;
+}
+.navSmallBox {
+	position: fixed;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	text-align: center;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #fff;
+}
+.navSmallBox h2 {
+	margin: 1em;
+}
+
+.accountBoxSmall {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	top: 0;
+	left: 0;
+}
+
+.closeBtn {
+	position: absolute;
+	top: 2%;
+	right: 2%;
+	padding: 0.5em;
+	font-size: 1.5em;
+	cursor: pointer;
+}
+.cartBoxSmall,
+.profileBoxSmall {
+	padding: 0.5em;
+}
+
+.catogoryBoxSmall {
+	text-transform: uppercase;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100vh;
+}
+
+.logoSmall,
+.logoBig {
+	font-family: 'Kanit', sans-serif;
+	font-size: 3em;
+}
+.searchIconSmall,
+.searchIconBig {
+	font-size: 1.5em;
+	cursor: pointer;
+}
+
+/*//////////////////////////////////////////////*/
+
+.bigDevices {
+	width: 100%;
+	padding: 1em;
+	margin-top: 2em;
+}
+.mainBig {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.searchBox,
+.searchBoxSmall {
+	border-bottom: 1px solid black;
+}
+
+.searchBox input,
+.searchBoxSmall input {
+	border: none;
+	outline: none;
+	padding: 0.5em;
+	font-size: 1em;
+}
+.accountBoxBig {
+	display: flex;
+	text-align: center;
+}
+.cartBoxBig {
+	margin-right: 2em;
+}
+.cartBoxBig,
+.profileBoxBig {
+	cursor: pointer;
+	transition: transform 0.3s;
+}
+.cartBoxBig:hover,
+.profileBoxBig:hover {
+	transform: scale(1.1);
+}
+
+.catogoryBoxBig {
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+}
+
+@media only screen and (min-width: 1024px) {
+	.smallDevices {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 1024px) {
+	.bigDevices {
+		display: none;
+	}
+}
