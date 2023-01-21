@@ -5,18 +5,27 @@ import classes from './Banner.module.css';
 
 const Banner = () => {
 	const [banner, setBanner] = useState(null);
+	const [currentIndex, setCurrentIndex] = useState(0);
 
 	useEffect(() => {
-		client.fetch(feedBanner).then((data) => setBanner(data[0]));
-	}, []);
+		client.fetch(feedBanner).then((data) => setBanner(data));
+	}, [feedBanner]);
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setCurrentIndex((currentIndex + 1) % banner.length);
+		}, 10000);
+		return () => clearInterval(interval);
+	}, [currentIndex, banner]);
 
 	return (
 		<>
-			{
-				banner && (
-					// banner.map((banner) => (
-					<div className={classes.container}>
-						<div className={classes.bannerBox}>
+			{banner && (
+				<div className={classes.container}>
+					{banner.map((banner, index) => (
+						<div
+							className={`${classes.bannerBox} ${
+								index === currentIndex ? classes.active : classes.inactive
+							}`}>
 							<div className={classes.bannerShadow}></div>
 							<img
 								src={urlFor(banner.image).url()}
@@ -28,10 +37,9 @@ const Banner = () => {
 								<button className={classes.btn}>{banner.buttonText}</button>
 							</div>
 						</div>
-					</div>
-				)
-				// ))}
-			}
+					))}
+				</div>
+			)}
 		</>
 	);
 };
