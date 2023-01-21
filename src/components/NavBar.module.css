@@ -1,6 +1,8 @@
 .smallDevice {
+	position: absolute;
 	display: flex;
 	flex-direction: row;
+	z-index: 10000;
 }
 .mainSmall {
 	display: flex;
@@ -26,6 +28,7 @@
 	width: 100%;
 	height: 100%;
 	background-color: #fff;
+	z-index: 1000;
 }
 .navSmallBox h2 {
 	margin: 1em;
@@ -43,9 +46,9 @@
 	position: absolute;
 	top: 2%;
 	right: 2%;
-	padding: 0.5em;
-	font-size: 1.5em;
+	font-size: 2em;
 	cursor: pointer;
+	color: black;
 }
 .cartBoxSmall,
 .profileBoxSmall {
