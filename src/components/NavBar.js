@@ -7,13 +7,7 @@ import { RiAccountPinCircleFill } from 'react-icons/ri';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import CategoryBar from './CategoryBar';
 import { AiOutlineClose } from 'react-icons/ai';
-
-const Dummy_category = [
-	{ name: 'Jednoczęściowe', id: 'm1' },
-	{ name: 'Dwuczęściowe', id: 'm2' },
-	{ name: 'Kąpielówki', id: 'm3' },
-	{ name: 'Tuniki', id: 'm4' },
-];
+import { categories } from '../utils/data';
 
 const NavBar = () => {
 	const [hide, setHide] = useState(true);
@@ -42,15 +36,15 @@ const NavBar = () => {
 							className={classes.closeBtn}
 							onClick={menuHandler}
 						/>
-						
+
 						<div className={classes.accountBoxSmall}>
 							<div className={classes.cartBoxSmall}>
 								<BsBag size={25} />
-								<p>Koszyk</p>
+								<p>Cart</p>
 							</div>
 							<div className={classes.profileBoxSmall}>
 								<RiAccountPinCircleFill size={25} />
-								<p>Zaloguj się</p>
+								<p>Login</p>
 							</div>
 						</div>
 						<div className={classes.searchBoxSmall}>
@@ -58,11 +52,10 @@ const NavBar = () => {
 							<IoIosSearch className={classes.searchIconSmall} />
 						</div>
 						<div className={classes.catogoryBoxSmall}>
-							{Dummy_category?.map((category) => (
-								<CategoryBar key={category.id} name={category.name} />
+							{categories?.map((category) => (
+								<CategoryBar key={category.name} name={category.name} />
 							))}
 						</div>
-						
 					</div>
 				)}
 			</div>
@@ -79,17 +72,17 @@ const NavBar = () => {
 					<div className={classes.accountBoxBig}>
 						<div className={classes.cartBoxBig}>
 							<BsBag size={30} />
-							<p>Koszyk</p>
+							<p>Cart</p>
 						</div>
 						<div className={classes.profileBoxBig}>
 							<RiAccountPinCircleFill size={30} />
-							<p>Zaloguj się</p>
+							<p>Login</p>
 						</div>
 					</div>
 				</div>
 				<div className={classes.catogoryBoxBig}>
-					{Dummy_category?.map((category) => (
-						<CategoryBar key={category.id} name={category.name} />
+					{categories?.map((category) => (
+						<CategoryBar key={category.name} name={category.name} />
 					))}
 				</div>
 			</div>

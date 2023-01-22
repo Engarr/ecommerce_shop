@@ -17,7 +17,7 @@ const Banner = () => {
 		const interval = setInterval(() => {
 			setCurrentIndex((currentIndex + 1) % banner.length);
 			
-		}, 10000);
+		}, 100000);
 
 		return () => clearInterval(interval);
 	}, [currentIndex, banner]);
@@ -48,7 +48,7 @@ const Banner = () => {
 					</button>
 					{banner.map((banner, index) => (
 						
-						<div
+						<div key={banner?.name}
 							className={`${classes.bannerBox} ${
 								index === currentIndex ? classes.active : classes.inactive
 							}`}>

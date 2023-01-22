@@ -1,0 +1,60 @@
+.container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	margin-top: 2em;
+}
+.productBox {
+	position: relative;
+	height: 500px;
+	width: 400px;
+	overflow: hidden;
+	margin: 1em;
+	box-shadow: 0 0 2px black;
+	border-radius: 5px;
+	cursor: pointer;
+}
+.image {
+	position: relative;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-position: center;
+	object-fit: cover;
+	background-position: center;
+}
+.controlBox {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.438);
+	height: 150px;
+	color: white;
+}
+.controlBox h2 {
+	margin-bottom: 0.5em;
+	font-size: 2em;
+}
+.controlBox button {
+	padding: 0.5em 2em;
+	margin: 1em;
+	background-color: rgb(233, 54, 54);
+	border-radius: 10px;
+	border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+.controlBox p{
+    font-size: 2em;
+}
+.controlBox button:hover{
+    background-color: rgb(221, 33, 33);
+
+}
