@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Banner from '../components/Banner';
-import { client, urlFor } from '../utils/client';
+import { client } from '../utils/client';
 import classes from './Home.module.css';
+import Product from '../components/Product';
+
 const Home = () => {
 	const [products, setProducts] = useState([]);
 
@@ -15,17 +17,8 @@ const Home = () => {
 			<Banner />
 			<div className={classes.container}>
 				{products?.map((product) => (
-					<div className={classes.productBox} key={product._id}>
-						<img
-							src={urlFor(product?.image[0]).url()}
-							className={classes.image}
-						/>
-						<div className={classes.controlBox}>
-							<h2>{product?.name}</h2>
-							<p>$ {product?.price}</p>
-							<button>Buy Now</button>
-						</div>
-					</div>
+					<Product key={product._id} product={product}/>
+					
 				))}
 			</div>
 		</div>

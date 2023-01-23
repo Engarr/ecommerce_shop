@@ -6,3 +6,8 @@ export const categories = [
 ];
 
 export const feedBanner = `*[_type == "banner"]`;
+
+export const productDetails = (slug) => {
+	const query = `*[_type == "product" && slug.current == '${slug}']`;
+	return query;
+};

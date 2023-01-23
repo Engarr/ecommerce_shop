@@ -1,14 +1,13 @@
 import classes from './CategoryBar.module.css';
+import { Link } from 'react-router-dom';
 
-
-const CategoryBar = (props) => {
-	
-
-	
+const CategoryBar = ({name}) => {
 	return (
 		<div className={classes.categoryItem}>
 			<div>
-				<div>{props.name}</div>
+				<Link to={`products/${name}`}>
+					<div>{name}</div>
+				</Link>
 			</div>
 		</div>
 	);
