@@ -18,7 +18,7 @@ const Home = () => {
 			<Banner />
 			<div className={classes.productsHeading}>
 				<h2>Best Seller Products</h2>
-				<p>speaker There are many variations passages</p>
+				<p>many types of swimwear</p>
 			</div>
 			<div className={classes.container}>
 				{maxProducts?.map((product) => (
