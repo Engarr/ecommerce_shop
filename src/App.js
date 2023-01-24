@@ -15,14 +15,14 @@ function App() {
 			</header>
 			<main>
 				<Routes>
-					{/* <Route path='/*' element={<Navigate to='/' />} /> */}
+					<Route path='/*' element={<Navigate to='/' />} />
 					<Route path='/' element={<Home />} />
 					<Route path='/products/:slug' element={<Products />} />
 					<Route path='/product/:slug' element={<ProductDetail />} />
 				</Routes>
 			</main>
 			<footer>
-				<Footer/>
+				<Footer />
 			</footer>
 		</div>
 	);

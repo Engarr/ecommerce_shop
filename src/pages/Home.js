@@ -6,6 +6,7 @@ import Product from '../components/Product';
 
 const Home = () => {
 	const [products, setProducts] = useState([]);
+	const maxProducts = products.slice(0, 10);
 
 	useEffect(() => {
 		const query = `*[_type == 'product']`;
@@ -15,10 +16,13 @@ const Home = () => {
 	return (
 		<div>
 			<Banner />
+			<div className={classes.productsHeading}>
+				<h2>Best Seller Products</h2>
+				<p>speaker There are many variations passages</p>
+			</div>
 			<div className={classes.container}>
-				{products?.map((product) => (
-					<Product key={product._id} product={product}/>
-					
+				{maxProducts?.map((product) => (
+					<Product key={product._id} product={product} />
 				))}
 			</div>
 		</div>

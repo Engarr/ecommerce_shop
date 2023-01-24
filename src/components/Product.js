@@ -4,15 +4,22 @@ import { urlFor } from '../utils/client';
 import { Link } from 'react-router-dom';
 
 const Product = ({ product }) => {
-	
+	const handleClick = () => {
+		window.scrollTo(0, 0);
+	};
 	return (
-		<div className={classes.productBox} key={product._id}>
-			<Link to={`product/${product?.slug.current}`}>
-				<img src={urlFor(product?.image[0]).url()} className={classes.image} />
-				<div className={classes.controlBox}>
-					<h2>{product?.name}</h2>
-					<p>$ {product?.price}</p>
-					<button>Buy Now</button>
+		<div>
+			<Link to={`/product/${product?.slug.current}`} onClick={handleClick}>
+				<div className={classes.productCard}>
+					<img
+						src={urlFor(product?.image[0]).url()}
+						alt={product?.name}
+						width={250}
+						height={250}
+						className={classes.productImage}
+					/>
+					<p className={classes.productName}>{product?.name}</p>
+					<p className={classes.productPrice}>$ {product?.price}</p>
 				</div>
 			</Link>
 		</div>

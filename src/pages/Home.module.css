@@ -2,7 +2,23 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	align-items: center;
-	width: 100%;
+	gap: 15px;
 	margin-top: 2em;
+	margin-bottom: 2em;
+	width: 100%;
 }
+
+.productsHeading{
+	text-align: center;
+	margin: 40px 0px;
+   
+  
+  }
+  .productsHeading h2{
+	font-size: 40px;
+	font-weight: 800;
+  }
+  .productsHeading p{
+	font-size: 16px;
+	font-weight: 200;
+  }

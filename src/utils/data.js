@@ -11,3 +11,7 @@ export const productDetails = (slug) => {
 	const query = `*[_type == "product" && slug.current == '${slug}']`;
 	return query;
 };
+export const categoryProducts = (category) => {
+	const query = `*[_type == "product" && category == '${category}']`;
+	return query;
+};
