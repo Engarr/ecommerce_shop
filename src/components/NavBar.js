@@ -8,13 +8,18 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import CategoryBar from './CategoryBar';
 import { AiOutlineClose } from 'react-icons/ai';
 import { categories } from '../utils/data';
+import { useStateContext } from '../context/StateContext';
+import Cart from './Cart';
 
 const NavBar = () => {
 	const [hide, setHide] = useState(true);
+	const { cartItems, showCart, cartHandler, totalQuantities } =
+		useStateContext();
 
 	const menuHandler = () => {
 		setHide((prev) => (prev = !prev));
 	};
+	console.log(totalQuantities);
 
 	return (
 		<div>
@@ -38,8 +43,17 @@ const NavBar = () => {
 						/>
 
 						<div className={classes.accountBoxSmall}>
-							<div className={classes.cartBoxSmall}>
+							<div
+								className={classes.cartBoxSmall}
+								onClick={() => {
+									cartHandler();
+									menuHandler();
+								}}>
 								<BsBag size={25} />
+								{totalQuantities !== 0 && (
+									<div className={classes.smallCartQty}>{totalQuantities}</div>
+								)}
+
 								<p>Cart</p>
 							</div>
 							<div className={classes.profileBoxSmall}>
@@ -70,8 +84,12 @@ const NavBar = () => {
 						<Link to='/'>WOSMOD</Link>
 					</div>
 					<div className={classes.accountBoxBig}>
-						<div className={classes.cartBoxBig}>
+						<div className={classes.cartBoxBig} onClick={cartHandler}>
 							<BsBag size={30} />
+							{totalQuantities !== 0 && (
+								<div className={classes.bigCartQty}>{totalQuantities}</div>
+							)}
+
 							<p>Cart</p>
 						</div>
 						<div className={classes.profileBoxBig}>
@@ -86,6 +104,7 @@ const NavBar = () => {
 					))}
 				</div>
 			</div>
+			{showCart && <Cart />}
 		</div>
 	);
 };

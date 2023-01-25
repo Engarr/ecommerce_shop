@@ -52,7 +52,8 @@
 }
 .cartBoxSmall,
 .profileBoxSmall {
-	padding: 0.5em;
+	position: relative;
+	padding: 1em 2em ;
 }
 
 .catogoryBoxSmall {
@@ -73,6 +74,32 @@
 .searchIconBig {
 	font-size: 1.5em;
 	cursor: pointer;
+}
+.smallCartQty {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: -5%;
+	right: 0;
+	background-color: rgb(241, 19, 19);
+	padding: 1px;
+	border-radius: 50%;
+	height: 35px;
+	width: 35px;
+}
+.bigCartQty{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: -50%;
+	right: -50%;
+	background-color: rgb(241, 19, 19);
+	padding: 1px;
+	border-radius: 50%;
+	height: 35px;
+	width: 35px;
 }
 
 /*//////////////////////////////////////////////*/
@@ -109,6 +136,7 @@
 }
 .cartBoxBig,
 .profileBoxBig {
+	position: relative;
 	cursor: pointer;
 	transition: transform 0.3s;
 }
@@ -127,24 +155,24 @@
 .nav-enter {
 	opacity: 0;
 	transform: translateY(-100%);
-  }
-  
-  .nav-enter-active {
+}
+
+.nav-enter-active {
 	opacity: 1;
 	transform: translateY(0);
 	transition: opacity 300ms, transform 300ms;
-  }
-  
-  .nav-exit {
+}
+
+.nav-exit {
 	opacity: 1;
 	transform: translateY(0);
-  }
-  
-  .nav-exit-active {
+}
+
+.nav-exit-active {
 	opacity: 0;
 	transform: translateY(-100%);
 	transition: opacity 300ms, transform 300ms;
-  }
+}
 
 @media only screen and (min-width: 1024px) {
 	.smallDevices {
