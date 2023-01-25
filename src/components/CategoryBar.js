@@ -1,15 +1,15 @@
 import classes from './CategoryBar.module.css';
 import { Link } from 'react-router-dom';
 
-const CategoryBar = ({name}) => {
+const CategoryBar = ({ name, onHide }) => {
 	return (
-		<div className={classes.categoryItem}>
-			<div>
-				<Link to={`products/${name}`}>
+		<Link to={`/category/${name}`}>
+			<div className={classes.categoryItem} onClick={onHide}>
+				<div>
 					<div>{name}</div>
-				</Link>
+				</div>
 			</div>
-		</div>
+		</Link>
 	);
 };
 

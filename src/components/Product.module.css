@@ -10,11 +10,12 @@
 }
 .productImage {
 	border-radius: 15px;
-	box-shadow:  0 0 2px black;
+	box-shadow: 0 0 2px black;
 	background-color: #ebebeb;
-	transform: scale(1, 1);
-	transition: transform 0.5s ease;
+	transition: transform 0.5s ease-in-out ;
+	
 }
+
 
 .productName {
 	font-weight: 500;

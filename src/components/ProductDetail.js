@@ -12,15 +12,29 @@ import {
 import Product from './Product';
 import classes from './ProductDetail.module.css';
 import Spinner from '../components/Spinner';
+import { useStateContext } from '../context/StateContext';
 
 const ProductDetail = () => {
 	const [productData, setProductData] = useState([]);
 	const [categoryProductData, setCategoryProductData] = useState([]);
 	const [newCategoryItems, setNewCategoryItems] = useState([]);
-
+	const [randomItems, setRandomItems] = useState([]);
 	const [index, setIndex] = useState(0);
+	const [size, setSize] = useState('S');
+
+	const { decreaseQty, increaseQty, qty, onAdd, cartItems } = useStateContext();
+
 	const { slug } = useParams();
 	const category = productData.category;
+
+	const updateRandomItems = () => {
+		const shuffledItems = newCategoryItems.sort(() => Math.random() - 0.5);
+		setRandomItems(shuffledItems.slice(0, 10));
+	};
+	useEffect(() => {
+		updateRandomItems();
+		// eslint-disable-next-line
+	}, [newCategoryItems]);
 
 	useEffect(() => {
 		let query = productDetails(slug);
@@ -36,7 +50,16 @@ const ProductDetail = () => {
 		);
 	}, [categoryProductData, productData._id]);
 
+	const sizeHandler = (e) => {
+		setSize(e.target.value);
+	};
+	// useEffect(() => {
+	// 	sizeHandler();
+	// }, [size]);
+
+	console.log(cartItems);
 	if (!productData) return <Spinner message='Loading...' />;
+
 	return (
 		<div>
 			<div className={classes.productDetailContainer}>
@@ -60,7 +83,7 @@ const ProductDetail = () => {
 									className={
 										i === index ? classes.selectedImage : classes.smallImage
 									}
-									onClick={() => setIndex(i)}
+									onMouseEnter={() => setIndex(i)}
 								/>
 							))}
 					</div>
@@ -84,18 +107,22 @@ const ProductDetail = () => {
 					<div className={classes.quantity}>
 						<h3>Quantity:</h3>
 						<p className={classes.quantityDesc}>
-							<span className={classes.minus}>
+							<span className={classes.minus} onClick={decreaseQty}>
 								<AiOutlineMinus />
 							</span>
-							<span className={classes.num}>0</span>
-							<span className={classes.plus}>
+							<span className={classes.num}>{qty}</span>
+							<span className={classes.plus} onClick={increaseQty}>
 								<AiOutlinePlus />
 							</span>
 						</p>
 						<h3>Size:</h3>
 						<p className={classes.size}>
-							<label for='size' > </label>
-							<select name='size' id='size' className={classes.select}>
+							<label for='size'> </label>
+							<select
+								name='size'
+								id='size'
+								className={classes.select}
+								onChange={sizeHandler}>
 								<option value='S'>S</option>
 								<option value='M'>M</option>
 								<option value='L'>L</option>
@@ -103,7 +130,10 @@ const ProductDetail = () => {
 						</p>
 					</div>
 					<div className={classes.buttons}>
-						<button type='button' className={classes.addToCart}>
+						<button
+							type='button'
+							className={classes.addToCart}
+							onClick={() => onAdd(productData, qty, size)}>
 							Add to Cart
 						</button>
 						<button type='button' className={classes.buyNow}>
@@ -115,10 +145,10 @@ const ProductDetail = () => {
 
 			<div className={classes.maylikeProductsWrapper}>
 				<h2>You may also like</h2>
-				<div className={classes.marquee}>
+				<div className={`${classes.marquee} ${classes.track}`}>
 					<div className={classes.maylikeProductsContainer}>
-						{newCategoryItems &&
-							newCategoryItems.map((item) => (
+						{randomItems &&
+							randomItems.map((item) => (
 								<Product key={item._id} product={item} />
 							))}
 					</div>

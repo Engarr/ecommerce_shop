@@ -17,7 +17,7 @@ function App() {
 				<Routes>
 					<Route path='/*' element={<Navigate to='/' />} />
 					<Route path='/' element={<Home />} />
-					<Route path='/products/:slug' element={<Products />} />
+					<Route path='/category/:category' element={<Products />} />
 					<Route path='/product/:slug' element={<ProductDetail />} />
 				</Routes>
 			</main>

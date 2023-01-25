@@ -22,7 +22,7 @@ const Home = () => {
 			</div>
 			<div className={classes.container}>
 				{maxProducts?.map((product) => (
-					<Product key={product._id} product={product} />
+					<Product key={product._id} product={product}  />
 				))}
 			</div>
 		</div>

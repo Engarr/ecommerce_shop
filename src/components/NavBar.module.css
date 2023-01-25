@@ -124,6 +124,28 @@
 	align-items: center;
 }
 
+.nav-enter {
+	opacity: 0;
+	transform: translateY(-100%);
+  }
+  
+  .nav-enter-active {
+	opacity: 1;
+	transform: translateY(0);
+	transition: opacity 300ms, transform 300ms;
+  }
+  
+  .nav-exit {
+	opacity: 1;
+	transform: translateY(0);
+  }
+  
+  .nav-exit-active {
+	opacity: 0;
+	transform: translateY(-100%);
+	transition: opacity 300ms, transform 300ms;
+  }
+
 @media only screen and (min-width: 1024px) {
 	.smallDevices {
 		display: none;
