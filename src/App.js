@@ -21,9 +21,9 @@ function App() {
 					<Route path='/product/:slug' element={<ProductDetail />} />
 				</Routes>
 			</main>
-			{/* <footer>
+			<footer>
 				<Footer />
-			</footer> */}
+			</footer>
 		</div>
 	);
 }

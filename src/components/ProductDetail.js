@@ -22,11 +22,11 @@ const ProductDetail = () => {
 	const [randomItems, setRandomItems] = useState([]);
 	const [index, setIndex] = useState(0);
 	const [size, setSize] = useState('S');
-
 	const { decreaseQty, increaseQty, qty, onAdd } = useStateContext();
-
 	const { slug } = useParams();
 	const category = productData.category;
+
+	let imageLength;
 
 	const updateRandomItems = () => {
 		const shuffledItems = newCategoryItems.sort(() => Math.random() - 0.5);
@@ -55,6 +55,27 @@ const ProductDetail = () => {
 		setSize(e.target.value);
 	};
 
+	const indexIncrease = () => {
+		if (productData) {
+			imageLength = productData.image.length - 1;
+			if (index < imageLength) {
+				setIndex((prevIndex) => prevIndex + 1);
+			} else {
+				setIndex(0);
+			}
+		}
+	};
+	const indexDecrease = () => {
+		if (productData) {
+			imageLength = productData.image.length - 1;
+			if (index > 0) {
+				setIndex((prevIndex) => prevIndex - 1);
+			} else {
+				setIndex(imageLength);
+			}
+		}
+	};
+
 	if (!productData) return <Spinner message='Loading...' />;
 
 	return (
@@ -77,16 +98,18 @@ const ProductDetail = () => {
 					</div>
 					<div className={classes.imageContainer}>
 						<div className={classes.buttonBox}>
-							<button className={classes.prevBtn}>
+							<button className={classes.prevBtn} onClick={indexDecrease}>
 								<GrPrevious />
 							</button>
-							<button className={classes.NextBtn}>
+							<button className={classes.nextBtn} onClick={indexIncrease}>
 								<GrNext />
 							</button>
 						</div>
 
 						<img
-							src={productData?.image && urlFor(productData?.image[2]).url()}
+							src={
+								productData?.image && urlFor(productData?.image[index]).url()
+							}
 							alt={productData.name}
 							className={classes.productMainImage}
 						/>
@@ -109,29 +132,33 @@ const ProductDetail = () => {
 					<p>{productData.details}</p>
 					<p className={classes.price}>${productData.price}</p>
 					<div className={classes.quantity}>
-						<h3>Quantity:</h3>
-						<p className={classes.quantityDesc}>
-							<span className={classes.minus} onClick={decreaseQty}>
-								<AiOutlineMinus />
-							</span>
-							<span className={classes.num}>{qty}</span>
-							<span className={classes.plus} onClick={increaseQty}>
-								<AiOutlinePlus />
-							</span>
-						</p>
-						<h3>Size:</h3>
-						<p className={classes.size}>
-							<label for='size'> </label>
-							<select
-								name='size'
-								id='size'
-								className={classes.select}
-								onChange={sizeHandler}>
-								<option value='S'>S</option>
-								<option value='M'>M</option>
-								<option value='L'>L</option>
-							</select>
-						</p>
+						<div>
+							<h3>Quantity:</h3>
+							<p className={classes.quantityDesc}>
+								<span className={classes.minus} onClick={decreaseQty}>
+									<AiOutlineMinus />
+								</span>
+								<span className={classes.num}>{qty}</span>
+								<span className={classes.plus} onClick={increaseQty}>
+									<AiOutlinePlus />
+								</span>
+							</p>
+						</div>
+						<div>
+							<h3>Size:</h3>
+							<p className={classes.size}>
+								<label for='size'> </label>
+								<select
+									name='size'
+									id='size'
+									className={classes.select}
+									onChange={sizeHandler}>
+									<option value='S'>S</option>
+									<option value='M'>M</option>
+									<option value='L'>L</option>
+								</select>
+							</p>
+						</div>
 					</div>
 					<div className={classes.buttons}>
 						<button
