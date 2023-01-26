@@ -1,7 +1,6 @@
 .footer {
-    position: absolute;
-    
-
+    position: relative;
+    bottom: 0;
 	height: 80px;
 	background-color: rgba(201, 197, 197, 0.24);
 	width: 100%;

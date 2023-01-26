@@ -4,7 +4,7 @@
 	right: 0;
 	background-color: #fff;
 	height: 100vh;
-	width: 400px;
+	width: 500px;
 	z-index: 100;
 	box-shadow: 0 0 3px black;
 }
@@ -31,4 +31,92 @@
 }
 .closeBtn:hover {
 	transform: scale(1.1);
+}
+.delete {
+	position: absolute;
+	top: 5%;
+	right: 10%;
+	cursor: pointer;
+	transition: color 0.3s;
+}
+.delete:hover {
+	color: red;
+}
+
+.productsContainer {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	top: 5em;
+}
+.productBox {
+	position: relative;
+	display: flex;
+	width: 90%;
+	padding: 10px 20px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.301);
+}
+.image{
+	margin-right: 0.5em;
+}
+
+.name::first-letter {
+	text-transform: uppercase;
+}
+.size {
+	font-size: 0.9em;
+	margin-bottom: 0.5em;
+
+}
+.price {
+	margin-bottom: 0.5em;
+	margin-top: 0.5em;
+}
+.qtyBox {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	margin-bottom: 1em;
+}
+.qtyBox p {
+	padding-right: 10px;
+	padding-left: 10px;
+}
+.qtyBox button {
+	font-size: 1.4em;
+	padding: 2px 4px;
+	background: none;
+	border: none;
+	cursor: pointer;
+	
+}
+.actionBox {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 2em;
+	width: 100%;
+}
+.actionBox button {
+	margin-top: 2em;
+	width: 90%;
+	border: none;
+	text-transform: uppercase;
+	padding: 10px 20px;
+	cursor: pointer;
+	background-color: rgb(233, 231, 229);
+	transition: background-color 0.3s;
+}
+.actionBox button:hover {
+	background-color: rgb(201, 199, 198);;
+}
+.totalPrice {
+	display: flex;
+	justify-content: space-around;
+	width: 100%;
+	
 }

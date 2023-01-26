@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
+import { v4 as uuidv4 } from 'uuid';
 
 const Context = createContext();
 
@@ -9,6 +10,9 @@ export const StateContext = ({ children }) => {
 	const [totalPrice, setTotalPrice] = useState(0);
 	const [totalQuantities, setTotalQuantities] = useState(0);
 	const [qty, setQty] = useState(1);
+
+	let foundProduct;
+	let index;
 
 	const cartHandler = () => {
 		setShowCart((prev) => (prev = !prev));
@@ -35,10 +39,66 @@ export const StateContext = ({ children }) => {
 		} else {
 			product.quantity = quantity;
 			product.size = size;
+			product._id = uuidv4();
 			setCartItems([...cartItems, { ...product }]);
 		}
 		toast.success(`${qty} ${product.name} added to the cart.`);
 	};
+
+	const toogleItemQuantity = (id, value) => {
+		foundProduct = cartItems.find((item) => item._id === id);
+		index = cartItems.findIndex((item) => item._id === id);
+
+		if (value === 'increase') {
+			let newCartItems = [...cartItems];
+
+			newCartItems[index] = {
+				...foundProduct,
+				quantity: foundProduct.quantity + 1,
+			};
+			setCartItems(newCartItems);
+			setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct.price);
+			setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + 1);
+		} else if (value === 'decrease') {
+			if (foundProduct.quantity > 1) {
+				let newCartItems = [...cartItems];
+				newCartItems[index] = {
+					...foundProduct,
+					quantity: foundProduct.quantity - 1,
+				};
+				setCartItems(newCartItems);
+				setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct.price);
+				setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - 1);
+			}
+		}
+	};
+
+	// const toogleItemQuantity = (id, value) => {
+	// 	foundProduct = cartItems.find((item) => item._id === id);
+	// 	index = cartItems.findIndex((product) => product._id === id);
+
+	// 	if (value === 'increase') {
+	// 		let newCartItems = [...cartItems];
+	// 		newCartItems[index] = {
+	// 			...foundProduct,
+	// 			quantity: foundProduct.quantity + 1,
+	// 		};
+	// 		setCartItems(newCartItems);
+	// 		setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct.price);
+	// 		setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + 1);
+	// 	} else if (value === 'decrease') {
+	// 		if (foundProduct.quantity > 1) {
+	// 			let newCartItems = [...cartItems];
+	// 			newCartItems[index] = {
+	// 				...foundProduct,
+	// 				quantity: foundProduct.quantity - 1,
+	// 			};
+	// 			setCartItems(newCartItems);
+	// 			setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price);
+	// 			setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - 1);
+	// 		}
+	// 	}
+	// };
 
 	const increaseQty = () => {
 		setQty((prevQty) => prevQty + 1);
@@ -62,6 +122,7 @@ export const StateContext = ({ children }) => {
 				decreaseQty,
 				onAdd,
 				cartHandler,
+				toogleItemQuantity,
 			}}>
 			{children}
 		</Context.Provider>

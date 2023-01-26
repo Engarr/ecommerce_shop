@@ -13,6 +13,7 @@ import Product from './Product';
 import classes from './ProductDetail.module.css';
 import Spinner from '../components/Spinner';
 import { useStateContext } from '../context/StateContext';
+import { GrNext, GrPrevious } from 'react-icons/gr';
 
 const ProductDetail = () => {
 	const [productData, setProductData] = useState([]);
@@ -22,7 +23,7 @@ const ProductDetail = () => {
 	const [index, setIndex] = useState(0);
 	const [size, setSize] = useState('S');
 
-	const { decreaseQty, increaseQty, qty, onAdd, cartItems } = useStateContext();
+	const { decreaseQty, increaseQty, qty, onAdd } = useStateContext();
 
 	const { slug } = useParams();
 	const category = productData.category;
@@ -53,26 +54,13 @@ const ProductDetail = () => {
 	const sizeHandler = (e) => {
 		setSize(e.target.value);
 	};
-	// useEffect(() => {
-	// 	sizeHandler();
-	// }, [size]);
 
-	console.log(cartItems);
 	if (!productData) return <Spinner message='Loading...' />;
 
 	return (
-		<div>
+		<div className={classes.mainContainer}>
 			<div className={classes.productDetailContainer}>
-				<div>
-					<div className={classes.imageContainer}>
-						<img
-							src={
-								productData?.image && urlFor(productData?.image[index]).url()
-							}
-							alt={productData.name}
-							className={classes.productDetailImage}
-						/>
-					</div>
+				<div className={classes.imageContainer}>
 					<div className={classes.smallImagesContainer}>
 						{productData?.image &&
 							productData?.image.map((item, i) => (
@@ -86,6 +74,22 @@ const ProductDetail = () => {
 									onMouseEnter={() => setIndex(i)}
 								/>
 							))}
+					</div>
+					<div className={classes.imageContainer}>
+						<div className={classes.buttonBox}>
+							<button className={classes.prevBtn}>
+								<GrPrevious />
+							</button>
+							<button className={classes.NextBtn}>
+								<GrNext />
+							</button>
+						</div>
+
+						<img
+							src={productData?.image && urlFor(productData?.image[2]).url()}
+							alt={productData.name}
+							className={classes.productMainImage}
+						/>
 					</div>
 				</div>
 

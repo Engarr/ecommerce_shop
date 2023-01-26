@@ -13,13 +13,12 @@ import Cart from './Cart';
 
 const NavBar = () => {
 	const [hide, setHide] = useState(true);
-	const { cartItems, showCart, cartHandler, totalQuantities } =
+	const {  showCart, cartHandler, totalQuantities } =
 		useStateContext();
 
 	const menuHandler = () => {
 		setHide((prev) => (prev = !prev));
 	};
-	console.log(totalQuantities);
 
 	return (
 		<div>
