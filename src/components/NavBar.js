@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import classes from './NavBar.module.css';
 import { IoIosSearch } from 'react-icons/io';
@@ -13,11 +13,36 @@ import Cart from './Cart';
 
 const NavBar = () => {
 	const [hide, setHide] = useState(true);
-	const {  showCart, cartHandler, totalQuantities } =
-		useStateContext();
+	const [showProfilCard, setShowProfilCard] = useState(false);
+	const { showCart, cartHandler, totalQuantities } = useStateContext();
+
+	const cardRef = useRef(null);
 
 	const menuHandler = () => {
 		setHide((prev) => (prev = !prev));
+	};
+
+	const profilActionHandler = () => {
+		setShowProfilCard((prev) => !prev);
+	};
+
+	useEffect(() => {
+		if (showProfilCard) {
+			document.addEventListener('click', clickHandler);
+		} else {
+			document.removeEventListener('click', clickHandler);
+		}
+		return () => {
+			document.removeEventListener('click', clickHandler);
+		};
+	}, [showProfilCard]);
+
+	const clickHandler = (event) => {
+		
+		if (!cardRef.current.contains(event.target)) {
+			
+			setShowProfilCard(false);
+		}
 	};
 
 	return (
@@ -57,7 +82,7 @@ const NavBar = () => {
 							</div>
 							<div className={classes.profileBoxSmall}>
 								<RiAccountPinCircleFill size={25} />
-								<p>Login</p>
+								<p>Profil</p>
 							</div>
 						</div>
 						<div className={classes.searchBoxSmall}>
@@ -66,7 +91,11 @@ const NavBar = () => {
 						</div>
 						<div className={classes.catogoryBoxSmall}>
 							{categories?.map((category) => (
-								<CategoryBar key={category.name} name={category.name} onHide={menuHandler}/>
+								<CategoryBar
+									key={category.name}
+									name={category.name}
+									onHide={menuHandler}
+								/>
 							))}
 						</div>
 					</div>
@@ -91,9 +120,38 @@ const NavBar = () => {
 
 							<p>Cart</p>
 						</div>
-						<div className={classes.profileBoxBig}>
-							<RiAccountPinCircleFill size={30} />
-							<p>Login</p>
+
+						<div ref={cardRef} className={classes.profileContainer} >
+							<div
+								className={classes.profileBoxBig}
+								onClick={profilActionHandler}>
+								<div className={classes.icon}>
+									<RiAccountPinCircleFill size={35} />
+									<p>Profil</p>
+								</div>
+							</div>
+
+							<div>
+								{showProfilCard && (
+									<div className={classes.profilAcctionContainer}>
+										<div>
+											<Link to='/login'>
+												<button type='button' onClick={profilActionHandler}>
+													Login
+												</button>
+											</Link>
+										</div>
+
+										<p>Don't have account?</p>
+
+										<div>
+											<Link>
+												<button type='button'>Create account</button>
+											</Link>
+										</div>
+									</div>
+								)}
+							</div>
 						</div>
 					</div>
 				</div>

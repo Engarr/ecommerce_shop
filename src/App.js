@@ -6,6 +6,7 @@ import Products from './pages/Products';
 import NavBar from './components/NavBar';
 import ProductDetail from './components/ProductDetail';
 import Footer from './components/Footer';
+import Login from './pages/Login';
 
 function App() {
 	return (
@@ -15,10 +16,11 @@ function App() {
 			</header>
 			<main>
 				<Routes>
-					<Route path='/*' element={<Navigate to='/' />} />
-					<Route path='/' element={<Home />} />
+					<Route path='/*' element={<Navigate to='/home' />} />
+					<Route path='/home' element={<Home />} />
 					<Route path='/category/:category' element={<Products />} />
 					<Route path='/product/:slug' element={<ProductDetail />} />
+					<Route path='/login' element={<Login  />} />
 				</Routes>
 			</main>
 			<footer>

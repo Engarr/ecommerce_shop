@@ -125,6 +125,9 @@
 .accountBoxBig {
 	display: flex;
 	text-align: center;
+	justify-content: center;
+	align-items: center;
+	width: 200px;
 }
 .cartBoxBig {
 	margin-right: 2em;
@@ -132,11 +135,17 @@
 .cartBoxBig,
 .profileBoxBig {
 	position: relative;
+	width: 50%;
+}
+.icon,
+.cartBoxBig {
 	cursor: pointer;
+	margin-bottom: 0.5em;
 	transition: transform 0.3s;
 }
-.cartBoxBig:hover,
-.profileBoxBig:hover {
+
+.icon:hover,
+.cartBoxBig:hover {
 	transform: scale(1.1);
 }
 
@@ -167,6 +176,51 @@
 	opacity: 0;
 	transform: translateY(-100%);
 	transition: opacity 300ms, transform 300ms;
+}
+
+
+.profileContainer{
+	position: relative;
+}
+.profilBoxBig {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	align-self: center;
+}
+
+.profilAcctionContainer {
+	position: absolute;
+	/* display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center; */
+	background-color: rgb(255, 255, 255);
+	border: 1px solid rgba(0, 0, 0, 0.144);
+	border-radius: 5px;
+	top: 70px;
+	right: 0%;
+	width: 250px;
+	padding: 20px 40px;
+	z-index: 100;
+}
+
+.profilAcctionContainer button {
+	padding: 10px 20px;
+	width: 100%;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	border: none;
+	cursor: pointer;
+	background-color: rgb(233, 231, 229);
+	transition: background-color 0.3s;
+}
+.profilAcctionContainer p {
+	margin: 1em auto;
+}
+.profilAcctionContainer button:hover {
+	background-color: rgb(201, 199, 198);
 }
 
 @media only screen and (min-width: 1024px) {

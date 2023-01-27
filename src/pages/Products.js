@@ -3,6 +3,7 @@ import { client, urlFor } from '../utils/client';
 import { categoryProducts } from '../utils/data';
 import { useParams, Link } from 'react-router-dom';
 import classes from '../styles/Products.module.css';
+import Spinner from '../components/Spinner';
 
 const Products = () => {
 	const [productsData, setProductsData] = useState([]);
@@ -13,6 +14,8 @@ const Products = () => {
 		let query = categoryProducts(category);
 		client.fetch(query).then((data) => setProductsData(data));
 	}, [category]);
+	
+	if (!productsData) return <Spinner message='Loading...' />;
 
 	return (
 		<div className={classes.container}>
@@ -25,8 +28,8 @@ const Products = () => {
 								<div>
 									<img
 										src={urlFor(product?.image[0]).url()}
-										className={classes.image}alt={product.name}
-										
+										className={classes.image}
+										alt={product.name}
 									/>
 									<h3>{product.name}</h3>
 									<p>
