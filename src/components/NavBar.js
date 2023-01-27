@@ -66,7 +66,7 @@ const NavBar = () => {
 						</div>
 						<div className={classes.catogoryBoxSmall}>
 							{categories?.map((category) => (
-								<CategoryBar key={category.name} name={category.name} />
+								<CategoryBar key={category.name} name={category.name} onHide={menuHandler}/>
 							))}
 						</div>
 					</div>

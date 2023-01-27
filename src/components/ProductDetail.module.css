@@ -57,17 +57,7 @@
 	right: 10%;
 }
 
-@keyframes pulse {
-	0% {
-		box-shadow: 0 0 1px black;
-	}
-	50% {
-		box-shadow: 0 0 2px black;
-	}
-	100% {
-		box-shadow: 0 0 1px black;
-	}
-}
+
 
 .productMainImage {
 	border-radius: 15px;
@@ -230,6 +220,17 @@
 }
 .track:hover {
 	animation-play-state: paused;
+}
+@keyframes pulse {
+	0% {
+		box-shadow: 0 0 1px black;
+	}
+	50% {
+		box-shadow: 0 0 2px black;
+	}
+	100% {
+		box-shadow: 0 0 1px black;
+	}
 }
 @keyframes marquee {
 	from {
