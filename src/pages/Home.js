@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Banner from '../components/Banner';
 import { client } from '../utils/client';
-import classes from './Home.module.css';
+import classes from '../styles/Home.module.css';
 import Product from '../components/Product';
 
 const Home = () => {

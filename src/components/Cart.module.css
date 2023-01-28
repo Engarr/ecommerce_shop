@@ -112,7 +112,7 @@
 	transition: background-color 0.3s;
 }
 .actionBox button:hover {
-	background-color: rgb(201, 199, 198);;
+	background-color: rgb(201, 199, 198);
 }
 .totalPrice {
 	display: flex;

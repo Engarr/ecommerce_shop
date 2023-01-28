@@ -1,0 +1,109 @@
+.mainContainer {
+	width: 100%;
+	height: 100%;
+	min-height: 900px;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+}
+.mainContainer h2, .mainContainer p{
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+.registerContainer {
+	display: flex;
+	margin-top: 140px;
+	flex-direction: column;
+	padding: 20px 35px 28px 35px;
+	width: 50%;
+	max-width: 500px;
+	border: 1px solid rgba(0, 0, 0, 0.267);
+}
+
+.emailBox,
+.passwordBox,.checkBox, .nameBox{
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
+	margin-bottom: 1em;
+	width: 100%;
+}
+.emailBox label,
+.passwordBox label,.checkBox ,.nameBox label {
+	margin-bottom: 0.3em;
+}
+.emailBox input,
+.passwordBox input, .nameBox input {
+	padding: 5px 10px;
+	width: 100%;
+	border: 1px solid rgba(0, 0, 0, 0.212);
+	outline: none;
+}
+.emailBox input:focus,
+.passwordBox input:focus {
+	background-color: rgb(207, 206, 204);
+}
+.checkBox{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1em;
+}
+
+.checkBox input{
+    margin-right: 10px;
+}
+.moreInfoBox{
+    margin-top: 1em;
+}
+
+.registerContainer button {
+	margin: 1em 0;
+	padding: 10px 20px;
+	background-color: rgb(233, 231, 229);
+	transition: background-color 0.3s;
+    font-weight: bold;
+	width: 100%;
+	border: none;
+	cursor: pointer;
+}
+.registerContainer button:hover {
+	background-color: rgb(201, 199, 198);
+}
+
+.createAccountBox {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+.createAccountBox p {
+	margin-top: 2em;
+	margin-bottom: 0.5em;
+}
+.createAccountBox a {
+	width: 100%;
+}
+
+.error {
+	position: absolute;
+	margin-top: 1em;
+	background-color: rgb(212, 109, 109);
+	padding: 10px 20px;
+	width: 50%;
+	text-align: center;
+}
+.closeBtn {
+	position: absolute;
+	right: 2%;
+	top: 10%;
+	cursor: pointer;
+}
+@media screen and (max-width: 1024px) {
+	.registerContainer {
+		width: 100%;
+		margin: 1em;
+	}
+}

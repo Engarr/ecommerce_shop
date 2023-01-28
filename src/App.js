@@ -7,6 +7,7 @@ import NavBar from './components/NavBar';
 import ProductDetail from './components/ProductDetail';
 import Footer from './components/Footer';
 import Login from './pages/Login';
+import Registration from './pages/Registration';
 
 function App() {
 	return (
@@ -21,6 +22,7 @@ function App() {
 					<Route path='/category/:category' element={<Products />} />
 					<Route path='/product/:slug' element={<ProductDetail />} />
 					<Route path='/login' element={<Login  />} />
+					<Route path='/registration' element={<Registration  />} />
 				</Routes>
 			</main>
 			<footer>

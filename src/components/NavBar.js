@@ -145,8 +145,8 @@ const NavBar = () => {
 										<p>Don't have account?</p>
 
 										<div>
-											<Link>
-												<button type='button'>Create account</button>
+											<Link to='/registration'>
+												<button type='button' onClick={profilActionHandler}>Create account</button>
 											</Link>
 										</div>
 									</div>

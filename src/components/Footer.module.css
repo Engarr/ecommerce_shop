@@ -1,7 +1,7 @@
 .footer {
     position: relative;
     bottom: 0;
-	height: 80px;
+	height: 100px;
 	background-color: rgba(201, 197, 197, 0.24);
 	width: 100%;
 	display: flex;
