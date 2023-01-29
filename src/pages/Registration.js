@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
+import { client } from '../utils/client';
+import { v4 as uuidv4 } from 'uuid';
+import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+
 
 import classes from '../styles/Registration.module.css';
 const Registration = () => {
 	const [error, setError] = useState(false);
-
 	const [name, setName] = useState('');
 	const [nameError, setNamError] = useState(false);
-
 	const [email, setEmail] = useState('');
 	const [emailError, setEmailError] = useState(false);
-
 	const [password, setPassword] = useState('');
 	const [passwordError, setPasswordError] = useState(false);
-
 	const [repeatedPassword, setRepeatedPassword] = useState('');
 	const [repeatedpasswordError, setRepeatedPasswordError] = useState(false);
-
 	const [isChecked, setIsChecked] = useState(false);
 	const [errorIsChecked, setErrorIsChecked] = useState(false);
+	const navigate = useNavigate();
 
 	const nameHandler = (e) => {
 		setName(e.target.value);
@@ -37,38 +38,49 @@ const Registration = () => {
 		setError(false);
 	};
 
-	const onRegistrationHandler = (e) => {
-		e.preventDefault();
+	const isDataValid = (e) => {
+		let isValid = true;
 		if (isNameValid()) {
 			setNamError(false);
+			isValid = true;
 		} else {
 			setNamError(true);
 			setError(true);
+			isValid = false;
 		}
 		if (isEmailValid()) {
 			setEmailError(false);
+			isValid = true;
 		} else {
 			setEmailError(true);
 			setError(true);
+			isValid = false;
 		}
 		if (isPasswordValid()) {
 			setPasswordError(false);
+			isValid = true;
 		} else {
 			setPasswordError(true);
 			setError(true);
+			isValid = false;
 		}
 		if (isRepeatPasswordValid()) {
 			setRepeatedPasswordError(false);
+			isValid = true;
 		} else {
 			setRepeatedPasswordError(true);
 			setError(true);
+			isValid = false;
 		}
 		if (isChecked) {
 			setErrorIsChecked(false);
+			isValid = true;
 		} else {
 			setErrorIsChecked(true);
 			setError(true);
+			isValid = false;
 		}
+		return isValid;
 	};
 
 	const isNameValid = () => {
@@ -112,6 +124,34 @@ const Registration = () => {
 		return isValid;
 	};
 
+	const onSubmit = (e) => {
+		e.preventDefault();
+		if (isDataValid()) {
+			const doc = {
+				_type: 'user',
+				name: name,
+				email: email,
+				password: password,
+				isChecked: isChecked,
+				userId: uuidv4(),
+			};
+			toast.success(`The account has been created.`);
+			client.create(doc).then(() => {
+				navigate('/home');
+			});;
+			// setName('');
+			// setEmail('');
+			// setPassword('');
+			// setRepeatedPassword('');
+			// setIsChecked(false);
+			
+			
+		} else {
+			toast.error(`Unfortunately, we were unable to create an account`);
+			
+		}
+	};
+
 	return (
 		<div className={classes.mainContainer}>
 			{error && (
@@ -120,9 +160,7 @@ const Registration = () => {
 					<p>The registration form contains errors.</p>
 				</div>
 			)}
-			<form
-				className={classes.registerContainer}
-				onSubmit={onRegistrationHandler}>
+			<form className={classes.registerContainer} onSubmit={onSubmit}>
 				<h2>Registration</h2>
 
 				<div
