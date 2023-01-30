@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-
 import classes from '../styles/Registration.module.css';
 const Registration = () => {
 	const [error, setError] = useState(false);
@@ -19,7 +18,9 @@ const Registration = () => {
 	const [repeatedpasswordError, setRepeatedPasswordError] = useState(false);
 	const [isChecked, setIsChecked] = useState(false);
 	const [errorIsChecked, setErrorIsChecked] = useState(false);
+	const [isEmailExistError, setIsEmailExistError] = useState(false);
 	const navigate = useNavigate();
+
 
 	const nameHandler = (e) => {
 		setName(e.target.value);
@@ -38,49 +39,63 @@ const Registration = () => {
 		setError(false);
 	};
 
-	const isDataValid = (e) => {
+	const isDataValid = async () => {
 		let isValid = true;
-		if (isNameValid()) {
-			setNamError(false);
-			isValid = true;
-		} else {
+		if (!isNameValid()) {
 			setNamError(true);
 			setError(true);
 			isValid = false;
-		}
-		if (isEmailValid()) {
-			setEmailError(false);
-			isValid = true;
 		} else {
+			setNamError(false);
+		}
+		if (!isEmailValid()) {
 			setEmailError(true);
 			setError(true);
 			isValid = false;
-		}
-		if (isPasswordValid()) {
-			setPasswordError(false);
-			isValid = true;
 		} else {
+			setEmailError(false);
+			if (await isEmailExists(email)) {
+				setIsEmailExistError(true);
+				isValid = false;
+			} else {
+				setIsEmailExistError(false);
+			}
+		}
+		if (!isPasswordValid()) {
 			setPasswordError(true);
 			setError(true);
 			isValid = false;
-		}
-		if (isRepeatPasswordValid()) {
-			setRepeatedPasswordError(false);
-			isValid = true;
 		} else {
+			setPasswordError(false);
+		}
+		if (!isRepeatPasswordValid()) {
 			setRepeatedPasswordError(true);
 			setError(true);
 			isValid = false;
-		}
-		if (isChecked) {
-			setErrorIsChecked(false);
-			isValid = true;
 		} else {
+			setRepeatedPasswordError(false);
+		}
+		if (!isChecked) {
 			setErrorIsChecked(true);
 			setError(true);
 			isValid = false;
+		} else {
+			setErrorIsChecked(false);
 		}
+
 		return isValid;
+	};
+
+	const isEmailExists = async (email) => {
+		const query = `*[_type == 'user']{
+			email
+		  }`;
+
+		const data = await client.fetch(query);
+		if (data && data.length > 0) {
+			console.log(data.find((user) => user.email === email) !== undefined);
+			return data.find((user) => user.email === email) !== undefined;
+		}
 	};
 
 	const isNameValid = () => {
@@ -94,12 +109,14 @@ const Registration = () => {
 		let isValid = true;
 		const re =
 			/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 		if (!re.test(email)) {
 			isValid = false;
-		} else {
 		}
+
 		return isValid;
 	};
+
 	const isPasswordValid = () => {
 		let isValid = true;
 		if (password.length < 8) {
@@ -124,31 +141,32 @@ const Registration = () => {
 		return isValid;
 	};
 
-	const onSubmit = (e) => {
+	
+
+
+	const onSubmit = async (e) => {
 		e.preventDefault();
-		if (isDataValid()) {
-			const doc = {
-				_type: 'user',
-				name: name,
-				email: email,
-				password: password,
-				isChecked: isChecked,
-				userId: uuidv4(),
-			};
+		if (await isDataValid()) {
+			// const doc = {
+			// 	_type: 'user',
+			// 	name: name,
+			// 	email: email,
+			// 	password: password,
+			// 	isChecked: isChecked,
+			// 	userId: uuidv4(),
+			// };
+			console.log('onSubmit isDataValid');
 			toast.success(`The account has been created.`);
-			client.create(doc).then(() => {
-				navigate('/home');
-			});;
+			// client.create(doc).then(() => {
+			// 	navigate('/home');
+			// });
 			// setName('');
 			// setEmail('');
 			// setPassword('');
 			// setRepeatedPassword('');
 			// setIsChecked(false);
-			
-			
 		} else {
 			toast.error(`Unfortunately, we were unable to create an account`);
-			
 		}
 	};
 
@@ -192,6 +210,7 @@ const Registration = () => {
 						onChange={emailHandler}
 						autoComplete='email'></input>
 					{emailError && <p>Invalid email address format</p>}
+					{isEmailExistError && <p>Email already exists in the database</p>}
 				</div>
 				<div
 					className={
