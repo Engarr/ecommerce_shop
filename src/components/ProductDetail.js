@@ -147,7 +147,7 @@ const ProductDetail = () => {
 						<div>
 							<h3>Size:</h3>
 							<p className={classes.size}>
-								<label for='size'> </label>
+								<label htmlFor='size'> </label>
 								<select
 									name='size'
 									id='size'

@@ -4,6 +4,7 @@ import { client } from '../utils/client';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import bcrypt from 'bcryptjs';
 
 import classes from '../styles/Registration.module.css';
 const Registration = () => {
@@ -20,7 +21,6 @@ const Registration = () => {
 	const [errorIsChecked, setErrorIsChecked] = useState(false);
 	const [isEmailExistError, setIsEmailExistError] = useState(false);
 	const navigate = useNavigate();
-
 
 	const nameHandler = (e) => {
 		setName(e.target.value);
@@ -86,18 +86,6 @@ const Registration = () => {
 		return isValid;
 	};
 
-	const isEmailExists = async (email) => {
-		const query = `*[_type == 'user']{
-			email
-		  }`;
-
-		const data = await client.fetch(query);
-		if (data && data.length > 0) {
-			console.log(data.find((user) => user.email === email) !== undefined);
-			return data.find((user) => user.email === email) !== undefined;
-		}
-	};
-
 	const isNameValid = () => {
 		let isValid = true;
 		if (name === '') {
@@ -116,7 +104,16 @@ const Registration = () => {
 
 		return isValid;
 	};
+	const isEmailExists = async (email) => {
+		const query = `*[_type == 'user']{
+			email
+		  }`;
 
+		const data = await client.fetch(query);
+		if (data && data.length > 0) {
+			return data.find((user) => user.email === email) !== undefined;
+		}
+	};
 	const isPasswordValid = () => {
 		let isValid = true;
 		if (password.length < 8) {
@@ -141,30 +138,29 @@ const Registration = () => {
 		return isValid;
 	};
 
-	
-
-
 	const onSubmit = async (e) => {
 		e.preventDefault();
+		const salt = await bcrypt.genSalt(10);
+		const hash = await bcrypt.hash(password, salt);
+
 		if (await isDataValid()) {
-			// const doc = {
-			// 	_type: 'user',
-			// 	name: name,
-			// 	email: email,
-			// 	password: password,
-			// 	isChecked: isChecked,
-			// 	userId: uuidv4(),
-			// };
-			console.log('onSubmit isDataValid');
+			const doc = {
+				_type: 'user',
+				name: name,
+				email: email,
+				password: hash,
+				isChecked: isChecked,
+				userId: uuidv4(),
+			};
 			toast.success(`The account has been created.`);
-			// client.create(doc).then(() => {
-			// 	navigate('/home');
-			// });
-			// setName('');
-			// setEmail('');
-			// setPassword('');
-			// setRepeatedPassword('');
-			// setIsChecked(false);
+			client.create(doc).then(() => {
+				navigate('/home');
+			});
+			setName('');
+			setEmail('');
+			setPassword('');
+			setRepeatedPassword('');
+			setIsChecked(false);
 		} else {
 			toast.error(`Unfortunately, we were unable to create an account`);
 		}
@@ -225,7 +221,7 @@ const Registration = () => {
 						type='password'
 						value={password}
 						onChange={passwordHandler}
-						autocomplete='new-password'></input>
+						autoComplete='new-password'></input>
 					{passwordError && (
 						<p>The password must meet the described conditions</p>
 					)}
@@ -243,7 +239,7 @@ const Registration = () => {
 						type='password'
 						value={repeatedPassword}
 						onChange={repeatedPasswordHandler}
-						autocomplete='new-password'
+						autoComplete='new-password'
 					/>
 					{repeatedpasswordError && <p>The passwords are different</p>}
 				</div>

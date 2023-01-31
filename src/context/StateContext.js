@@ -9,6 +9,7 @@ export const StateContext = ({ children }) => {
 	const [totalPrice, setTotalPrice] = useState(0);
 	const [totalQuantities, setTotalQuantities] = useState(0);
 	const [qty, setQty] = useState(1);
+	const [userData, setUserData] = useState([]);
 
 	let foundProduct;
 	let index;
@@ -25,7 +26,7 @@ export const StateContext = ({ children }) => {
 		);
 		setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
 		if (isProductInCart) {
-			// eslint-disable-next-line 
+			// eslint-disable-next-line
 			const updatedCartItems = cartItems.map((cartProduct) => {
 				if (cartProduct._id === product._id)
 					return {
@@ -119,6 +120,8 @@ export const StateContext = ({ children }) => {
 				cartHandler,
 				toogleItemQuantity,
 				onDelete,
+				userData,
+				setUserData,
 			}}>
 			{children}
 		</Context.Provider>

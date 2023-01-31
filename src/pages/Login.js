@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AiOutlineClose } from 'react-icons/ai';
-
+import bcrypt from 'bcryptjs';
+import { loginUser } from '../utils/data';
+import { client } from '../utils/client';
 import classes from '../styles/Login.module.css';
+import { useStateContext } from '../context/StateContext';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 
 const Login = () => {
 	const [error, setError] = useState(false);
 	const [password, setPassword] = useState('');
 	const [email, setEmail] = useState('');
-
+	const { userData, setUserData } = useStateContext();
+	const navigate = useNavigate();
 	const passwordHandler = (e) => {
 		setPassword(e.target.value);
 	};
@@ -24,14 +30,14 @@ const Login = () => {
 		if (password.length < 8) {
 			isValid = false;
 		}
-		if (!/\d/.test(password)) {
-			isValid = false;
-		}
+		// if (!/\d/.test(password)) {
+		// 	isValid = false;
+		// }
 
-		if (!/[!@#$%^&*()+=._-]/.test(password)) {
-			isValid = false;
-		} else {
-		}
+		// if (!/[!@#$%^&*()+=._-]/.test(password)) {
+		// 	isValid = false;
+		// } else {
+		// }
 		return isValid;
 	};
 	const isEmailValid = () => {
@@ -45,12 +51,33 @@ const Login = () => {
 		return isValid;
 	};
 
-	const onLoginHandler = (e) => {
+	const onLoginHandler = async (e) => {
 		e.preventDefault();
 
 		if (isPasswordValid() && isEmailValid()) {
-			setPassword('');
-			setEmail('');
+			try {
+				const query = loginUser(email);
+				const response = await client.fetch(query);
+				const data = response[0].password;
+
+				const match = await bcrypt.compare(password, data);
+				if (!match) {
+					setError(true);
+					setPassword('');
+				}
+				if (match) {
+					setEmail('');
+					setPassword('');
+					setUserData(response);
+
+					toast.success(
+						`You have successfully logged in. Welcome ${userData[0].name}!`
+					);
+					navigate('/home');
+				}
+			} catch {
+				setError(true);
+			}
 		} else {
 			setError(true);
 		}
@@ -74,16 +101,19 @@ const Login = () => {
 						name='e-mail'
 						id='e-mail'
 						onChange={emailHandler}
-						value={email}></input>
+						value={email}
+						autoComplete='off'></input>
 				</div>
 				<div className={classes.passwordBox}>
 					<label for='password'> Password:</label>
 
 					<input
+						type='password'
 						name='password'
 						id='password'
 						onChange={passwordHandler}
-						value={password}></input>
+						value={password}
+						autoComplete='off'></input>
 				</div>
 				<button type='submit'>Login</button>
 				<div className={classes.createAccountBox}>
