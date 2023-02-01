@@ -35,34 +35,46 @@ const Cart = () => {
 				) : (
 					<div className={classes.productsContainer}>
 						{cartItems.map((item) => (
-							<div className={classes.productBox} key={uuidv4()}>
-								<img
-									src={urlFor(item.image[0])}
-									height={100}
-									className={classes.image}
-									alt={item.name}
-								/>
-								<AiOutlineClose
-									className={classes.delete}
-									onClick={() => onDelete(item._id, item.size)}
-								/>
-								<div>
-									<p className={classes.name}>{item.name}</p>
-									<p className={classes.price}>${item.price}</p>
-									<p className={classes.size}>Size: {item.size}</p>
-									<p>Quantity:</p>
-									<div className={classes.qtyBox}>
-										<button
-											type='button'
-											onClick={() => toogleItemQuantity(item._id, 'decrease', item.size)}>
-											-
-										</button>
-										<p> {item.quantity}</p>
-										<button
-											type='button'
-											onClick={() => toogleItemQuantity(item._id, 'increase', item.size)}>
-											+
-										</button>
+							<div className={classes.productContainer} key={uuidv4()}>
+								<div className={classes.productBox}>
+									<img
+										src={urlFor(item.image[0])}
+										height={100}
+										className={classes.image}
+										alt={item.name}
+									/>
+									<AiOutlineClose
+										className={classes.delete}
+										onClick={() => onDelete(item._id, item.size)}
+									/>
+									<div>
+										<p className={classes.name}>{item.name}</p>
+										<p className={classes.price}>
+											<span>Price:</span> ${item.price}
+										</p>
+										<p className={classes.size}>
+											<span>Size:</span> {item.size}
+										</p>
+										<p>Quantity:</p>
+										<div className={classes.qtyBox}>
+											<button
+												type='button'
+												onClick={() =>
+													toogleItemQuantity(item._id, 'decrease', item.size)
+												}
+												className={classes.minus}>
+												-
+											</button>
+											<p> {item.quantity}</p>
+											<button
+												type='button'
+												onClick={() =>
+													toogleItemQuantity(item._id, 'increase', item.size)
+												}
+												className={classes.plus}>
+												+
+											</button>
+										</div>
 									</div>
 								</div>
 							</div>

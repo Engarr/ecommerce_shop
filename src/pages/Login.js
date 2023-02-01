@@ -13,7 +13,7 @@ const Login = () => {
 	const [error, setError] = useState(false);
 	const [password, setPassword] = useState('');
 	const [email, setEmail] = useState('');
-	const { userData, setUserData, setIsLogin } = useStateContext();
+	const { setUserData, setIsLogin } = useStateContext();
 	const navigate = useNavigate();
 	const passwordHandler = (e) => {
 		setPassword(e.target.value);
@@ -65,24 +65,24 @@ const Login = () => {
 					setPassword('');
 				}
 				if (match) {
-					setUserData({ name: response[0].name, email: response[0].email });
-					console.log(userData);
+					setUserData({
+						name: response[0].name,
+						email: response[0].email,
+					});
 					setIsLogin(true);
 					setEmail('');
 					setPassword('');
-					localStorage.setItem('userInfo', JSON.stringify(userData));
+
 					toast.success(
-						`You have successfully logged in. Welcome ${userData.name}!`
-						);
+						`You have successfully logged in. Welcome ${response[0].name}!`
+					);
 					navigate('/home');
 				}
 			} catch {
 				setError(true);
-				
 			}
 		} else {
 			setError(true);
-			
 		}
 	};
 
@@ -98,17 +98,18 @@ const Login = () => {
 			<form className={classes.loginContainer} onSubmit={onLoginHandler}>
 				<h2>Lgoin</h2>
 				<div className={classes.emailBox}>
-					<label for='e-mail'> E-mail:</label>
+					<label htmlFor='e-mail'> E-mail:</label>
 
 					<input
 						name='e-mail'
 						id='e-mail'
 						onChange={emailHandler}
 						value={email}
-						autoComplete='off'></input>
+						autoComplete='off'
+						className={error ? classes.inputError : ''}></input>
 				</div>
 				<div className={classes.passwordBox}>
-					<label for='password'> Password:</label>
+					<label htmlFor='password'> Password:</label>
 
 					<input
 						type='password'
@@ -116,7 +117,8 @@ const Login = () => {
 						id='password'
 						onChange={passwordHandler}
 						value={password}
-						autoComplete='off'></input>
+						autoComplete='off'
+						className={error ? classes.inputError : ''}></input>
 				</div>
 				<button type='submit'>Login</button>
 				<div className={classes.createAccountBox}>

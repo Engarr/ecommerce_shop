@@ -34,9 +34,14 @@ export const StateContext = ({ children }) => {
 		localStorage.setItem('cart', JSON.stringify(cartItems));
 	}, [cartItems]);
 
-	// useEffect(() => {
-	// 	localStorage.setItem('userInfo', userData);
-	// }, []);
+	useEffect(() => {
+		localStorage.setItem('userInfo', JSON.stringify(userData));
+		if (userData.length === 0) {
+			setIsLogin(false);
+		} else {
+			setIsLogin(true);
+		}
+	}, [userData]);
 
 	const onAdd = (product, quantity, size) => {
 		const isProductInCart = cartItems.find(

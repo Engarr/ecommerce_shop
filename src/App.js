@@ -12,7 +12,7 @@ import Registration from './pages/Registration';
 function App() {
 	
 	return (
-		<div>
+		<>
 			<header>
 				<NavBar />
 			</header>
@@ -26,10 +26,10 @@ function App() {
 					<Route path='/registration' element={<Registration  />} />
 				</Routes>
 			</main>
-			<footer>
+			
 				<Footer />
-			</footer>
-		</div>
+			
+		</>
 	);
 }
 

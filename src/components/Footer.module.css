@@ -1,13 +1,12 @@
 .footer {
-    position: relative;
-    bottom: 0;
-	height: 100px;
-	background-color: rgba(201, 197, 197, 0.24);
-	width: 100%;
-	display: flex;
+   	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+   	height: 100px;
+	
+	background-color: rgba(201, 197, 197, 0.24);
+	
 }
 .socialIcons {
 	display: flex;

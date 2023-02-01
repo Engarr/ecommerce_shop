@@ -183,7 +183,7 @@ const Registration = () => {
 							? `${classes.nameBox} ${classes.inputError}`
 							: classes.nameBox
 					}>
-					<label for='name'>* Your name:</label>
+					<label htmlFor='name'>* Your name:</label>
 					<input
 						name='name'
 						id='name'
@@ -198,7 +198,7 @@ const Registration = () => {
 							? `${classes.emailBox} ${classes.inputError}`
 							: classes.emailBox
 					}>
-					<label for='email'>* E-mail:</label>
+					<label htmlFor='email'>* E-mail:</label>
 					<input
 						name='email'
 						id='email'
@@ -214,7 +214,7 @@ const Registration = () => {
 							? `${classes.passwordBox} ${classes.inputError}`
 							: classes.passwordBox
 					}>
-					<label for='password'>* Password:</label>
+					<label htmlFor='password'>* Password:</label>
 					<input
 						name='password'
 						id='password'
@@ -232,7 +232,7 @@ const Registration = () => {
 							? `${classes.passwordBox} ${classes.inputError}`
 							: classes.passwordBox
 					}>
-					<label for='repeatPassword'>* Repeat password:</label>
+					<label htmlFor='repeatPassword'>* Repeat password:</label>
 					<input
 						name='repeatPassword'
 						id='repeatPassword'
@@ -253,7 +253,7 @@ const Registration = () => {
 
 						// className={classes.errorCheckBox}
 					/>
-					<label for='check'>
+					<label htmlFor='check'>
 						I have read the regulations of the online store and accept its
 						content.
 					</label>

@@ -4,9 +4,10 @@
 	right: 0;
 	background-color: #fff;
 	height: 100vh;
-	width: 500px;
+	width: 600px;
 	z-index: 100000;
 	box-shadow: 0 0 3px black;
+	overflow: scroll;
 }
 .controlPanel {
 	position: relative;
@@ -14,6 +15,10 @@
 	justify-content: center;
 	align-items: center;
 	top: 2em;
+}
+
+.controlPanel p {
+	margin-bottom: 2em;
 }
 .emptyText {
 	position: relative;
@@ -52,24 +57,37 @@
 	width: 100%;
 	top: 5em;
 }
+.productContainer {
+	position: relative;
+	width: 90%;
+	border-top: 1px solid rgba(165, 157, 157, 0.301);
+}
 .productBox {
+	margin-top: 1.5em;
+	position: absolute;
 	position: relative;
 	display: flex;
 	width: 90%;
 	padding: 10px 20px;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.301);
 }
-.image{
-	margin-right: 0.5em;
+.image {
+	margin-right: 1.2em;
 }
 
 .name::first-letter {
 	text-transform: uppercase;
 }
+.name {
+	font-size: 1.2em;
+}
 .size {
 	font-size: 0.9em;
 	margin-bottom: 0.5em;
-
+}
+.size span,
+.price span {
+	font-weight: bold;
+	font-size: 1.2em;
 }
 .price {
 	margin-bottom: 0.5em;
@@ -91,7 +109,20 @@
 	background: none;
 	border: none;
 	cursor: pointer;
-	
+}
+.plus,
+.minus {
+	transition: transform 0.3s;
+}
+.minus:hover,
+.plus:hover {
+	transform: scale(1.4);
+}
+.plus:hover{
+	color: green;
+}
+.minus:hover{
+	color: red
 }
 .actionBox {
 	display: flex;
@@ -118,7 +149,6 @@
 	display: flex;
 	justify-content: space-around;
 	width: 100%;
-	
 }
 @media screen and (max-width: 1024px) {
 	.cartContainer {

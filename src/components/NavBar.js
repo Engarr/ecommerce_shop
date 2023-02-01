@@ -10,14 +10,21 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { categories } from '../utils/data';
 import { useStateContext } from '../context/StateContext';
 import Cart from './Cart';
+import { toast } from 'react-hot-toast';
 
 const NavBar = () => {
 	const [hide, setHide] = useState(true);
 	const [showProfilCard, setShowProfilCard] = useState(false);
-	const { showCart, cartHandler, totalQuantities } = useStateContext();
+	const {
+		showCart,
+		cartHandler,
+		totalQuantities,
+		isLogin,
+		setUserData,
+		
+	} = useStateContext();
 
 	const cardRef = useRef(null);
-
 	const menuHandler = () => {
 		setHide((prev) => (prev = !prev));
 	};
@@ -38,11 +45,16 @@ const NavBar = () => {
 	}, [showProfilCard]);
 
 	const clickHandler = (event) => {
-		
 		if (!cardRef.current.contains(event.target)) {
-			
 			setShowProfilCard(false);
 		}
+	};
+
+	const logout = () => {
+		localStorage.removeItem('userInfo');
+		setShowProfilCard(false);
+		setUserData([]);
+		toast.success(`You have successfully logged out. See You soon!`);
 	};
 
 	return (
@@ -57,7 +69,6 @@ const NavBar = () => {
 						onClick={menuHandler}
 					/>
 				</div>
-
 				{!hide && (
 					<div className={classes.navSmallBox}>
 						<h2>Menu</h2>
@@ -65,7 +76,6 @@ const NavBar = () => {
 							className={classes.closeBtn}
 							onClick={menuHandler}
 						/>
-
 						<div className={classes.accountBoxSmall}>
 							<div
 								className={classes.cartBoxSmall}
@@ -77,12 +87,59 @@ const NavBar = () => {
 								{totalQuantities !== 0 && (
 									<div className={classes.smallCartQty}>{totalQuantities}</div>
 								)}
-
 								<p>Cart</p>
 							</div>
-							<div className={classes.profileBoxSmall}>
-								<RiAccountPinCircleFill size={25} />
-								<p>Profil</p>
+							<div ref={cardRef} className={classes.profileContainer}>
+								<div
+									className={classes.profileBoxSmall}
+									onClick={profilActionHandler}>
+									<RiAccountPinCircleFill size={25} />
+									<p>Profil</p>
+								</div>
+								<div>
+									{showProfilCard && (
+										<div className={classes.profilAcctionContainer}>
+											{isLogin ? (
+												<>
+													<div>
+														<Link>
+															<button>Your account</button>
+														</Link>
+													</div>
+													<div>
+														<button
+															type='button'
+															onClick={`${logout} ${menuHandler}`}>
+															Logout
+														</button>
+													</div>
+												</>
+											) : (
+												<>
+													<div>
+														<Link to='/login'>
+															<button
+																type='button'
+																onClick={`${profilActionHandler} ${menuHandler}`}>
+																Login
+															</button>
+														</Link>
+													</div>
+													<p>Don't have account?</p>
+													<div>
+														<Link to='/registration'>
+															<button
+																type='button'
+																onClick={`${profilActionHandler} ${menuHandler}`}>
+																Create account
+															</button>
+														</Link>
+													</div>
+												</>
+											)}
+										</div>
+									)}
+								</div>
 							</div>
 						</div>
 						<div className={classes.searchBoxSmall}>
@@ -101,7 +158,6 @@ const NavBar = () => {
 					</div>
 				)}
 			</div>
-
 			<div className={classes.bigDevices}>
 				<div className={classes.mainBig}>
 					<div className={classes.searchBox}>
@@ -117,11 +173,9 @@ const NavBar = () => {
 							{totalQuantities !== 0 && (
 								<div className={classes.bigCartQty}>{totalQuantities}</div>
 							)}
-
 							<p>Cart</p>
 						</div>
-
-						<div ref={cardRef} className={classes.profileContainer} >
+						<div ref={cardRef} className={classes.profileContainer}>
 							<div
 								className={classes.profileBoxBig}
 								onClick={profilActionHandler}>
@@ -130,25 +184,43 @@ const NavBar = () => {
 									<p>Profil</p>
 								</div>
 							</div>
-
 							<div>
 								{showProfilCard && (
 									<div className={classes.profilAcctionContainer}>
-										<div>
-											<Link to='/login'>
-												<button type='button' onClick={profilActionHandler}>
-													Login
-												</button>
-											</Link>
-										</div>
+										{isLogin ? (
+											<>
+												<div>
+													<Link>
+														<button>Your account</button>
+													</Link>
+												</div>
+												<div>
+													<button type='button' onClick={logout}>
+														Logout
+													</button>
+												</div>
+											</>
+										) : (
+											<>
+												<div>
+													<Link to='/login'>
+														<button type='button' onClick={profilActionHandler}>
+															Login
+														</button>
+													</Link>
+												</div>
 
-										<p>Don't have account?</p>
+												<p>Don't have account?</p>
 
-										<div>
-											<Link to='/registration'>
-												<button type='button' onClick={profilActionHandler}>Create account</button>
-											</Link>
-										</div>
+												<div>
+													<Link to='/registration'>
+														<button type='button' onClick={profilActionHandler}>
+															Create account
+														</button>
+													</Link>
+												</div>
+											</>
+										)}
 									</div>
 								)}
 							</div>
