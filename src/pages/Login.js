@@ -13,7 +13,7 @@ const Login = () => {
 	const [error, setError] = useState(false);
 	const [password, setPassword] = useState('');
 	const [email, setEmail] = useState('');
-	const { userData, setUserData } = useStateContext();
+	const { userData, setUserData, setIsLogin } = useStateContext();
 	const navigate = useNavigate();
 	const passwordHandler = (e) => {
 		setPassword(e.target.value);
@@ -30,14 +30,13 @@ const Login = () => {
 		if (password.length < 8) {
 			isValid = false;
 		}
-		// if (!/\d/.test(password)) {
-		// 	isValid = false;
-		// }
+		if (!/\d/.test(password)) {
+			isValid = false;
+		}
 
-		// if (!/[!@#$%^&*()+=._-]/.test(password)) {
-		// 	isValid = false;
-		// } else {
-		// }
+		if (!/[!@#$%^&*()+=._-]/.test(password)) {
+			isValid = false;
+		}
 		return isValid;
 	};
 	const isEmailValid = () => {
@@ -66,20 +65,24 @@ const Login = () => {
 					setPassword('');
 				}
 				if (match) {
+					setUserData({ name: response[0].name, email: response[0].email });
+					console.log(userData);
+					setIsLogin(true);
 					setEmail('');
 					setPassword('');
-					setUserData(response);
-
+					localStorage.setItem('userInfo', JSON.stringify(userData));
 					toast.success(
-						`You have successfully logged in. Welcome ${userData[0].name}!`
-					);
+						`You have successfully logged in. Welcome ${userData.name}!`
+						);
 					navigate('/home');
 				}
 			} catch {
 				setError(true);
+				
 			}
 		} else {
 			setError(true);
+			
 		}
 	};
 

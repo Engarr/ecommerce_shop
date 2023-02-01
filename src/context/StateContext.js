@@ -11,8 +11,10 @@ const totalQuantitiesFromSotarge = fetchCarftFromStorage.map(
 );
 for (let i = 0; i < totalQuantitiesFromSotarge.length; i++) {
 	sum = sum + totalQuantitiesFromSotarge[i];
-	
 }
+const fetchUserDataFromLocalStorage = JSON.parse(
+	localStorage.getItem('userInfo') || '[]'
+);
 
 export const StateContext = ({ children }) => {
 	const [showCart, setShowCart] = useState(false);
@@ -20,7 +22,8 @@ export const StateContext = ({ children }) => {
 	const [totalPrice, setTotalPrice] = useState(0);
 	const [totalQuantities, setTotalQuantities] = useState(sum || 0);
 	const [qty, setQty] = useState(1);
-	const [userData, setUserData] = useState([]);
+	const [userData, setUserData] = useState(fetchUserDataFromLocalStorage);
+	const [isLogin, setIsLogin] = useState(false);
 
 	let foundProduct;
 	let index;
@@ -30,6 +33,10 @@ export const StateContext = ({ children }) => {
 	useEffect(() => {
 		localStorage.setItem('cart', JSON.stringify(cartItems));
 	}, [cartItems]);
+
+	// useEffect(() => {
+	// 	localStorage.setItem('userInfo', userData);
+	// }, []);
 
 	const onAdd = (product, quantity, size) => {
 		const isProductInCart = cartItems.find(
@@ -136,6 +143,8 @@ export const StateContext = ({ children }) => {
 				onDelete,
 				userData,
 				setUserData,
+				setIsLogin,
+				isLogin,
 			}}>
 			{children}
 		</Context.Provider>
