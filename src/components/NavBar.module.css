@@ -92,12 +92,11 @@
 	top: -5%;
 	right: 20%;
 }
+/*//////////////////////////////////////////////*/
 .bigCartQty {
 	top: -30%;
 	right: -50%;
 }
-
-/*//////////////////////////////////////////////*/
 
 .bigDevices {
 	position: relative;
@@ -209,6 +208,7 @@
 	background-color: rgb(255, 255, 255);
 	border: 1px solid rgba(0, 0, 0, 0.144);
 	z-index: 100;
+	opacity: 0;
 }
 
 .profilAcctionContainer button {
@@ -228,8 +228,44 @@
 	background-color: rgb(201, 199, 198);
 }
 
+.shake {
+	animation: shake 0.3s linear;
+}
 
+.showUp {
+	animation: showUp 0.2s  ease-in forwards;
+}
+.hideUp {
+	animation: hideUp 0.2s  forwards;
+}
+@keyframes showUp {
+	0% {
+		opacity: 0.5;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@keyframes hideUp {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
 
+@keyframes shake {
+	0% {
+		transform: scale(1.1);
+		box-shadow: 0 0 0 black;
+	}
+
+	100% {
+		transform: scale(1.2);
+		box-shadow: 0 0 10px black;
+	}
+}
 
 @media only screen and (min-width: 1024px) {
 	.smallDevices {

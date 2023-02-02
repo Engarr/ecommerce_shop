@@ -16,6 +16,7 @@ import Transition from 'react-transition-group/Transition';
 const NavBar = () => {
 	const [hide, setHide] = useState(true);
 	const [showProfilCard, setShowProfilCard] = useState(false);
+	const [isClassAdded, setIsClassAdded] = useState(false);
 	const { showCart, cartHandler, totalQuantities, isLogin, setUserData } =
 		useStateContext();
 
@@ -51,6 +52,16 @@ const NavBar = () => {
 		setUserData([]);
 		toast.success(`You have successfully logged out. See You soon!`);
 	};
+
+	useEffect(() => {
+		const timeout = setTimeout(() => {
+			setIsClassAdded(true);
+			setTimeout(() => {
+				setIsClassAdded(false);
+			}, 400);
+		}, 400);
+		return () => clearTimeout(timeout);
+	}, [totalQuantities]);
 
 	return (
 		<div>
@@ -166,7 +177,12 @@ const NavBar = () => {
 						<div className={classes.cartBoxBig} onClick={cartHandler}>
 							<BsBag size={30} />
 							{totalQuantities !== 0 && (
-								<div className={classes.bigCartQty}>{totalQuantities}</div>
+								<div
+									className={`${classes.bigCartQty} ${
+										isClassAdded ? classes.shake : ''
+									}`}>
+									{totalQuantities}
+								</div>
 							)}
 							<p>Cart</p>
 						</div>
@@ -180,44 +196,62 @@ const NavBar = () => {
 								</div>
 							</div>
 							<div>
-								{showProfilCard && (
-									<div className={classes.profilAcctionContainer}>
-										{isLogin ? (
-											<>
-												<div>
-													<Link>
-														<button>Your account</button>
-													</Link>
-												</div>
-												<div>
-													<button type='button' onClick={logout}>
-														Logout
-													</button>
-												</div>
-											</>
-										) : (
-											<>
-												<div>
-													<Link to='/login'>
-														<button type='button' onClick={profilActionHandler}>
-															Login
-														</button>
-													</Link>
-												</div>
+								
+									<Transition in={showProfilCard} mountOnEnter unmountOnExit timeout={200}>
+										{(state) => {
+											const classesCss = [
+												state === 'entered'
+													? classes.showUp
+													: state === 'exiting'
+													? classes.hideUp
+													: null,
+											];
 
-												<p>Don't have account?</p>
+											return (
+												<div className={`${classes.profilAcctionContainer} ${classesCss}` }>
+													{isLogin ? (
+														<>
+															<div>
+																<Link>
+																	<button>Your account</button>
+																</Link>
+															</div>
+															<div>
+																<button type='button' onClick={logout}>
+																	Logout
+																</button>
+															</div>
+														</>
+													) : (
+														<>
+															<div>
+																<Link to='/login'>
+																	<button
+																		type='button'
+																		onClick={profilActionHandler}>
+																		Login
+																	</button>
+																</Link>
+															</div>
 
-												<div>
-													<Link to='/registration'>
-														<button type='button' onClick={profilActionHandler}>
-															Create account
-														</button>
-													</Link>
+															<p>Don't have account?</p>
+
+															<div>
+																<Link to='/registration'>
+																	<button
+																		type='button'
+																		onClick={profilActionHandler}>
+																		Create account
+																	</button>
+																</Link>
+															</div>
+														</>
+													)}
 												</div>
-											</>
-										)}
-									</div>
-								)}
+											);
+										}}
+									</Transition>
+								
 							</div>
 						</div>
 					</div>
