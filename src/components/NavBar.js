@@ -11,18 +11,13 @@ import { categories } from '../utils/data';
 import { useStateContext } from '../context/StateContext';
 import Cart from './Cart';
 import { toast } from 'react-hot-toast';
+import Transition from 'react-transition-group/Transition';
 
 const NavBar = () => {
 	const [hide, setHide] = useState(true);
 	const [showProfilCard, setShowProfilCard] = useState(false);
-	const {
-		showCart,
-		cartHandler,
-		totalQuantities,
-		isLogin,
-		setUserData,
-		
-	} = useStateContext();
+	const { showCart, cartHandler, totalQuantities, isLogin, setUserData } =
+		useStateContext();
 
 	const cardRef = useRef(null);
 	const menuHandler = () => {
@@ -233,7 +228,9 @@ const NavBar = () => {
 					))}
 				</div>
 			</div>
-			{showCart && <Cart />}
+			<Transition mountOnEnter unmountOnExit in={showCart} timeout={400}>
+				{(state) => <Cart show={state} />}
+			</Transition>
 		</div>
 	);
 };

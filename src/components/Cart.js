@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { urlFor } from '../utils/client';
 import { v4 as uuidv4 } from 'uuid';
 
-const Cart = () => {
+const Cart = (props) => {
 	const {
 		showCart,
 		cartHandler,
@@ -18,10 +18,19 @@ const Cart = () => {
 	} = useStateContext();
 	const length = cartItems.length;
 	const newTotalPrice = totalPrice.toFixed(2);
+
+	const classesCss = [
+		props.show === 'entering'
+			? classes.active
+			: props.show === 'exiting'
+			? classes.inactive
+			: null,
+	];
 	return (
 		<div>
 			<Modal showCart={showCart} cartHandler={cartHandler} />
-			<div className={classes.cartContainer}>
+
+			<div className={`${classes.cartContainer} ${classesCss}`}>
 				<div className={classes.controlPanel}>
 					<AiOutlineClose className={classes.closeBtn} onClick={cartHandler} />
 					<Link to='/' onClick={cartHandler}>

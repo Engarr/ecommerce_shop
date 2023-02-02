@@ -82,12 +82,12 @@
 
 .active {
 	transform: translateX(0);
-	animation: show 1s forwards;
+	animation: show 2s forwards;
 }
 
 .inactive {
 	transform: translateX(-100%);
-	animation: hide 1s forwards;
+	animation: hide 2s forwards;
 }
 
 @keyframes hide {

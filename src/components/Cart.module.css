@@ -118,11 +118,11 @@
 .plus:hover {
 	transform: scale(1.4);
 }
-.plus:hover{
+.plus:hover {
 	color: green;
 }
-.minus:hover{
-	color: red
+.minus:hover {
+	color: red;
 }
 .actionBox {
 	display: flex;
@@ -150,6 +150,53 @@
 	justify-content: space-around;
 	width: 100%;
 }
+.active {
+	opacity: 1;
+	transform: translate(0%);
+	animation: showCart 0.4s linear forwards ;
+}
+.inactive {
+	opacity: 0;
+	transform: translate(100%);
+	animation: hideCart 0.4s linear forwards ;
+}
+
+@keyframes showCart {
+	0% {
+		opacity: 0;
+		transform: translate(100%);
+	
+	}
+	50% {
+		opacity: 0.5;
+		transform: translate(50%);
+	}
+	75%{
+		
+		opacity: 0.8;
+		transform: translate(20%);
+	}
+	100% {
+		opacity: 1;
+		transform: translate(0%);
+	
+	}
+}
+@keyframes hideCart {
+	0% {
+		opacity: 01;
+		transform: translate(0);
+	}
+	50% {
+		opacity: 0.5;
+		transform: translate(50%);
+	}
+	100% {
+		opacity: 1;
+		transform: translate(100%);
+	}
+}
+
 @media screen and (max-width: 1024px) {
 	.cartContainer {
 		width: 100%;

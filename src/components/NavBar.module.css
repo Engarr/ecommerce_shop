@@ -228,6 +228,9 @@
 	background-color: rgb(201, 199, 198);
 }
 
+
+
+
 @media only screen and (min-width: 1024px) {
 	.smallDevices {
 		display: none;
