@@ -1,0 +1,68 @@
+
+
+.profilAcctionContainer {
+	position: absolute;
+	border-radius: 5px;
+	width: 250px;
+	top: 70px;
+	right: -100%;
+	padding: 20px 40px;
+	background-color: rgb(255, 255, 255);
+	border: 1px solid rgba(0, 0, 0, 0.144);
+	z-index: 100;
+	opacity: 0;
+}
+
+.profilAcctionContainer button {
+	padding: 10px 20px;
+	width: 100%;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	border: none;
+	cursor: pointer;
+	background-color: rgb(233, 231, 229);
+	transition: background-color 0.3s;
+}
+.profilAcctionContainer p {
+	margin: 1em auto;
+}
+.profilAcctionContainer button:hover {
+	background-color: rgb(201, 199, 198);
+}
+
+
+
+.showUp {
+	animation: showUp 0.2s  ease-in forwards;
+}
+.hideUp {
+	animation: hideUp 0.2s  forwards;
+}
+@keyframes showUp {
+	0% {
+		opacity: 0.5;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@keyframes hideUp {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+@media only screen and (max-width: 1024px) {
+	
+	.profileContainer {
+		position: unset;
+	}
+	.profilAcctionContainer {
+		top: 180px;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 95%;
+	}
+}

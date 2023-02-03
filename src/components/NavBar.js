@@ -11,16 +11,17 @@ import { categories } from '../utils/data';
 import { useStateContext } from '../context/StateContext';
 import Cart from './Cart';
 import { toast } from 'react-hot-toast';
+import ProfilCard from './ProfilCard';
 import Transition from 'react-transition-group/Transition';
 
 const NavBar = () => {
 	const [hide, setHide] = useState(true);
 	const [showProfilCard, setShowProfilCard] = useState(false);
 	const [isClassAdded, setIsClassAdded] = useState(false);
-	const { showCart, cartHandler, totalQuantities, isLogin, setUserData } =
+	const { showCart, cartHandler, totalQuantities, setUserData } =
 		useStateContext();
+	const cardRef = useRef();
 
-	const cardRef = useRef(null);
 	const menuHandler = () => {
 		setHide((prev) => (prev = !prev));
 	};
@@ -41,6 +42,8 @@ const NavBar = () => {
 	}, [showProfilCard]);
 
 	const clickHandler = (event) => {
+		if (!cardRef.current) return;
+
 		if (!cardRef.current.contains(event.target)) {
 			setShowProfilCard(false);
 		}
@@ -63,6 +66,7 @@ const NavBar = () => {
 		return () => clearTimeout(timeout);
 	}, [totalQuantities]);
 
+	
 	return (
 		<div>
 			<div className={classes.smallDevices}>
@@ -95,56 +99,22 @@ const NavBar = () => {
 								)}
 								<p>Cart</p>
 							</div>
+
 							<div ref={cardRef} className={classes.profileContainer}>
 								<div
 									className={classes.profileBoxSmall}
 									onClick={profilActionHandler}>
-									<RiAccountPinCircleFill size={25} />
-									<p>Profil</p>
+									<div className={classes.icon}>
+										<RiAccountPinCircleFill size={35} />
+										<p>Profil</p>
+									</div>
 								</div>
 								<div>
-									{showProfilCard && (
-										<div className={classes.profilAcctionContainer}>
-											{isLogin ? (
-												<>
-													<div>
-														<Link>
-															<button>Your account</button>
-														</Link>
-													</div>
-													<div>
-														<button
-															type='button'
-															onClick={`${logout} ${menuHandler}`}>
-															Logout
-														</button>
-													</div>
-												</>
-											) : (
-												<>
-													<div>
-														<Link to='/login'>
-															<button
-																type='button'
-																onClick={`${profilActionHandler} ${menuHandler}`}>
-																Login
-															</button>
-														</Link>
-													</div>
-													<p>Don't have account?</p>
-													<div>
-														<Link to='/registration'>
-															<button
-																type='button'
-																onClick={`${profilActionHandler} ${menuHandler}`}>
-																Create account
-															</button>
-														</Link>
-													</div>
-												</>
-											)}
-										</div>
-									)}
+									<ProfilCard
+										showProfilCard={showProfilCard}
+										logout={logout}
+										profilActionHandler={profilActionHandler}
+									/>
 								</div>
 							</div>
 						</div>
@@ -196,62 +166,11 @@ const NavBar = () => {
 								</div>
 							</div>
 							<div>
-								
-									<Transition in={showProfilCard} mountOnEnter unmountOnExit timeout={200}>
-										{(state) => {
-											const classesCss = [
-												state === 'entered'
-													? classes.showUp
-													: state === 'exiting'
-													? classes.hideUp
-													: null,
-											];
-
-											return (
-												<div className={`${classes.profilAcctionContainer} ${classesCss}` }>
-													{isLogin ? (
-														<>
-															<div>
-																<Link>
-																	<button>Your account</button>
-																</Link>
-															</div>
-															<div>
-																<button type='button' onClick={logout}>
-																	Logout
-																</button>
-															</div>
-														</>
-													) : (
-														<>
-															<div>
-																<Link to='/login'>
-																	<button
-																		type='button'
-																		onClick={profilActionHandler}>
-																		Login
-																	</button>
-																</Link>
-															</div>
-
-															<p>Don't have account?</p>
-
-															<div>
-																<Link to='/registration'>
-																	<button
-																		type='button'
-																		onClick={profilActionHandler}>
-																		Create account
-																	</button>
-																</Link>
-															</div>
-														</>
-													)}
-												</div>
-											);
-										}}
-									</Transition>
-								
+								<ProfilCard
+									showProfilCard={showProfilCard}
+									logout={logout}
+									profilActionHandler={profilActionHandler}
+								/>
 							</div>
 						</div>
 					</div>
