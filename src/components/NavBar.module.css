@@ -1,20 +1,23 @@
 .smallDevice {
-	position: absolute;
+	position: relative;
 	display: flex;
 	flex-direction: row;
-	z-index: 10000;
 }
 .mainSmall {
+	position: absolute;
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
 	width: 100%;
+	top: 2em;
+	z-index: 100;
 }
 
 .burgerIcon {
 	display: block;
 	font-size: 2em;
 	cursor: pointer;
+	color: var(--main-text-nav);
 }
 .navSmallBox {
 	position: fixed;
@@ -48,7 +51,7 @@
 	right: 2%;
 	font-size: 2em;
 	cursor: pointer;
-	color: black;
+	color: var(--black-color);
 }
 .cartBoxSmall,
 .profileBoxSmall {
@@ -75,6 +78,13 @@
 	font-size: 1.5em;
 	cursor: pointer;
 }
+.searchIconBig {
+	color: var(--main-text-nav);
+}
+.searchIconSmall {
+	color: var(--black-color);
+}
+
 .bigCartQty,
 .smallCartQty {
 	display: flex;
@@ -106,32 +116,37 @@
 	flex-direction: column;
 	width: 100%;
 	max-width: 1400px;
-	margin-top: 2em;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.267);
+	border-bottom: 1px solid var(--main-text-nav);
 	left: 50%;
 	transform: translate(-50%);
-	z-index: 100;
+	z-index: 10;
 }
 .mainBig {
 	display: flex;
-	width: 100%;
 	justify-content: center;
 	justify-content: space-around;
 	align-items: center;
+	width: 100%;
+	margin-top: 6em;
 }
 
 .searchBox,
 .searchBoxSmall {
-	border-bottom: 1px solid black;
+	border-bottom: 1px solid var(--main-text-nav);
 }
 
 .searchBox input,
 .searchBoxSmall input {
+	background-color: transparent;
 	border: none;
 	outline: none;
 	padding: 0.5em;
 	font-size: 1em;
 }
+.searchBoxSmall {
+	border-color: var(--black-color);
+}
+
 .accountBoxBig {
 	display: flex;
 	text-align: center;
@@ -202,15 +217,41 @@
 	animation: shake 0.3s linear;
 }
 
+.container {
+	position: relative;
+	height: 400px;
+}
+
+.heroImg {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
+}
+.heroShadow {
+	position: absolute;
+
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 1;
+}
+
+.logoBig a,
+.logoSmall a,
+.accountBoxBig {
+	color: var(--main-text-nav);
+}
+
 @keyframes shake {
 	0% {
 		transform: scale(1.1);
-		box-shadow: 0 0 0 black;
+		box-shadow: 0 0 0 var(--black-color);
 	}
 
 	100% {
 		transform: scale(1.2);
-		box-shadow: 0 0 10px black;
+		box-shadow: 0 0 10px var(--black-color);
 	}
 }
 
@@ -227,5 +268,16 @@
 	.profileContainer {
 		position: unset;
 	}
-	
+	.container {
+		height: 300px;
+	}
+
+	.heroShadow {
+		position: absolute;
+
+		height: 100%;
+		width: 100%;
+		background-color: rgba(0, 0, 0, 0.5);
+		z-index: 1;
+	}
 }

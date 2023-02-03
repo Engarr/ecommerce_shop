@@ -10,11 +10,12 @@
 	font-size: 0.8em;
 	text-transform: uppercase;
 	border-bottom: 1px solid transparent;
+	color: var(--main-text-nav);
 }
 .categoryItem::after {
 	position: absolute;
 	content: '';
-	background-color: black;
+	background-color: var(--main-text-nav);
 	width: 0px;
 	height: 1px;
 	top: 100%;
@@ -30,5 +31,6 @@
 	.categoryItem {
 		width: 100vh;
 		border-bottom: 1px solid rgba(0, 0, 0, 0.158);
+		color: var(--black-color);
 	}
 }

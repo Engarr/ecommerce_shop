@@ -1,3 +1,22 @@
+.productsHeading {
+	text-align: center;
+	margin: 6em 0px;
+}
+
+.productsHeading div {
+	margin-top: 1em;
+}
+.productsHeading button {
+	background-color: transparent;
+	padding: 10px 40px;
+	border: 1px solid rgba(0, 0, 0, 0.26);
+	cursor: pointer;
+	transition: border 0.1s ease-in;
+}
+.productsHeading button:hover {
+	border: 1px solid rgb(0, 0, 0);
+}
+
 .container {
 	position: relative;
 	display: flex;
@@ -9,22 +28,26 @@
 	transform: translate(-50%);
 	gap: 15px;
 	margin-top: 2em;
-	margin-bottom: 2em;
+	margin-bottom: 4em;
 	width: 100%;
 	max-width: 1600px;
 }
 
-.productsHeading{
-	text-align: center;
-	margin: 40px 0px;
-   
-  
-  }
-  .productsHeading h2{
-	font-size: 40px;
-	font-weight: 800;
-  }
-  .productsHeading p{
+.productsHeading h2 {
+	font-size: 2em;
+	text-transform: uppercase;
+}
+.productsHeading p {
 	font-size: 16px;
 	font-weight: 200;
-  }
+}
+
+@media only screen and (max-width: 1024px) {
+	.productsHeading {
+		text-align: center;
+		margin: 2em 0px;
+	}
+	.productsHeading h2 {
+		font-size: 1.7em;
+	}
+}

@@ -1,5 +1,3 @@
-
-
 .profilAcctionContainer {
 	position: absolute;
 	border-radius: 5px;
@@ -9,6 +7,7 @@
 	padding: 20px 40px;
 	background-color: rgb(255, 255, 255);
 	border: 1px solid rgba(0, 0, 0, 0.144);
+	color: black;
 	z-index: 100;
 	opacity: 0;
 }
@@ -30,13 +29,11 @@
 	background-color: rgb(201, 199, 198);
 }
 
-
-
 .showUp {
-	animation: showUp 0.2s  ease-in forwards;
+	animation: showUp 0.2s ease-in forwards;
 }
 .hideUp {
-	animation: hideUp 0.2s  forwards;
+	animation: hideUp 0.2s forwards;
 }
 @keyframes showUp {
 	0% {
@@ -55,7 +52,6 @@
 	}
 }
 @media only screen and (max-width: 1024px) {
-	
 	.profileContainer {
 		position: unset;
 	}

@@ -14,7 +14,7 @@ const Products = () => {
 		let query = categoryProducts(category);
 		client.fetch(query).then((data) => setProductsData(data));
 	}, [category]);
-	
+
 	if (!productsData) return <Spinner message='Loading...' />;
 
 	return (
@@ -31,6 +31,7 @@ const Products = () => {
 										className={classes.image}
 										alt={product.name}
 									/>
+									
 									<h3>{product.name}</h3>
 									<p>
 										<span>$</span> {product.price}

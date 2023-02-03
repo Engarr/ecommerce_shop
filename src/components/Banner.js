@@ -3,6 +3,7 @@ import { feedBanner } from '../utils/data';
 import { urlFor, client } from '../utils/client';
 import classes from './Banner.module.css';
 import { GrNext, GrPrevious } from 'react-icons/gr';
+import { Link } from 'react-router-dom';
 
 const Banner = () => {
 	const [banner, setBanner] = useState(null);
@@ -13,10 +14,8 @@ const Banner = () => {
 	}, []);
 
 	useEffect(() => {
-		
 		const interval = setInterval(() => {
 			setCurrentIndex((currentIndex + 1) % banner.length);
-			
 		}, 100000);
 
 		return () => clearInterval(interval);
@@ -47,8 +46,8 @@ const Banner = () => {
 						<GrNext onClick={nextBannerHandler} className={classes.btnIcon} />
 					</button>
 					{banner.map((banner, index) => (
-						
-						<div key={banner?.name}
+						<div
+							key={banner?.name}
 							className={`${classes.bannerBox} ${
 								index === currentIndex ? classes.active : classes.inactive
 							}`}>
@@ -60,7 +59,9 @@ const Banner = () => {
 							/>
 							<div className={classes.textBox}>
 								<h2>{banner.text}</h2>
-								<button className={classes.btn}>{banner.buttonText}</button>
+								<Link to={`/category/${banner.category}`}>
+									<button className={classes.btn}>{banner.buttonText}</button>
+								</Link>
 							</div>
 						</div>
 					))}
@@ -70,4 +71,4 @@ const Banner = () => {
 	);
 };
 
-export default Banner
+export default Banner;

@@ -3,6 +3,9 @@ export const categories = [
 	{ name: 'Two pieces' },
 	{ name: 'SWIMMING TRUNKS' },
 	{ name: 'TUNICS' },
+	{ name: 'Top of the outfit' },
+	{ name: 'Bottom of the outfit' },
+	{ name: 'FAQ' },
 ];
 
 export const feedBanner = `*[_type == "banner"]`;

@@ -13,11 +13,13 @@ import Cart from './Cart';
 import { toast } from 'react-hot-toast';
 import ProfilCard from './ProfilCard';
 import Transition from 'react-transition-group/Transition';
+import { client, urlFor } from '../utils/client';
 
 const NavBar = () => {
 	const [hide, setHide] = useState(true);
 	const [showProfilCard, setShowProfilCard] = useState(false);
 	const [isClassAdded, setIsClassAdded] = useState(false);
+	const [image, setImage] = useState([]);
 	const { showCart, cartHandler, totalQuantities, setUserData } =
 		useStateContext();
 	const cardRef = useRef();
@@ -66,9 +68,18 @@ const NavBar = () => {
 		return () => clearTimeout(timeout);
 	}, [totalQuantities]);
 
-	
+	useEffect(() => {
+		let query = '*[_type == "photo"]';
+		client.fetch(query).then((data) => setImage(data));
+	}, []);
+	// console.log(urlFor(image[0].image).url());
 	return (
-		<div>
+		<div className={classes.container}>
+			
+				<div className={classes.heroShadow}></div>
+				<img src={image[0]?.image && urlFor(image[0].image).url()}  className={classes.heroImg} alt={image.name}/>
+			
+
 			<div className={classes.smallDevices}>
 				<div className={classes.mainSmall}>
 					<div className={classes.logoSmall}>
