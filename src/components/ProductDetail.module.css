@@ -9,9 +9,9 @@
 	align-items: center;
 	margin-top: 60px;
 	max-width: 1200px;
-	
 	padding: 2em;
 	overflow-x: hidden;
+	letter-spacing: 1px;
 }
 
 .imageContainer {
@@ -103,6 +103,7 @@
 .productDetailDesc p {
 	margin-top: 10px;
 }
+
 .reviews p {
 	color: #324d67;
 	margin-top: 0px;
@@ -111,6 +112,10 @@
 	font-weight: 700;
 	font-size: 26px;
 	margin-top: 30px;
+}
+.description{
+	font-size: 14px;
+	font-family: "Kanit";
 }
 .price .oldPrice,
 .productPrice .oldPrice,
@@ -144,6 +149,7 @@
 .buttons .addToCart:hover {
 	transform: scale(1.1, 1.1);
 }
+
 .buttons .buyNow {
 	width: 200px;
 
@@ -190,8 +196,8 @@
 .maylikeProductsWrapper h2 {
 	text-align: center;
 	margin: 50px;
-	color: #324d67;
 	font-size: 28px;
+	font-family: 'Lexend Tera';
 }
 .maylikeProductsContainer {
 	display: flex;

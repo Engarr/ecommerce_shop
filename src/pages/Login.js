@@ -96,7 +96,7 @@ const Login = () => {
 			)}
 
 			<form className={classes.loginContainer} onSubmit={onLoginHandler}>
-				<h2>Lgoin</h2>
+				<h2>LOGIN</h2>
 				<div className={classes.emailBox}>
 					<label htmlFor='e-mail'> E-mail:</label>
 

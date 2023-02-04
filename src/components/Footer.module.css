@@ -1,29 +1,108 @@
 .footer {
-   	display: flex;
+	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-   	height: 100px;
-	
 	background-color: rgba(201, 197, 197, 0.24);
+	letter-spacing: 1px;
+
+}
+.infoContainer {
+	display: flex;
+	position: relative;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: flex-start;
+	margin-top: 3em;
+	margin-bottom: 4em;
+	width: 80%;
+	max-width: 1600px;
+	font-size: 0.9em;
+}
+
+.infoContainer div {
+	width: 33%;
+}
+.newsLetter,
+.faq,
+.more {
+	padding: 10px 20px;
+}
+.faq p,
+.more p {
+	margin-bottom: 1em;
+}
+.more h3 {
+	margin-bottom: 2em;
+}
+.newsLetter div {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	width: 100%;
+}
+
+.inputBox {
+	position: relative;
+	margin-top: 3em;
+	margin-bottom: 1em;
+}
+
+.inputBox input {
+	background: none;
+	border: none;
+	border-bottom: 1px solid black;
+	padding: 10px 5px;
+	min-width: 250px;
 	
+}
+.envelope {
+	position: absolute;
+	top: 8px;
+	left: 221px;
+	font-size: 2em;
 }
 .socialIcons {
 	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
+	flex-direction: row;
 }
 .fb,
 .ig {
-	font-size: 1.2em;
+	font-size: 1.4em;
 	margin: 0.5em;
 	transition: color 0.2s;
-    cursor: pointer;
+	cursor: pointer;
 }
 .fb:hover {
 	color: rgb(10, 97, 168);
 }
-.ig:hover{
-    color: rgb(221, 29, 148);
+.ig:hover {
+	color: rgb(221, 29, 148);
+}
+.year {
+	margin-bottom: 3em;
+}
+@media only screen and (max-width: 1024px) {
+	.infoContainer {
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+	}
+	.infoContainer div {
+		width: 100%;
+	}
+	.newsLetter,
+	.faq,
+	.more {
+		margin-top: 2em;
+		padding: 0px;
+	}
+	.inputBox input {
+		width: 300px;
+	}
+	.envelope {
+		
+		left: 271px;
+		
+	}
 }

@@ -22,6 +22,8 @@
 	font-weight: 500;
 	margin-top: 5px;
 	text-transform: uppercase;
+	font-style: italic;
+
 }
 .productPrice {
 	font-weight: 800;
@@ -43,12 +45,12 @@
 	border: none;
 	width: 90%;
 	padding: 10px 20px;
-	background-color: rgba(0, 0, 0, 0.781);
-	color: white;
+	background-color: rgba(0, 0, 0, 0.719);
+	color: var(--main-text-nav);
 }
 
 .showUp {
-	animation: showUp 0.3s forwards;
+	animation: showUp 0.2s forwards;
 }
 .hide {
 	animation: hide 0.3s forwards;
