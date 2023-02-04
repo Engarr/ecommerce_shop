@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { client, urlFor } from '../utils/client';
-import { categoryProducts } from '../utils/data';
+import { categoryProducts, feedProducts } from '../utils/data';
 import { useParams, Link } from 'react-router-dom';
 import classes from '../styles/Products.module.css';
 import Spinner from '../components/Spinner';
@@ -11,8 +11,13 @@ const Products = () => {
 	const { category } = useParams();
 
 	useEffect(() => {
-		let query = categoryProducts(category);
-		client.fetch(query).then((data) => setProductsData(data));
+		if (category) {
+			let query = categoryProducts(category);
+			client.fetch(query).then((data) => setProductsData(data));
+		} else {
+			let query = feedProducts;
+			client.fetch(query).then((data) => setProductsData(data));
+		}
 	}, [category]);
 
 	if (!productsData) return <Spinner message='Loading...' />;
@@ -31,7 +36,7 @@ const Products = () => {
 										className={classes.image}
 										alt={product.name}
 									/>
-									
+
 									<h3>{product.name}</h3>
 									<p>
 										<span>$</span> {product.price}

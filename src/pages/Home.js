@@ -25,8 +25,14 @@ const Home = () => {
 
 	return (
 		<div>
+			
 			<div className={classes.productsHeading}>
 				<h2>Best Seller Products</h2>
+				<div>
+					<Link to={`/products`}>
+						<button className={classes.border}>See all products</button>
+					</Link>
+				</div>
 			</div>
 			<div className={classes.container}>
 				{maxProducts?.map((product) => (

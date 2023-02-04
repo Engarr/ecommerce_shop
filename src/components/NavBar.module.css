@@ -146,6 +146,10 @@
 .searchBoxSmall {
 	border-color: var(--black-color);
 }
+.searchBox input {
+	caret-color: var(--main-text-nav);
+	color: var(--main-text-nav);
+}
 
 .accountBoxBig {
 	display: flex;

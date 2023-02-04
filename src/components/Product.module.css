@@ -5,7 +5,6 @@
 	transition: transform 0.5s ease;
 }
 .productCard p {
-	font-size: 0.8em;
 	letter-spacing: 2px;
 	font-family: sans-serif;
 }
@@ -19,17 +18,16 @@
 }
 
 .productName {
-	font-weight: 500;
+	font-size: 0.9em;
 	margin-top: 5px;
 	text-transform: uppercase;
 	font-style: italic;
 
 }
 .productPrice {
-	font-weight: 800;
-	margin-top: 6px;
-	color: black;
-	font-size: 1.2em;
+	margin-top: 10px;
+	color: var(--black-color);
+	font-size: 0.7em;
 }
 .btnBox {
 	position: absolute;
