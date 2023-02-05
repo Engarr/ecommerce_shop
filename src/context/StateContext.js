@@ -24,7 +24,7 @@ export const StateContext = ({ children }) => {
 	const [qty, setQty] = useState(1);
 	const [userData, setUserData] = useState(fetchUserDataFromLocalStorage);
 	const [isLogin, setIsLogin] = useState(false);
-	// const [isActive, setIsActive] = useState(false)
+	
 
 	let foundProduct;
 	let index;
@@ -151,6 +151,7 @@ export const StateContext = ({ children }) => {
 				setUserData,
 				setIsLogin,
 				isLogin,
+				
 			}}>
 			{children}
 		</Context.Provider>

@@ -6,7 +6,7 @@ import Transition from 'react-transition-group/Transition';
 
 const Product = ({ product }) => {
 	const [isActive, setIsActive] = useState(false);
-	
+
 	const handleClick = () => {
 		window.scrollTo(0, 0);
 	};
@@ -15,18 +15,20 @@ const Product = ({ product }) => {
 		setIsActive((prev) => (prev = !prev));
 	};
 	return (
-		<div>
+		<div className={classes.mainContainer}>
 			<div
 				className={classes.productCard}
 				onMouseEnter={activeHandler}
 				onMouseLeave={activeHandler}>
-				<img
-					src={urlFor(product?.image[0]).url()}
-					alt={product?.name}
-					width={300}
-					height={300}
-					className={classes.productImage}
-				/>
+				<Link to={`/product/${product?.slug.current}`} onClick={handleClick}>
+					<img
+						src={urlFor(product?.image[0]).url()}
+						alt={product?.name}
+						width={250}
+						height={250}
+						className={classes.productImage}
+					/>
+				</Link>
 				<Transition in={isActive} timeout={300} mountOnEnter unmountOnExit>
 					{(state) => {
 						const classesCss = [

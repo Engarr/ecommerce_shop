@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { client, urlFor } from '../utils/client';
+import { client } from '../utils/client';
 import { categoryProducts, feedProducts } from '../utils/data';
-import { useParams, Link } from 'react-router-dom';
-import classes from '../styles/Products.module.css';
+import { useParams } from 'react-router-dom';
 import Spinner from '../components/Spinner';
+import { MdKeyboardArrowDown } from 'react-icons/md';
+import classes from '../styles/Products.module.css';
+import Product from '../components/Product';
 
 const Products = () => {
 	const [productsData, setProductsData] = useState([]);
+	const [sortCriteria, setSortCriteria] = useState('recommended');
 
 	const { category } = useParams();
 
@@ -20,30 +23,55 @@ const Products = () => {
 		}
 	}, [category]);
 
+	let sortedProducts = [...productsData];
+
+	if (sortCriteria === 'recomended') {
+		sortedProducts = [...productsData];
+	} else if (sortCriteria === 'alphabetically, A-Z') {
+		sortedProducts.sort((a, b) => {
+			if (a.name < b.name) {
+				return -1;
+			}
+			if (a.name > b.name) {
+				return 1;
+			}
+			return 0;
+		});
+	} else if (sortCriteria === 'price ascending') {
+		sortedProducts.sort((a, b) => a.price - b.price);
+	} else if (sortCriteria === 'price descending') {
+		sortedProducts.sort((a, b) => b.price - a.price);
+	}
+
 	if (!productsData) return <Spinner message='Loading...' />;
 
 	return (
 		<div className={classes.container}>
-			<div className={classes.optionsContainer}>Sorting opctions</div>
+			<div className={classes.optionsContainer}>
+				<h2>{category ? category : 'All products'}</h2>
+
+				<div className={classes.sortingBox}>
+					<MdKeyboardArrowDown className={classes.arrow} />
+					<label>Sorting options:</label>
+					<select
+						name='sorting'
+						id='sorting'
+						value={sortCriteria}
+						onChange={(e) => setSortCriteria(e.target.value)}>
+						<option value='recommended' className={classes.option}>
+							Recomended
+						</option>
+						<option value='alphabetically, A-Z'>Alphabetically, A-Z</option>
+						<option value='alphabetically, Z-A'>Alphabetically, Z-A</option>
+						<option value='price ascending'>Price ascending</option>
+						<option value='price descending'>Price descending</option>
+					</select>
+				</div>
+			</div>
 			<div className={classes.productContainer}>
 				{productsData &&
-					productsData?.map((product) => (
-						<div className={classes.productBox}>
-							<Link to={`/product/${product?.slug.current}`}>
-								<div>
-									<img
-										src={urlFor(product?.image[0]).url()}
-										className={classes.image}
-										alt={product.name}
-									/>
-
-									<h3>{product.name}</h3>
-									<p>
-										<span>$</span> {product.price}
-									</p>
-								</div>
-							</Link>
-						</div>
+					sortedProducts?.map((product) => (
+						<Product product={product} key={product._id} />
 					))}
 			</div>
 		</div>

@@ -2,44 +2,92 @@
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
 	text-align: center;
+	left: 50%;
+	transform: translate(-50%);
+	width: 100%;
+	max-width: 1400px;
+}
+.optionsContainer {
+	position: relative;
 	margin-top: 2em;
 	margin-bottom: 2em;
 	width: 100%;
+	left: 50%;
+	transform: translate(-50%);
 }
-.productContainer {
+.optionsContainer h2 {
+	font-family: 'Lexend Tera';
+}
+.sortingBox {
+	position: relative;
 	display: flex;
-	flex-wrap: wrap;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	width: 100%;
+}
+.sortingBox label {
+	margin-bottom: 10px;
+}
+.sortingBox select {
+	text-align: start;
+	width: 200px;
+	height: 44px;
+	padding: 8px 10px;
+	background-color: transparent;
+	border-color: rgba(0, 0, 0, 0.253);
+	appearance: none;
+	cursor: pointer;
+}
+
+.arrow {
+	position: relative;
+	font-size: 20px;
+	top: 58px;
+	right: -74px;
+	z-index: -1;
+}
+.arro:hover {
+	transform: scale(1.1);
+}
+
+.productContainer {
+	display: flex;
 	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	width: auto;
 	max-width: 1400px;
 }
 .productBox {
-	margin: 1em 1em;
-	padding: 0.5em;
-	transition: box-shadow 0.2s;
+	display: flex;
+	flex-direction: column;
+	width: 20%;
+	min-width: 250px;
+	height: 350px;
+	margin: 5px;
+	background-color: white;
+	transition: transform 0.3s;
 }
-.image {
-	width: 250px;
-	height: 300px;
+.imgBox {
+	margin-top: 1em;
+	margin-bottom: 0.5em;
+	box-shadow: 0 0 5px black;
 }
-.productBox:hover {
-	box-shadow: 0 0 1px black;
+
+.productBox:hover .imgBox {
+	box-shadow: 0 0 10px rgb(0, 0, 0);
 }
 .productBox h3 {
 	text-transform: uppercase;
 	margin-top: 1em;
 	margin-bottom: 0.5em;
-}
-.productBox p {
 	font-size: 1.1em;
 }
-.productBox span {
-	color: rgb(35, 170, 35);
+.productBox p {
+	font-size: 1em;
 }
+
 @media screen and (max-width: 767px) {
 	.productBox {
 		width: 100%;
