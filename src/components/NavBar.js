@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {
+	useState,
+	useEffect,
+	useRef,
+	useCallback,
+	useMemo,
+} from 'react';
 import { Link } from 'react-router-dom';
 import classes from './NavBar.module.css';
 import { IoIosSearch } from 'react-icons/io';
@@ -28,9 +34,13 @@ const NavBar = () => {
 		setHide((prev) => (prev = !prev));
 	};
 
-	const profilActionHandler = () => {
+	const profilActionHandler = useCallback(() => {
 		setShowProfilCard((prev) => !prev);
-	};
+	}, [setShowProfilCard]);
+
+	const imageUrl = useMemo(() => {
+		return image[0]?.image && urlFor(image[0].image).url();
+	}, [image]);
 
 	useEffect(() => {
 		if (showProfilCard) {
@@ -51,12 +61,12 @@ const NavBar = () => {
 		}
 	};
 
-	const logout = () => {
+	const logout = useCallback(() => {
 		localStorage.removeItem('userInfo');
 		setShowProfilCard(false);
 		setUserData([]);
 		toast.success(`You have successfully logged out. See You soon!`);
-	};
+	}, [setUserData]);
 
 	useEffect(() => {
 		const timeout = setTimeout(() => {
@@ -72,13 +82,10 @@ const NavBar = () => {
 		let query = '*[_type == "photo"]';
 		client.fetch(query).then((data) => setImage(data));
 	}, []);
-	// console.log(urlFor(image[0].image).url());
 	return (
 		<div className={classes.container}>
-			
-				<div className={classes.heroShadow}></div>
-				<img src={image[0]?.image && urlFor(image[0].image).url()}  className={classes.heroImg} alt={image.name}/>
-			
+			<div className={classes.heroShadow}></div>
+			<img src={imageUrl} className={classes.heroImg} alt={image.name} />
 
 			<div className={classes.smallDevices}>
 				<div className={classes.mainSmall}>

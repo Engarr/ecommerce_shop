@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { client, urlFor } from '../utils/client';
 import { productDetails, categoryProducts } from '../utils/data';
@@ -14,6 +14,8 @@ import classes from './ProductDetail.module.css';
 import Spinner from '../components/Spinner';
 import { useStateContext } from '../context/StateContext';
 import { GrNext, GrPrevious } from 'react-icons/gr';
+import { MdKeyboardArrowDown } from 'react-icons/md';
+import Transition from 'react-transition-group/Transition';
 
 const ProductDetail = () => {
 	const [productData, setProductData] = useState([]);
@@ -22,15 +24,19 @@ const ProductDetail = () => {
 	const [randomItems, setRandomItems] = useState([]);
 	const [index, setIndex] = useState(0);
 	const [size, setSize] = useState('S');
+
+	const [isActive, setIsActive] = useState(false);
+
 	const { decreaseQty, increaseQty, qty, onAdd } = useStateContext();
 	const { slug } = useParams();
 	const category = productData.category;
-
 	let imageLength;
 
 	const updateRandomItems = () => {
-		const shuffledItems = newCategoryItems.sort(() => Math.random() - 0.5);
-		setRandomItems(shuffledItems.slice(0, 10));
+		let shuffledItems = newCategoryItems.sort(() => Math.random() - 0.5);
+		let maxProducts = shuffledItems.slice(0, 5);
+
+		setRandomItems(maxProducts);
 	};
 	useEffect(() => {
 		updateRandomItems();
@@ -75,6 +81,10 @@ const ProductDetail = () => {
 			}
 		}
 	};
+
+	const activeDetailHandler = useCallback(() => {
+		setIsActive((prev) => (prev = !prev));
+	}, [setIsActive]);
 
 	if (!productData) return <Spinner message='Loading...' />;
 
@@ -128,8 +138,7 @@ const ProductDetail = () => {
 						</div>
 						<p>(20)</p>
 					</div>
-					<h4>Details: </h4>
-					<p className={classes.description}>{productData.details}</p>
+
 					<p className={classes.price}>${productData.price}</p>
 					<div className={classes.quantity}>
 						<div>
@@ -171,18 +180,57 @@ const ProductDetail = () => {
 							Buy Now
 						</button>
 					</div>
+
+					<Transition in={isActive} timeout={300}>
+						{(state) => {
+							const classesCssArrow = [
+								state === 'entered'
+									? classes.rotateUp
+									: state === 'exiting'
+									? classes.rotateDown
+									: null,
+							];
+
+							return (
+								<div
+									className={classes.detailBox}
+									onClick={activeDetailHandler}>
+									<h4>Details: </h4>
+									<MdKeyboardArrowDown
+										className={`${classes.arrow} ${classesCssArrow}`}
+									/>
+								</div>
+							);
+						}}
+					</Transition>
+					<Transition in={isActive} timeout={500}>
+						{(state) => {
+							const classesCssBox = [
+								state === 'entered'
+									? classes.showBox
+									: state === 'exiting'
+									? classes.hideBox
+									: null,
+							];
+
+							return (
+								<div className={`${classes.descBox} ${classesCssBox}`}>
+									<p className={classes.description}>{productData.details}</p>
+								</div>
+							);
+						}}
+					</Transition>
 				</div>
 			</div>
 
 			<div className={classes.maylikeProductsWrapper}>
 				<h2>You may also like</h2>
-				<div className={`${classes.marquee} ${classes.track}`}>
-					<div className={classes.maylikeProductsContainer}>
-						{randomItems &&
-							randomItems.map((item) => (
-								<Product key={item._id} product={item} />
-							))}
-					</div>
+
+				<div className={classes.maylikeProductsContainer}>
+					{randomItems &&
+						randomItems.map((item) => (
+							<Product key={item._id} product={item} />
+						))}
 				</div>
 			</div>
 		</div>
