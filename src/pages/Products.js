@@ -43,7 +43,7 @@ const Products = () => {
 		sortedProducts.sort((a, b) => b.price - a.price);
 	}
 
-	if (!productsData) return <Spinner message='Loading...' />;
+	if (productsData.length === 0) return <Spinner message='Loading...' />;
 
 	return (
 		<div className={classes.container}>

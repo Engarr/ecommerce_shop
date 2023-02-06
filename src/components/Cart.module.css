@@ -133,7 +133,10 @@
 	width: 100%;
 }
 .actionBox button {
+	position: absolute;
 	margin-top: 2em;
+	left: 50%;
+	transform: translate(-50%);
 	width: 90%;
 	border: none;
 	text-transform: uppercase;
@@ -153,33 +156,30 @@
 .active {
 	opacity: 1;
 	transform: translate(0%);
-	animation: showCart 0.4s linear forwards ;
+	animation: showCart 0.4s linear forwards;
 }
 .inactive {
 	opacity: 0;
 	transform: translate(100%);
-	animation: hideCart 0.4s linear forwards ;
+	animation: hideCart 0.4s linear forwards;
 }
 
 @keyframes showCart {
 	0% {
 		opacity: 0;
 		transform: translate(100%);
-	
 	}
 	50% {
 		opacity: 0.5;
 		transform: translate(50%);
 	}
-	75%{
-		
+	75% {
 		opacity: 0.8;
 		transform: translate(20%);
 	}
 	100% {
 		opacity: 1;
 		transform: translate(0%);
-	
 	}
 }
 @keyframes hideCart {

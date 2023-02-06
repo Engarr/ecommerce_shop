@@ -94,7 +94,11 @@ const Cart = (props) => {
 								<p>Total price:</p>
 								<p>${newTotalPrice}</p>
 							</div>
-							<button type='button'>Buy now</button>
+							<Link to='/information'>
+								<button type='button' onClick={cartHandler}>
+									Buy now
+								</button>
+							</Link>
 						</div>
 					</div>
 				)}

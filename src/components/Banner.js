@@ -21,7 +21,6 @@ const Banner = () => {
 		return () => clearInterval(interval);
 	}, [currentIndex, banner]);
 
-	
 	const nextBannerHandler = () => {
 		setCurrentIndex((currentIndex + 1) % banner.length);
 	};

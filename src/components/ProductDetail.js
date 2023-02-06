@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { client, urlFor } from '../utils/client';
 import { productDetails, categoryProducts } from '../utils/data';
 import {
@@ -176,9 +176,11 @@ const ProductDetail = () => {
 							onClick={() => onAdd(productData, qty, size)}>
 							Add to Cart
 						</button>
-						<button type='button' className={classes.buyNow}>
-							Buy Now
-						</button>
+						<Link to='/information'>
+							<button type='button' className={classes.buyNow}>
+								Buy Now
+							</button>
+						</Link>
 					</div>
 
 					<Transition in={isActive} timeout={300}>

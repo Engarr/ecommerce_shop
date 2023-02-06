@@ -8,9 +8,9 @@ import ProductDetail from './components/ProductDetail';
 import Footer from './components/Footer';
 import Login from './pages/Login';
 import Registration from './pages/Registration';
+import Information from './pages/Information';
 
 function App() {
-	
 	return (
 		<>
 			<header>
@@ -23,13 +23,13 @@ function App() {
 					<Route path='/category/:category' element={<Products />} />
 					<Route path='/products' element={<Products />} />
 					<Route path='/product/:slug' element={<ProductDetail />} />
-					<Route path='/login' element={<Login  />} />
-					<Route path='/registration' element={<Registration  />} />
+					<Route path='/login' element={<Login />} />
+					<Route path='/registration' element={<Registration />} />
+					<Route path='/Information' element={<Information />} />
 				</Routes>
 			</main>
-			
-				<Footer />
-			
+
+			<Footer />
 		</>
 	);
 }

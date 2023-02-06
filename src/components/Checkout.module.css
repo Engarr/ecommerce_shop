@@ -1,0 +1,19 @@
+.checkoutContainer {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	margin-top: 2em;
+	margin-bottom: 2em;
+	width: 100%;
+	font-size: 14px;
+}
+.checkoutContainer p {
+	margin: auto 5px;
+}
+.unActive {
+	color: grey;
+}
+.active {
+	color: black;
+	font-size: 16px;
+}
