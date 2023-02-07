@@ -6,29 +6,31 @@
 	left: 50%;
 	transform: translate(-50%);
 	max-width: 1200px;
-	min-height: 1000px;
 }
 .informationContainer {
 	width: 50%;
 }
 .cartContainer {
-	background-color: beige;
 	width: 50%;
+	height: 100vh;
+	margin-left: 10px;
+	border-left: 1px solid rgba(0, 0, 0, 0.199);
 }
 .adressContainer h2 {
 	margin-bottom: 0.8em;
+	margin-top: 2em;
 }
 
 .inputBox {
 	position: relative;
-	min-width: 250px;
+	min-width: 290px;
 }
 
 .inputBox input {
 	position: relative;
 	width: 100%;
 	padding: 14px;
-	border: 1px solid gray;
+	border: 1px solid rgba(2, 2, 2, 0.349);
 	border-radius: 5px;
 	outline: none;
 	font-size: 1em;
@@ -49,16 +51,60 @@
 	color: black;
 	transform: translate(10px) translateY(-7px);
 	font-size: 0.95em;
-	padding: 0 10px;
+	padding: 0 5px;
 	letter-spacing: 1px;
 	border-left: 1px solid black;
 	border-right: 1px solid black;
 	background-color: #fff;
 }
+.inputBox input:focus {
+	border: 1px solid black;
+}
 
-.nameBox {
+.box {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	width: 100%;
+}
+.btn {
+	position: relative;
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-end;
+	margin-top: 1em;
+	margin-bottom: 2em;
+}
+.btn button {
+	padding: 15px 30px;
+	border: none;
+	background-color: rgb(17, 17, 17);
+	color: aliceblue;
+	border-radius: 5px;
+	font-weight: bold;
+	letter-spacing: 0.5px;
+	cursor: pointer;
+}
+
+@media screen and (max-width: 1206px) {
+	.wrapper {
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
+	}
+	.informationContainer {
+		width: 100%;
+		padding: 10px 20px;
+	}
+	.inputBox {
+		width: 100%;
+		min-width: auto;
+	}
+	.box {
+		flex-direction: column;
+		width: 100%;
+	}
+	.btn button {
+		width: 100%;
+	}
 }

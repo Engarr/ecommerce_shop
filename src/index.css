@@ -10,11 +10,18 @@ body {
 	height: 100%;
 	margin: 0;
 	
-	font-family: 'Josefin Sans', 'Kanit','Lexend Tera', sans-serif ;
-		-webkit-font-smoothing: antialiased;
+	font-family: 'Josefin Sans', 'Kanit', 'Lexend Tera', sans-serif;
+	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
-
+::-webkit-scrollbar{
+	width: 0.5em;
+	background-color: rgba(0, 0, 0, 0.438);
+}
+::-webkit-scrollbar-thumb{
+	background-color: antiquewhite;
+	border-radius: 5px;
+}
 a {
 	text-decoration: none;
 	color: inherit;

@@ -5,6 +5,7 @@ const Context = createContext();
 
 const fetchCarftFromStorage = JSON.parse(localStorage.getItem('cart') || '[]');
 let sum = 0;
+let sumTotalPrice = 0;
 
 const totalQuantitiesFromSotarge = fetchCarftFromStorage.map(
 	(item) => item.quantity
@@ -12,6 +13,15 @@ const totalQuantitiesFromSotarge = fetchCarftFromStorage.map(
 for (let i = 0; i < totalQuantitiesFromSotarge.length; i++) {
 	sum = sum + totalQuantitiesFromSotarge[i];
 }
+
+const totalPricesFromStorage = fetchCarftFromStorage.map(
+	(item) => item.price * item.quantity
+);
+
+for (let i = 0; i < totalPricesFromStorage.length; i++) {
+	sumTotalPrice = sumTotalPrice + totalPricesFromStorage[i];
+}
+
 const fetchUserDataFromLocalStorage = JSON.parse(
 	localStorage.getItem('userInfo') || '[]'
 );
@@ -19,12 +29,14 @@ const fetchUserDataFromLocalStorage = JSON.parse(
 export const StateContext = ({ children }) => {
 	const [showCart, setShowCart] = useState(false);
 	const [cartItems, setCartItems] = useState(fetchCarftFromStorage);
-	const [totalPrice, setTotalPrice] = useState(0);
+	const [totalPrice, setTotalPrice] = useState(
+		Number((sumTotalPrice || 0).toFixed(2))
+	);
+
 	const [totalQuantities, setTotalQuantities] = useState(sum || 0);
 	const [qty, setQty] = useState(1);
 	const [userData, setUserData] = useState(fetchUserDataFromLocalStorage);
 	const [isLogin, setIsLogin] = useState(false);
-	
 
 	let foundProduct;
 	let index;
@@ -151,7 +163,6 @@ export const StateContext = ({ children }) => {
 				setUserData,
 				setIsLogin,
 				isLogin,
-				
 			}}>
 			{children}
 		</Context.Provider>

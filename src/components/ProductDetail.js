@@ -177,7 +177,10 @@ const ProductDetail = () => {
 							Add to Cart
 						</button>
 						<Link to='/information'>
-							<button type='button' className={classes.buyNow}>
+							<button
+								type='button'
+								className={classes.buyNow}
+								onClick={() => onAdd(productData, qty, size)}>
 								Buy Now
 							</button>
 						</Link>

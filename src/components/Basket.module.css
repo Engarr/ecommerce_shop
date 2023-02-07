@@ -1,0 +1,51 @@
+.wraper {
+	padding: 10px 20px;
+	margin-top: 2em;
+}
+.productsContainer {
+	display: flex;
+	justify-content: space-between;
+	padding: 10px 20px;
+}
+.imageBox {
+	position: relative;
+	display: flex;
+}
+.image {
+	margin-right: 1em;
+}
+
+.productName h3 {
+	margin-bottom: 0.4em;
+}
+.qtyBox {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	background-color: rgba(0, 0, 0, 0.664);
+	top: -15px;
+	left: 0;
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	color: wheat;
+	border-radius: 50%;
+}
+.priceBox {
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-start;
+	margin-left: 4em;
+	font-size: 1.1em;
+}
+.border {
+	border-top: 1px solid rgba(0, 0, 0, 0.363);
+	width: 100%;
+}
+.totalPriceBox {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 2em;
+}
