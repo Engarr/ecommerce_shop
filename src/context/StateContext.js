@@ -32,17 +32,47 @@ export const StateContext = ({ children }) => {
 	const [totalPrice, setTotalPrice] = useState(
 		Number((sumTotalPrice || 0).toFixed(2))
 	);
-
 	const [totalQuantities, setTotalQuantities] = useState(sum || 0);
 	const [qty, setQty] = useState(1);
 	const [userData, setUserData] = useState(fetchUserDataFromLocalStorage);
 	const [isLogin, setIsLogin] = useState(false);
+	const [email, setEmail] = useState('');
+	const [name, setName] = useState('');
+	const [surname, setSurname] = useState('');
+	const [street, setStreet] = useState('');
+	const [additional, setAdditional] = useState('');
+	const [zipCode, setZipCode] = useState('');
+	const [city, setCity] = useState('');
+	const [tel, setTel] = useState('');
 
 	let foundProduct;
 	let index;
 	const cartHandler = () => {
 		setShowCart((prev) => (prev = !prev));
 	};
+
+	const emailHandler = (e) => {
+		setEmail(e.target.value);
+	};
+	const nameHandler = (e) => {
+		setName(e.target.value);
+	};
+	const surnameHandler = (e) => {
+		setSurname(e.target.value);
+	};
+	const streetHandler = (e) => {
+		setStreet(e.target.value);
+	};
+	const zipCodeHandler = (e) => {
+		setZipCode(e.target.value);
+	};
+	const cityHandler = (e) => {
+		setCity(e.target.value);
+	};
+	const telHandler = (e) => {
+		setTel(e.target.value);
+	};
+
 	useEffect(() => {
 		localStorage.setItem('cart', JSON.stringify(cartItems));
 	}, [cartItems]);
@@ -163,6 +193,21 @@ export const StateContext = ({ children }) => {
 				setUserData,
 				setIsLogin,
 				isLogin,
+				email,
+				emailHandler,
+				nameHandler,
+				surnameHandler,
+				streetHandler,
+				zipCodeHandler,
+				cityHandler,
+				telHandler,
+				name,
+				surname,
+				city,
+				tel,
+				zipCode,
+				street,
+				additional,
 			}}>
 			{children}
 		</Context.Provider>

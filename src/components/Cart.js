@@ -49,6 +49,7 @@ const Cart = (props) => {
 									<img
 										src={urlFor(item.image[0])}
 										height={100}
+										width={100}
 										className={classes.image}
 										alt={item.name}
 									/>
