@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import Login from './pages/Login';
 import Registration from './pages/Registration';
 import Information from './pages/Information';
+import Shipping from './pages/Shipping';
 
 function App() {
 	return (
@@ -25,7 +26,8 @@ function App() {
 					<Route path='/product/:slug' element={<ProductDetail />} />
 					<Route path='/login' element={<Login />} />
 					<Route path='/registration' element={<Registration />} />
-					<Route path='/Information' element={<Information />} />
+					<Route path='/information' element={<Information />} />
+					<Route path='/shipping' element={<Shipping />} />
 				</Routes>
 			</main>
 

@@ -3,6 +3,7 @@ import Checkout from '../components/Checkout';
 import classes from '../styles/Information.module.css';
 import Input from '../components/UI/Input';
 import { useStateContext } from '../context/StateContext';
+import { useNavigate } from 'react-router-dom';
 
 import Basket from '../components/Basket';
 const Information = () => {
@@ -16,6 +17,7 @@ const Information = () => {
 		tel: false,
 	});
 
+	const navigate = useNavigate();
 	const {
 		emailHandler,
 		nameHandler,
@@ -24,13 +26,14 @@ const Information = () => {
 		zipCodeHandler,
 		cityHandler,
 		telHandler,
+		additionalHandler,
 		name,
 		surname,
 		city,
 		tel,
 		zipCode,
 		street,
-
+		additional,
 		email,
 	} = useStateContext();
 
@@ -59,43 +62,43 @@ const Information = () => {
 	};
 	useEffect(() => {
 		if (name !== '') {
-			setErrors({
-				...errors,
+			setErrors((prevErrors) => ({
+				...prevErrors,
 				name: false,
-			});
+			}));
 		}
 		if (email !== '') {
-			setErrors({
-				...errors,
+			setErrors((prevErrors) => ({
+				...prevErrors,
 				email: false,
-			});
+			}));
 		}
 		if (surname !== '') {
-			setErrors({ ...errors, surname: false });
+			setErrors((prevErrors) => ({ ...prevErrors, surname: false }));
 		}
 		if (street !== '') {
-			setErrors({
-				...errors,
+			setErrors((prevErrors) => ({
+				...prevErrors,
 				street: false,
-			});
+			}));
 		}
 		if (zipCode !== '') {
-			setErrors({
-				...errors,
+			setErrors((prevErrors) => ({
+				...prevErrors,
 				zipCode: false,
-			});
+			}));
 		}
 		if (city !== '') {
-			setErrors({
-				...errors,
+			setErrors((prevErrors) => ({
+				...prevErrors,
 				city: false,
-			});
+			}));
 		}
 		if (tel !== '') {
-			setErrors({
-				...errors,
+			setErrors((prevErrors) => ({
+				...prevErrors,
 				tel: false,
-			});
+			}));
 		}
 	}, [name, email, surname, street, zipCode, city, tel]);
 
@@ -105,7 +108,7 @@ const Information = () => {
 		validation();
 
 		if (isEmailValid() && !Object.values(errors).some((error) => error)) {
-			console.log('Validation passed');
+			navigate('/shipping');
 		} else {
 			console.log('Validation failed');
 		}
@@ -122,7 +125,7 @@ const Information = () => {
 							text={`E-mail:`}
 							data={'contactDetails'}
 							onChange={emailHandler}
-							oninvalid={'name'}
+							value={email}
 							message={'Enter your Email'}
 							error={errors.email}
 						/>
@@ -146,11 +149,13 @@ const Information = () => {
 							onChange={nameHandler}
 							message={'Enter your name'}
 							error={errors.name}
+							value={name}
 						/>
 
 						<Input
 							text={`Surname:`}
 							data={'surname'}
+							value={surname}
 							onChange={surnameHandler}
 							message={'Enter your surname'}
 							error={errors.surname}
@@ -160,6 +165,7 @@ const Information = () => {
 					<Input
 						text={`Street and house / apartment number:`}
 						data={'street'}
+						value={street}
 						onChange={streetHandler}
 						message={'Enter your street adress'}
 						error={errors.street}
@@ -167,6 +173,8 @@ const Information = () => {
 
 					<Input
 						text={`Additional information (optional):`}
+						onChange={additionalHandler}
+						value={additional}
 						data={'optional'}
 					/>
 
@@ -174,6 +182,7 @@ const Information = () => {
 						<Input
 							text={`Zip code:`}
 							data={'zip code'}
+							value={zipCode}
 							onChange={zipCodeHandler}
 							message={'Enter your zip code'}
 							error={errors.zipCode}
@@ -181,6 +190,7 @@ const Information = () => {
 						<Input
 							text={`City`}
 							data={'city'}
+							value={city}
 							onChange={cityHandler}
 							message={'Enter your city name'}
 							error={errors.city}
@@ -190,9 +200,11 @@ const Information = () => {
 					<Input
 						text={`Telefon number:`}
 						data={'tel'}
+						value={tel}
 						onChange={telHandler}
 						message={'Enter your telefon number'}
 						error={errors.tel}
+						maxLength='9'
 					/>
 					<div className={classes.btn}>
 						<button type='submit'>Choose a delivery method</button>

@@ -8,8 +8,21 @@ export const categories = [
 	{ name: 'FAQ' },
 ];
 
+export const shippingCost = [
+	{
+		name: 'Courier DPD',
+		price: 5.49,
+		option: 'option 1'
+	},
+	{
+		name: 'Courier DHL',
+		price: 6.99,
+		option: 'option 2'
+	},
+];
+
 export const feedBanner = `*[_type == "banner"]`;
-export const feedProducts =`*[_type == "product"]`
+export const feedProducts = `*[_type == "product"]`;
 
 export const productDetails = (slug) => {
 	const query = `*[_type == "product" && slug.current == '${slug}']`;

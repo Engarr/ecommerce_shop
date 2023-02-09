@@ -72,6 +72,9 @@ export const StateContext = ({ children }) => {
 	const telHandler = (e) => {
 		setTel(e.target.value);
 	};
+	const additionalHandler = (e) => {
+		setAdditional(e.target.value);
+	};
 
 	useEffect(() => {
 		localStorage.setItem('cart', JSON.stringify(cartItems));
@@ -201,6 +204,7 @@ export const StateContext = ({ children }) => {
 				zipCodeHandler,
 				cityHandler,
 				telHandler,
+				additionalHandler,
 				name,
 				surname,
 				city,
