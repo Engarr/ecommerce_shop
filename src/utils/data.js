@@ -12,12 +12,12 @@ export const shippingCost = [
 	{
 		name: 'Courier DPD',
 		price: 5.49,
-		option: 'option 1'
+		option: '0'
 	},
 	{
 		name: 'Courier DHL',
 		price: 6.99,
-		option: 'option 2'
+		option: '1'
 	},
 ];
 

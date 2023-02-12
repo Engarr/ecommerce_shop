@@ -4,7 +4,7 @@ import { urlFor } from '../utils/client';
 import classes from './Basket.module.css';
 import Input from './UI/Input';
 
-const Basket = () => {
+const Basket = ({ deliveryCost }) => {
 	const [isDisabled, setIsDisabled] = useState(true);
 	const { cartItems, totalPrice } = useStateContext();
 	const [coderError, setCoderError] = useState(false);
@@ -80,8 +80,12 @@ const Basket = () => {
 				<div className={classes.sumaryPrice}>
 					<div>
 						<p>Cost of products</p>
+						{deliveryCost !== 0 ? <p>Shipping cost</p> : ''}
 					</div>
-					<div>$ {totalPrice}</div>
+					<div>
+						<p>$ {totalPrice}</p>
+						{deliveryCost !== 0 ? <p>$ {deliveryCost}</p> : ''}
+					</div>
 				</div>
 			</div>
 			<div className={classes.border}></div>

@@ -76,3 +76,20 @@
 .shippingMethodsBox {
 	padding: 10px 0px;
 }
+.nextPageBtn {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	margin-top: 2em;
+	width: 100%;
+}
+.nextPageBtn button {
+	padding: 15px 30px;
+	border: none;
+	background-color: rgb(17, 17, 17);
+	color: aliceblue;
+	border-radius: 5px;
+	font-weight: bold;
+	letter-spacing: 0.5px;
+	cursor: pointer;
+}

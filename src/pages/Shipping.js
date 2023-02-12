@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Basket from '../components/Basket';
 import { useStateContext } from '../context/StateContext';
 import Checkout from '../components/Checkout';
@@ -8,11 +8,18 @@ import classes from '../styles/Shipping.module.css';
 
 const Shipping = () => {
 	const { city, zipCode, street, additional, email } = useStateContext();
-	const [selectedOption, setSelectedOption] = useState('option 1');
+	const [selectedOption, setSelectedOption] = useState('0');
+	const [deliveryCost, setDeliveryCost] = useState(
+		shippingCost[selectedOption].price || 0
+	);
 
 	const handleOption = (e) => {
 		setSelectedOption(e.target.value);
 	};
+
+	useEffect(() => {
+		setDeliveryCost(shippingCost[selectedOption].price);
+	}, [selectedOption]);
 
 	return (
 		<div className={classes.wrapper}>
@@ -79,13 +86,15 @@ const Shipping = () => {
 						</>
 					))}
 				</div>
-        <div className={classes.nextPageBtn}>
-						<button type='submit'>choose payment method</button>
-					</div>
+				<div className={classes.nextPageBtn}>
+					<Link>
+						<button type='submit'>Choose payment method</button>
+					</Link>
+				</div>
 			</div>
 
 			<div className={classes.cartContainer}>
-				<Basket />
+				<Basket deliveryCost={deliveryCost} />
 			</div>
 		</div>
 	);
