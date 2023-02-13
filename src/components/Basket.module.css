@@ -82,6 +82,9 @@
 	justify-content: space-between;
 	align-content: center;
 }
+.sumaryPrice p{
+	margin-bottom: 1em;
+}
 @media screen and (max-width: 1206px) {
 	.wraper {
 		margin-top: 1em;

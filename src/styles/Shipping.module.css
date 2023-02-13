@@ -19,9 +19,13 @@
 }
 .shippingDataContainer,
 .deliveryContainer {
+	padding: 10px 20px;
+}
+.shippingDataContainer,
+.deliveryContainer,
+.paymentContainer {
 	width: 100%;
 	border: 1px solid rgba(0, 0, 0, 0.24);
-	padding: 10px 20px;
 	border-radius: 5px;
 }
 .shippingDataBox,
@@ -69,7 +73,8 @@
 	margin-bottom: 0.5em;
 }
 
-.shippinOptionBox label {
+.shippinOptionBox label,
+.paymentOptionBox label {
 	margin-left: 1em;
 }
 
@@ -83,7 +88,8 @@
 	margin-top: 2em;
 	width: 100%;
 }
-.nextPageBtn button {
+.nextPageBtn button,
+.noShippingDetails button {
 	padding: 15px 30px;
 	border: none;
 	background-color: rgb(17, 17, 17);
@@ -92,4 +98,93 @@
 	font-weight: bold;
 	letter-spacing: 0.5px;
 	cursor: pointer;
+}
+
+.paymentOptionBox {
+	margin: 1em;
+}
+.desc {
+	width: 100%;
+	text-align: center;
+	background-color: rgba(199, 199, 198, 0.411);
+	border-top: 1px solid rgba(0, 0, 0, 0.219);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.219);
+	max-height: 0;
+	overflow: hidden;
+}
+.active {
+	max-height: 200px;
+	opacity: 1;
+	animation: active 0.2s forwards linear;
+}
+.unactive {
+	max-height: 0;
+	opacity: 0;
+	animation: unactive 0.3s forwards linear;
+}
+
+@keyframes active {
+	0% {
+		opacity: 0;
+		padding: 0px 20px;
+	}
+
+	100% {
+		opacity: 1;
+		padding: 10px 20px;
+	}
+}
+@keyframes unactive {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+.noShippingDetails {
+	height: 300px;
+}
+.noShippingDetails button {
+	position: relative;
+	left: 50%;
+	top: 100px;
+	transform: translate(-50%);
+}
+
+@media screen and (max-width: 1206px) {
+	.wrapper {
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
+	}
+	.shippingContainer {
+		width: 100%;
+		padding: 10px 20px;
+	}
+	.inputBox {
+		width: 100%;
+		min-width: auto;
+		padding-right: 0;
+	}
+	.box {
+		flex-direction: column;
+		width: 100%;
+	}
+
+	.nextPageBtn {
+		display: block;
+	}
+	.nextPageBtn button {
+		width: 100%;
+		margin-bottom: 2em;
+	}
+
+	.cartContainer {
+		width: 100%;
+		height: 100vh;
+		margin-left: 0em;
+		border-left: none;
+	}
 }

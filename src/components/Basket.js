@@ -20,7 +20,7 @@ const Basket = ({ deliveryCost }) => {
 		setCodeValue('');
 		setIsDisabled(true);
 	};
-	console.log(codeValue);
+	const totalCost = (totalPrice + deliveryCost).toFixed(2);
 	const buttonCss = !isDisabled ? classes.active : classes.unActive;
 
 	return (
@@ -83,8 +83,8 @@ const Basket = ({ deliveryCost }) => {
 						{deliveryCost !== 0 ? <p>Shipping cost</p> : ''}
 					</div>
 					<div>
-						<p>$ {totalPrice}</p>
-						{deliveryCost !== 0 ? <p>$ {deliveryCost}</p> : ''}
+						<p>$ {totalPrice.toFixed(2)}</p>
+						{deliveryCost !== 0 ? <p>$ {deliveryCost.toFixed(2)}</p> : ''}
 					</div>
 				</div>
 			</div>
@@ -94,7 +94,7 @@ const Basket = ({ deliveryCost }) => {
 					<p>Sum:</p>
 				</div>
 				<div>
-					<p>$ {totalPrice}</p>
+					<p>$ {totalCost}</p>
 				</div>
 			</div>
 		</div>

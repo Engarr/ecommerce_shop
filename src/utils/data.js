@@ -12,12 +12,26 @@ export const shippingCost = [
 	{
 		name: 'Courier DPD',
 		price: 5.49,
-		option: '0'
+		option: '0',
 	},
 	{
 		name: 'Courier DHL',
 		price: 6.99,
-		option: '1'
+		option: '1',
+	},
+];
+export const paymentMethod = [
+	{
+		name: 'Traditional transfer',
+		description:
+			'After clicking "Order" you will be redirected to the PayU website to make a secure online transfer from your bank.',
+		option: '0',
+	},
+	{
+		name: 'PayPal',
+		description:
+			'After clicking "Order", you will be redirected to PayPal to make a secure payment.',
+		option: '1',
 	},
 ];
 

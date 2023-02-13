@@ -213,7 +213,7 @@ const Information = () => {
 			</div>
 
 			<div className={classes.cartContainer}>
-				<Basket />
+				<Basket deliveryCost={0} />
 			</div>
 		</div>
 	);

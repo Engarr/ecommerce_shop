@@ -59,13 +59,11 @@ const Cart = (props) => {
 									/>
 									<div>
 										<p className={classes.name}>{item.name}</p>
-										<p className={classes.price}>
-											<span>Price:</span> ${item.price}
-										</p>
+										
 										<p className={classes.size}>
 											<span>Size:</span> {item.size}
 										</p>
-										<p>Quantity:</p>
+										
 										<div className={classes.qtyBox}>
 											<button
 												type='button'
@@ -85,6 +83,9 @@ const Cart = (props) => {
 												+
 											</button>
 										</div>
+										<p className={classes.price}>
+											${item.price}
+										</p>
 									</div>
 								</div>
 							</div>
