@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import classes from './Modal.module.css';
 
-const Modal = ({ showCart, cartHandler }) => {
-	if (!showCart) return null;
+const Modal = ({ show, handler }) => {
+	// if (!show) return null;
 
 	return ReactDOM.createPortal(
-		<div className={classes.backdrop} onClick={cartHandler}></div>,
+		<div className={classes.backdrop} onClick={handler}></div>,
 		document.getElementById('backdrop')
 	);
 };

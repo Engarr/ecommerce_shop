@@ -10,12 +10,14 @@ import Login from './pages/Login';
 import Registration from './pages/Registration';
 import Information from './pages/Information';
 import Shipping from './pages/Shipping';
+import SearchBox from './components/SearchBox';
 
 function App() {
 	return (
 		<>
 			<header>
 				<NavBar />
+				<SearchBox/>
 			</header>
 			<main>
 				<Routes>

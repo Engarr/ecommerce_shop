@@ -131,10 +131,7 @@
 	margin-top: 6em;
 }
 
-.searchBox,
-.searchBoxSmall {
-	border-bottom: 1px solid var(--main-text-nav);
-}
+
 
 .searchBox input,
 .searchBoxSmall input {

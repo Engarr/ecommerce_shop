@@ -137,7 +137,6 @@ const NavBar = () => {
 							</div>
 						</div>
 						<div className={classes.searchBoxSmall}>
-							<input />
 							<IoIosSearch className={classes.searchIconSmall} />
 						</div>
 						<div className={classes.catogoryBoxSmall}>
@@ -155,7 +154,6 @@ const NavBar = () => {
 			<div className={classes.bigDevices}>
 				<div className={classes.mainBig}>
 					<div className={classes.searchBox}>
-						<input />
 						<IoIosSearch className={classes.searchIconBig} />
 					</div>
 					<div className={classes.logoBig}>

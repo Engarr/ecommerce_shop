@@ -28,7 +28,7 @@ const Cart = (props) => {
 	];
 	return (
 		<div>
-			<Modal showCart={showCart} cartHandler={cartHandler} />
+			<Modal show={showCart} handler={cartHandler} />
 
 			<div className={`${classes.cartContainer} ${classesCss}`}>
 				<div className={classes.controlPanel}>
