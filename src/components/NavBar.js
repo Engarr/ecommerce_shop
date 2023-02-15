@@ -21,6 +21,9 @@ import ProfilCard from './ProfilCard';
 import Transition from 'react-transition-group/Transition';
 import { client, urlFor } from '../utils/client';
 
+import { useDispatch } from 'react-redux';
+import { searchActions } from '../store/search-slice';
+
 const NavBar = () => {
 	const [hide, setHide] = useState(true);
 	const [showProfilCard, setShowProfilCard] = useState(false);
@@ -29,6 +32,11 @@ const NavBar = () => {
 	const { showCart, cartHandler, totalQuantities, setUserData } =
 		useStateContext();
 	const cardRef = useRef();
+
+	const dispatch = useDispatch();
+	const searchVisibleHandler = () => {
+		dispatch(searchActions.searchHandler());
+	};
 
 	const menuHandler = () => {
 		setHide((prev) => (prev = !prev));
@@ -137,7 +145,7 @@ const NavBar = () => {
 							</div>
 						</div>
 						<div className={classes.searchBoxSmall}>
-							<IoIosSearch className={classes.searchIconSmall} />
+							<IoIosSearch className={classes.searchIconSmall} onClick={searchVisibleHandler} />
 						</div>
 						<div className={classes.catogoryBoxSmall}>
 							{categories?.map((category) => (
@@ -154,7 +162,10 @@ const NavBar = () => {
 			<div className={classes.bigDevices}>
 				<div className={classes.mainBig}>
 					<div className={classes.searchBox}>
-						<IoIosSearch className={classes.searchIconBig} />
+						<IoIosSearch
+							className={classes.searchIconBig}
+							onClick={searchVisibleHandler}
+						/>
 					</div>
 					<div className={classes.logoBig}>
 						<Link to='/'>WOSMOD</Link>

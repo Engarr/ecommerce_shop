@@ -11,13 +11,16 @@ import Registration from './pages/Registration';
 import Information from './pages/Information';
 import Shipping from './pages/Shipping';
 import SearchBox from './components/SearchBox';
+//////REDUX
+import { useSelector } from 'react-redux';
 
 function App() {
+	const isSearchVisible = useSelector((state) => state.search.isSearchVisible);
 	return (
 		<>
 			<header>
 				<NavBar />
-				<SearchBox/>
+				{isSearchVisible && <SearchBox />}
 			</header>
 			<main>
 				<Routes>
