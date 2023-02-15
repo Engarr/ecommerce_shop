@@ -19,11 +19,13 @@ import Transition from 'react-transition-group/Transition';
 
 const ProductDetail = () => {
 	const [productData, setProductData] = useState([]);
+	const [size, setSize] = useState('S');
+
+
 	const [categoryProductData, setCategoryProductData] = useState([]);
 	const [newCategoryItems, setNewCategoryItems] = useState([]);
 	const [randomItems, setRandomItems] = useState([]);
 	const [index, setIndex] = useState(0);
-	const [size, setSize] = useState('S');
 
 	const [isActive, setIsActive] = useState(false);
 
@@ -85,7 +87,6 @@ const ProductDetail = () => {
 	const activeDetailHandler = useCallback(() => {
 		setIsActive((prev) => (prev = !prev));
 	}, [setIsActive]);
-
 	if (!productData) return <Spinner message='Loading...' />;
 
 	return (

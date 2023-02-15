@@ -7,10 +7,12 @@ import { Link } from 'react-router-dom';
 import { urlFor } from '../utils/client';
 import { v4 as uuidv4 } from 'uuid';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { cartActions } from '../store/cart-slice';
+
 const Cart = (props) => {
 	const {
-		showCart,
-		cartHandler,
+		
 		cartItems,
 		totalPrice,
 		toogleItemQuantity,
@@ -26,14 +28,22 @@ const Cart = (props) => {
 			? classes.inactive
 			: null,
 	];
+
+	//////////REDUX
+	const dispatch = useDispatch();
+	const cartIsVisible = useSelector(state=>state.cart.cartIsVisible)
+	const showCartHandler=()=>{
+		dispatch(cartActions.cartHandler())
+	}
+
 	return (
 		<div>
-			<Modal show={showCart} handler={cartHandler} />
+			<Modal show={cartIsVisible} handler={showCartHandler} />
 
 			<div className={`${classes.cartContainer} ${classesCss}`}>
 				<div className={classes.controlPanel}>
-					<AiOutlineClose className={classes.closeBtn} onClick={cartHandler} />
-					<Link to='/' onClick={cartHandler}>
+					<AiOutlineClose className={classes.closeBtn} onClick={showCartHandler} />
+					<Link to='/' onClick={showCartHandler}>
 						<p>WOSMOD</p>
 					</Link>
 				</div>
@@ -59,11 +69,11 @@ const Cart = (props) => {
 									/>
 									<div>
 										<p className={classes.name}>{item.name}</p>
-										
+
 										<p className={classes.size}>
 											<span>Size:</span> {item.size}
 										</p>
-										
+
 										<div className={classes.qtyBox}>
 											<button
 												type='button'
@@ -83,9 +93,7 @@ const Cart = (props) => {
 												+
 											</button>
 										</div>
-										<p className={classes.price}>
-											${item.price}
-										</p>
+										<p className={classes.price}>${item.price}</p>
 									</div>
 								</div>
 							</div>
@@ -97,7 +105,7 @@ const Cart = (props) => {
 								<p>${newTotalPrice}</p>
 							</div>
 							<Link to='/information'>
-								<button type='button' onClick={cartHandler}>
+								<button type='button' onClick={showCartHandler}>
 									Buy now
 								</button>
 							</Link>

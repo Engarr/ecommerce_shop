@@ -27,7 +27,6 @@ const fetchUserDataFromLocalStorage = JSON.parse(
 );
 
 export const StateContext = ({ children }) => {
-	const [showCart, setShowCart] = useState(false);
 	const [cartItems, setCartItems] = useState(fetchCarftFromStorage);
 	const [totalPrice, setTotalPrice] = useState(
 		Number((sumTotalPrice || 0).toFixed(2))
@@ -47,9 +46,6 @@ export const StateContext = ({ children }) => {
 
 	let foundProduct;
 	let index;
-	const cartHandler = () => {
-		setShowCart((prev) => (prev = !prev));
-	};
 
 	const emailHandler = (e) => {
 		setEmail(e.target.value);
@@ -181,7 +177,6 @@ export const StateContext = ({ children }) => {
 	return (
 		<Context.Provider
 			value={{
-				showCart,
 				cartItems,
 				totalPrice,
 				totalQuantities,
@@ -189,7 +184,6 @@ export const StateContext = ({ children }) => {
 				increaseQty,
 				decreaseQty,
 				onAdd,
-				cartHandler,
 				toogleItemQuantity,
 				onDelete,
 				userData,

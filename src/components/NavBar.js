@@ -21,22 +21,31 @@ import ProfilCard from './ProfilCard';
 import Transition from 'react-transition-group/Transition';
 import { client, urlFor } from '../utils/client';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { searchActions } from '../store/search-slice';
+import { cartActions } from '../store/cart-slice';
 
 const NavBar = () => {
 	const [hide, setHide] = useState(true);
 	const [showProfilCard, setShowProfilCard] = useState(false);
 	const [isClassAdded, setIsClassAdded] = useState(false);
 	const [image, setImage] = useState([]);
-	const { showCart, cartHandler, totalQuantities, setUserData } =
+	const {  totalQuantities, setUserData } =
 		useStateContext();
 	const cardRef = useRef();
+////////////// REDUX
+const dispatch = useDispatch();
 
-	const dispatch = useDispatch();
-	const searchVisibleHandler = () => {
-		dispatch(searchActions.searchHandler());
-	};
+const searchVisibleHandler = () => {
+	dispatch(searchActions.searchHandler());
+};
+
+const showCartHandler=()=>{
+	dispatch(cartActions.cartHandler())
+}
+const cartIsVisible = useSelector(state=>state.cart.cartIsVisible)
+
+////////////// REDUX
 
 	const menuHandler = () => {
 		setHide((prev) => (prev = !prev));
@@ -116,7 +125,7 @@ const NavBar = () => {
 							<div
 								className={classes.cartBoxSmall}
 								onClick={() => {
-									cartHandler();
+									showCartHandler();
 									menuHandler();
 								}}>
 								<BsBag size={25} />
@@ -171,7 +180,7 @@ const NavBar = () => {
 						<Link to='/'>WOSMOD</Link>
 					</div>
 					<div className={classes.accountBoxBig}>
-						<div className={classes.cartBoxBig} onClick={cartHandler}>
+						<div className={classes.cartBoxBig} onClick={showCartHandler}>
 							<BsBag size={30} />
 							{totalQuantities !== 0 && (
 								<div
@@ -208,7 +217,7 @@ const NavBar = () => {
 					))}
 				</div>
 			</div>
-			<Transition mountOnEnter unmountOnExit in={showCart} timeout={400}>
+			<Transition mountOnEnter unmountOnExit in={cartIsVisible} timeout={400}>
 				{(state) => <Cart show={state} />}
 			</Transition>
 		</div>
