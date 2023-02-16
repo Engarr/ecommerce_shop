@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import Basket from '../components/Basket';
-import { useStateContext } from '../context/StateContext';
 import Checkout from '../components/Checkout';
 import { Link } from 'react-router-dom';
 import { shippingCost, paymentMethod } from '../utils/data';
 import classes from '../styles/Shipping.module.css';
+import { useSelector } from 'react-redux';
 
 const Shipping = () => {
-	const { city, zipCode, street, additional, email } = useStateContext();
 	const [selectedOption, setSelectedOption] = useState('0');
 	const [payment, setPayment] = useState('0');
 	const [deliveryCost, setDeliveryCost] = useState(
 		shippingCost[selectedOption].price || 0
 	);
+	const email = useSelector((state) => state.form.email);
+	const street = useSelector((state) => state.form.street);
+	const additional = useSelector((state) => state.form.additional);
+	const zipCode = useSelector((state) => state.form.zipCode);
+	const city = useSelector((state) => state.form.city);
+	
 
 	const handleOption = (e) => {
 		setSelectedOption(e.target.value);

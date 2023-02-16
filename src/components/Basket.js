@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
-import { useStateContext } from '../context/StateContext';
 import { urlFor } from '../utils/client';
 import classes from './Basket.module.css';
 import Input from './UI/Input';
+import {useSelector} from "react-redux"
 
 const Basket = ({ deliveryCost }) => {
 	const [isDisabled, setIsDisabled] = useState(true);
-	const { cartItems, totalPrice } = useStateContext();
 	const [coderError, setCoderError] = useState(false);
 	const [codeValue, setCodeValue] = useState('');
 
+	const totalPrice = useSelector((state) => {
+		return state.cartItems.items.reduce((total, item) => {
+			return total + item.price * item.quantity;
+		}, 0);
+	});
+const cartItems = useSelector(state=>state.cartItems.items)
 	const handleInputChange = (e) => {
 		setIsDisabled(e.target.value === '');
 		setCodeValue(e.target.value);
@@ -29,7 +34,7 @@ const Basket = ({ deliveryCost }) => {
 				<div className={classes.productsContainer} key={item._id}>
 					<div className={classes.imageBox}>
 						<img
-							src={urlFor(item.image[0])}
+							src={urlFor(item.image)}
 							height={100}
 							width={100}
 							className={classes.image}

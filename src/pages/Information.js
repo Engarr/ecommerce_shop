@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Checkout from '../components/Checkout';
 import classes from '../styles/Information.module.css';
 import Input from '../components/UI/Input';
-import { useStateContext } from '../context/StateContext';
+// import { useStateContext } from '../context/StateContext';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { formActions } from '../store/form-slice';
+
 
 import Basket from '../components/Basket';
 const Information = () => {
@@ -18,29 +21,26 @@ const Information = () => {
 	});
 
 	const navigate = useNavigate();
-	const {
-		emailHandler,
-		nameHandler,
-		surnameHandler,
-		streetHandler,
-		zipCodeHandler,
-		cityHandler,
-		telHandler,
-		additionalHandler,
-		name,
-		surname,
-		city,
-		tel,
-		zipCode,
-		street,
-		additional,
-		email,
-	} = useStateContext();
+
+	const dispatch = useDispatch();
+	const email = useSelector((state) => state.form.email);
+	const name = useSelector((state) => state.form.name);
+	const surname = useSelector((state) => state.form.surname);
+	const street = useSelector((state) => state.form.street);
+	const additional = useSelector((state) => state.form.additional);
+	const zipCode = useSelector((state) => state.form.zipCode);
+	const city = useSelector((state) => state.form.city);
+	const tel = useSelector((state) => state.form.tel);
+
+	const handleInputChange = (event) => {
+		const { name, value } = event.target;
+		dispatch(formActions.updatedField({ field: name, value: value }));
+	};
 
 	const validation = () => {
 		setErrors({
-			name: name === '',
 			email: email === '',
+			name: name === '',
 			surname: surname === '',
 			street: street === '',
 			zipCode: zipCode === '',
@@ -113,7 +113,7 @@ const Information = () => {
 			console.log('Validation failed');
 		}
 	};
-
+console.log(email);
 	return (
 		<div className={classes.wrapper}>
 			<div className={classes.informationContainer}>
@@ -123,11 +123,11 @@ const Information = () => {
 					<div>
 						<Input
 							text={`E-mail:`}
-							data={'contactDetails'}
-							onChange={emailHandler}
+							data={'email'}
 							value={email}
+							onChange={handleInputChange}
 							message={'Enter your Email'}
-							error={errors.email}
+							 error={errors.email}
 						/>
 
 						<input
@@ -146,7 +146,7 @@ const Information = () => {
 						<Input
 							text={`Name:`}
 							data={'name'}
-							onChange={nameHandler}
+							onChange={handleInputChange}
 							message={'Enter your name'}
 							error={errors.name}
 							value={name}
@@ -156,7 +156,7 @@ const Information = () => {
 							text={`Surname:`}
 							data={'surname'}
 							value={surname}
-							onChange={surnameHandler}
+							onChange={handleInputChange}
 							message={'Enter your surname'}
 							error={errors.surname}
 						/>
@@ -166,24 +166,24 @@ const Information = () => {
 						text={`Street and house / apartment number:`}
 						data={'street'}
 						value={street}
-						onChange={streetHandler}
+						onChange={handleInputChange}
 						message={'Enter your street adress'}
 						error={errors.street}
 					/>
 
 					<Input
 						text={`Additional information (optional):`}
-						onChange={additionalHandler}
+						onChange={handleInputChange}
 						value={additional}
-						data={'optional'}
+						data={'additional'}
 					/>
 
 					<div className={classes.box}>
 						<Input
 							text={`Zip code:`}
-							data={'zip code'}
+							data={'zipCode'}
 							value={zipCode}
-							onChange={zipCodeHandler}
+							onChange={handleInputChange}
 							message={'Enter your zip code'}
 							error={errors.zipCode}
 						/>
@@ -191,7 +191,7 @@ const Information = () => {
 							text={`City`}
 							data={'city'}
 							value={city}
-							onChange={cityHandler}
+							onChange={handleInputChange}
 							message={'Enter your city name'}
 							error={errors.city}
 						/>
@@ -201,7 +201,7 @@ const Information = () => {
 						text={`Telefon number:`}
 						data={'tel'}
 						value={tel}
-						onChange={telHandler}
+						onChange={handleInputChange}
 						message={'Enter your telefon number'}
 						error={errors.tel}
 						maxLength='9'
