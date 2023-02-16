@@ -12,24 +12,25 @@ import {
 import Product from './Product';
 import classes from './ProductDetail.module.css';
 import Spinner from '../components/Spinner';
-import { useStateContext } from '../context/StateContext';
 import { GrNext, GrPrevious } from 'react-icons/gr';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import Transition from 'react-transition-group/Transition';
+import { cartItemActions } from '../store/cartItems-slice';
+import { useDispatch} from 'react-redux';
+import { toast } from 'react-hot-toast';
+import store from '../store/index';
+
 
 const ProductDetail = () => {
 	const [productData, setProductData] = useState([]);
 	const [size, setSize] = useState('S');
-
-
 	const [categoryProductData, setCategoryProductData] = useState([]);
 	const [newCategoryItems, setNewCategoryItems] = useState([]);
 	const [randomItems, setRandomItems] = useState([]);
 	const [index, setIndex] = useState(0);
-
+	const [quantity, setQuantity] = useState(1);
 	const [isActive, setIsActive] = useState(false);
 
-	const { decreaseQty, increaseQty, qty, onAdd } = useStateContext();
 	const { slug } = useParams();
 	const category = productData.category;
 	let imageLength;
@@ -40,6 +41,40 @@ const ProductDetail = () => {
 
 		setRandomItems(maxProducts);
 	};
+
+	/////REDUX
+	const dispatch = useDispatch();
+	const additemHandler = () => {
+		dispatch(
+			cartItemActions.onAddItem({
+				_id: productData._id.concat(size),
+				price: productData.price,
+				image: productData.image[0],
+				size: size,
+				quantity: quantity,
+				name: productData.name,
+			})
+		);
+		localStorage.setItem(
+			'cartItems',
+			JSON.stringify(store.getState().cartItems)
+		);
+		toast.success(`${quantity} ${productData.name} added to the cart.`);
+	};
+	const incQuantity = () => {
+		setQuantity((prevQty) => prevQty + 1);
+	};
+
+	const decQuantity = () => {
+		setQuantity((prevQty) => {
+			if (prevQty - 1 < 1) return 1;
+			return prevQty - 1;
+		});
+	};
+
+
+	/////REDUX
+
 	useEffect(() => {
 		updateRandomItems();
 		// eslint-disable-next-line
@@ -87,6 +122,7 @@ const ProductDetail = () => {
 	const activeDetailHandler = useCallback(() => {
 		setIsActive((prev) => (prev = !prev));
 	}, [setIsActive]);
+
 	if (!productData) return <Spinner message='Loading...' />;
 
 	return (
@@ -145,11 +181,11 @@ const ProductDetail = () => {
 						<div>
 							<h3>Quantity:</h3>
 							<p className={classes.quantityDesc}>
-								<span className={classes.minus} onClick={decreaseQty}>
+								<span className={classes.minus} onClick={decQuantity}>
 									<AiOutlineMinus />
 								</span>
-								<span className={classes.num}>{qty}</span>
-								<span className={classes.plus} onClick={increaseQty}>
+								<span className={classes.num}>{quantity}</span>
+								<span className={classes.plus} onClick={incQuantity}>
 									<AiOutlinePlus />
 								</span>
 							</p>
@@ -174,14 +210,18 @@ const ProductDetail = () => {
 						<button
 							type='button'
 							className={classes.addToCart}
-							onClick={() => onAdd(productData, qty, size)}>
+							onClick={additemHandler}
+							// onClick={() => onAdd(productData, qty, size)}
+						>
 							Add to Cart
 						</button>
 						<Link to='/information'>
 							<button
 								type='button'
 								className={classes.buyNow}
-								onClick={() => onAdd(productData, qty, size)}>
+								onClick={additemHandler}
+								// onClick={() => onAdd(productData, qty, size)}
+							>
 								Buy Now
 							</button>
 						</Link>

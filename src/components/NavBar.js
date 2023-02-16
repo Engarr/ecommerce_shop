@@ -30,22 +30,24 @@ const NavBar = () => {
 	const [showProfilCard, setShowProfilCard] = useState(false);
 	const [isClassAdded, setIsClassAdded] = useState(false);
 	const [image, setImage] = useState([]);
-	const {  totalQuantities, setUserData } =
-		useStateContext();
+	const { setUserData } = useStateContext();
 	const cardRef = useRef();
-////////////// REDUX
-const dispatch = useDispatch();
+	////////////// REDUX
+	const dispatch = useDispatch();
+	const cartIsVisible = useSelector((state) => state.showCart.cartIsVisible);
+	const totalQuantity = useSelector(
+		(state) => state.cartItems.totalQuantity
+	);
 
-const searchVisibleHandler = () => {
-	dispatch(searchActions.searchHandler());
-};
+	const searchVisibleHandler = () => {
+		dispatch(searchActions.searchHandler());
+	};
 
-const showCartHandler=()=>{
-	dispatch(cartActions.cartHandler())
-}
-const cartIsVisible = useSelector(state=>state.cart.cartIsVisible)
+	const showCartHandler = () => {
+		dispatch(cartActions.cartHandler());
+	};
 
-////////////// REDUX
+	////////////// REDUX
 
 	const menuHandler = () => {
 		setHide((prev) => (prev = !prev));
@@ -93,7 +95,7 @@ const cartIsVisible = useSelector(state=>state.cart.cartIsVisible)
 			}, 400);
 		}, 400);
 		return () => clearTimeout(timeout);
-	}, [totalQuantities]);
+	}, [totalQuantity]);
 
 	useEffect(() => {
 		let query = '*[_type == "photo"]';
@@ -129,8 +131,8 @@ const cartIsVisible = useSelector(state=>state.cart.cartIsVisible)
 									menuHandler();
 								}}>
 								<BsBag size={25} />
-								{totalQuantities !== 0 && (
-									<div className={classes.smallCartQty}>{totalQuantities}</div>
+								{totalQuantity !== 0 && (
+									<div className={classes.smallCartQty}>{totalQuantity}</div>
 								)}
 								<p>Cart</p>
 							</div>
@@ -154,7 +156,10 @@ const cartIsVisible = useSelector(state=>state.cart.cartIsVisible)
 							</div>
 						</div>
 						<div className={classes.searchBoxSmall}>
-							<IoIosSearch className={classes.searchIconSmall} onClick={searchVisibleHandler} />
+							<IoIosSearch
+								className={classes.searchIconSmall}
+								onClick={searchVisibleHandler}
+							/>
 						</div>
 						<div className={classes.catogoryBoxSmall}>
 							{categories?.map((category) => (
@@ -182,12 +187,12 @@ const cartIsVisible = useSelector(state=>state.cart.cartIsVisible)
 					<div className={classes.accountBoxBig}>
 						<div className={classes.cartBoxBig} onClick={showCartHandler}>
 							<BsBag size={30} />
-							{totalQuantities !== 0 && (
+							{totalQuantity !== 0 && (
 								<div
 									className={`${classes.bigCartQty} ${
 										isClassAdded ? classes.shake : ''
 									}`}>
-									{totalQuantities}
+									{totalQuantity}
 								</div>
 							)}
 							<p>Cart</p>

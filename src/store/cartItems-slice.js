@@ -1,24 +1,60 @@
 import { createSlice } from '@reduxjs/toolkit';
+
+const localStorageItems = localStorage.getItem('cartItems')
+	? JSON.parse(localStorage.getItem('cartItems'))
+	: {
+			items: [],
+			totalQuantity: 0,
+	  };
+
+const initialState = {
+	items: localStorageItems.items,
+	totalQuantity: localStorageItems.totalQuantity
+};
+
 const cartItemsSlice = createSlice({
 	name: 'cartItems',
-	initialState: {
-		items: [],
-		totalQuantity: 0,
-	},
+	initialState: initialState,
 	reducers: {
-		onAddItem(state, action) {
+		onAddItem: (state, action) => {
 			const newItem = action.payload;
-			const existingItem = state.items.find((item) => item.id === newItem.id);
-			state.totalQuantity = state.totalQuantity + newItem.quantity;
+			const existingItem = state.items.find(
+				(item) => item.id === newItem.id && item.size === newItem.size
+			);
 			if (!existingItem) {
-				state.items.push(action.payload);
+				state.items.push(newItem);
 			} else {
-				existingItem.quantity = existingItem.quantity + action.payload.quantity;
+				existingItem.quantity = existingItem.quantity + newItem.quantity;
 				existingItem.price =
-					existingItem.price + action.payload.price * action.payload.quantity;
+					existingItem.price + newItem.price * newItem.quantity;
+			}
+			state.totalQuantity = state.totalQuantity + newItem.quantity;
+		},
+		increaseQuantity: (state, action) => {
+			const itemId = action.payload;
+			const existingItem = state.items.find((item) => item._id === itemId);
+			if (existingItem) {
+				existingItem.quantity++;
+				state.totalQuantity++;
 			}
 		},
-		onRemoveItem() {},
+
+		decreaseQuantity: (state, action) => {
+			const itemId = action.payload;
+			const existingItem = state.items.find((item) => item._id === itemId);
+			if (existingItem && existingItem.quantity > 1) {
+				existingItem.quantity--;
+				state.totalQuantity--;
+			}
+		},
+		removeItem: (state, action) => {
+			const itemId = action.payload;
+			const existingItem = state.items.find((item) => item._id === itemId);
+			if (existingItem) {
+				state.items = state.items.filter((item) => item !== existingItem);
+				state.totalQuantity = state.totalQuantity - existingItem.quantity;
+			}
+		},
 	},
 });
 

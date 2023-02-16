@@ -1,38 +1,13 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { toast } from 'react-hot-toast';
 
 const Context = createContext();
-
-const fetchCarftFromStorage = JSON.parse(localStorage.getItem('cart') || '[]');
-let sum = 0;
-let sumTotalPrice = 0;
-
-const totalQuantitiesFromSotarge = fetchCarftFromStorage.map(
-	(item) => item.quantity
-);
-for (let i = 0; i < totalQuantitiesFromSotarge.length; i++) {
-	sum = sum + totalQuantitiesFromSotarge[i];
-}
-
-const totalPricesFromStorage = fetchCarftFromStorage.map(
-	(item) => item.price * item.quantity
-);
-
-for (let i = 0; i < totalPricesFromStorage.length; i++) {
-	sumTotalPrice = sumTotalPrice + totalPricesFromStorage[i];
-}
 
 const fetchUserDataFromLocalStorage = JSON.parse(
 	localStorage.getItem('userInfo') || '[]'
 );
 
 export const StateContext = ({ children }) => {
-	const [cartItems, setCartItems] = useState(fetchCarftFromStorage);
-	const [totalPrice, setTotalPrice] = useState(
-		Number((sumTotalPrice || 0).toFixed(2))
-	);
-	const [totalQuantities, setTotalQuantities] = useState(sum || 0);
-	const [qty, setQty] = useState(1);
+	
 	const [userData, setUserData] = useState(fetchUserDataFromLocalStorage);
 	const [isLogin, setIsLogin] = useState(false);
 	const [email, setEmail] = useState('');
@@ -44,8 +19,7 @@ export const StateContext = ({ children }) => {
 	const [city, setCity] = useState('');
 	const [tel, setTel] = useState('');
 
-	let foundProduct;
-	let index;
+	
 
 	const emailHandler = (e) => {
 		setEmail(e.target.value);
@@ -72,9 +46,7 @@ export const StateContext = ({ children }) => {
 		setAdditional(e.target.value);
 	};
 
-	useEffect(() => {
-		localStorage.setItem('cart', JSON.stringify(cartItems));
-	}, [cartItems]);
+	
 
 	useEffect(() => {
 		localStorage.setItem('userInfo', JSON.stringify(userData));
@@ -85,107 +57,13 @@ export const StateContext = ({ children }) => {
 		}
 	}, [userData]);
 
-	const onAdd = (product, quantity, size) => {
-		const isProductInCart = cartItems.find(
-			(item) => item._id === product._id && item.size === size
-		);
-		setTotalPrice(
-			(prevTotalPrice) => prevTotalPrice + product.price * quantity
-		);
-		setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
-		if (isProductInCart) {
-			// eslint-disable-next-line
-			const updatedCartItems = cartItems.map((cartProduct) => {
-				if (cartProduct._id === product._id)
-					return {
-						...cartProduct,
-						quantity: cartProduct.quantity + quantity,
-					};
-			});
 
-			setCartItems(updatedCartItems);
-		} else {
-			product.quantity = quantity;
-			product.size = size;
 
-			setCartItems([...cartItems, { ...product }]);
-		}
-		toast.success(`${qty} ${product.name} added to the cart.`);
-	};
-
-	const toogleItemQuantity = (id, value, size) => {
-		foundProduct = cartItems.find(
-			(item) => item._id === id && item.size === size
-		);
-		index = cartItems.findIndex(
-			(item) => item._id === id && item.size === size
-		);
-
-		if (value === 'increase') {
-			let newCartItems = [...cartItems];
-
-			newCartItems[index] = {
-				...foundProduct,
-				quantity: foundProduct.quantity + 1,
-			};
-			setCartItems(newCartItems);
-			setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct.price);
-			setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + 1);
-		} else if (value === 'decrease') {
-			if (foundProduct.quantity > 1) {
-				let newCartItems = [...cartItems];
-				newCartItems[index] = {
-					...foundProduct,
-					quantity: foundProduct.quantity - 1,
-				};
-				setCartItems(newCartItems);
-				setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price);
-				setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - 1);
-			}
-		}
-	};
-
-	const onDelete = (id, size) => {
-		foundProduct = cartItems.find(
-			(item) => item._id === id && item.size === size
-		);
-		let newCartItems = [...cartItems];
-		const deleteItem = newCartItems.findIndex(
-			(item) => item._id === foundProduct._id && item.size === foundProduct.size
-		);
-		newCartItems.splice(deleteItem, 1);
-		setCartItems(newCartItems);
-		setTotalPrice(
-			(prevTotalPrice) =>
-				prevTotalPrice - foundProduct.price * foundProduct.quantity
-		);
-		setTotalQuantities(
-			(prevTotalQuantities) => prevTotalQuantities - foundProduct.quantity
-		);
-	};
-
-	const increaseQty = () => {
-		setQty((prevQty) => prevQty + 1);
-	};
-	const decreaseQty = () => {
-		setQty((prevQty) => {
-			if (prevQty - 1 < 1) return 1;
-			return prevQty - 1;
-		});
-	};
 
 	return (
 		<Context.Provider
 			value={{
-				cartItems,
-				totalPrice,
-				totalQuantities,
-				qty,
-				increaseQty,
-				decreaseQty,
-				onAdd,
-				toogleItemQuantity,
-				onDelete,
+										
 				userData,
 				setUserData,
 				setIsLogin,
