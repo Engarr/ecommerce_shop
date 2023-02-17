@@ -5,16 +5,15 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { urlFor } from '../utils/client';
 import { v4 as uuidv4 } from 'uuid';
-
 import { useDispatch, useSelector } from 'react-redux';
-import { cartActions } from '../store/cart-slice';
 import { cartItemActions } from '../store/cartItems-slice';
 import store from '../store/index';
+import { uiActions } from '../store/ui-slice';
 
 const Cart = (props) => {
 	//////////REDUX
 	const dispatch = useDispatch();
-	const cartIsVisible = useSelector((state) => state.showCart.cartIsVisible);
+	const cartIsVisible = useSelector((state) => state.ui.cartIsVisible);
 	const cartItems = useSelector((state) => state.cartItems.items);
 	const totalPrice = useSelector((state) => {
 		return state.cartItems.items.reduce((total, item) => {
@@ -40,7 +39,7 @@ const Cart = (props) => {
 		updateLocalStorage();
 	};
 	const showCartHandler = () => {
-		dispatch(cartActions.cartHandler());
+		dispatch(uiActions.cartHandler());
 	};
 	//////////REDUX
 

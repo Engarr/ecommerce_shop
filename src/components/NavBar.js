@@ -22,8 +22,7 @@ import Transition from 'react-transition-group/Transition';
 import { client, urlFor } from '../utils/client';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { searchActions } from '../store/search-slice';
-import { cartActions } from '../store/cart-slice';
+import { uiActions } from '../store/ui-slice';
 
 const NavBar = () => {
 	const [hide, setHide] = useState(true);
@@ -34,17 +33,17 @@ const NavBar = () => {
 	const cardRef = useRef();
 	////////////// REDUX
 	const dispatch = useDispatch();
-	const cartIsVisible = useSelector((state) => state.showCart.cartIsVisible);
+	const cartIsVisible = useSelector((state) => state.ui.cartIsVisible);
 	const totalQuantity = useSelector(
 		(state) => state.cartItems.totalQuantity
 	);
 
 	const searchVisibleHandler = () => {
-		dispatch(searchActions.searchHandler());
+		dispatch(uiActions.searchHandler());
 	};
 
 	const showCartHandler = () => {
-		dispatch(cartActions.cartHandler());
+		dispatch(uiActions.cartHandler());
 	};
 
 	////////////// REDUX

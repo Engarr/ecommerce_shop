@@ -15,7 +15,7 @@ import SearchBox from './components/SearchBox';
 import { useSelector } from 'react-redux';
 
 function App() {
-	const isSearchVisible = useSelector((state) => state.search.isSearchVisible);
+	const isSearchVisible = useSelector((state) => state.ui.isSearchVisible);
 	return (
 		<>
 			<header>

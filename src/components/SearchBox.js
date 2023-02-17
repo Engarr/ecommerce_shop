@@ -4,14 +4,14 @@ import { AiOutlineClose } from 'react-icons/ai';
 import Modal from './Modal';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { searchActions } from '../store/search-slice';
+import { uiActions } from '../store/ui-slice';
 import classes from './SearchBox.module.css';
 
 const SearchBox = () => {
-	const isSearchVisible = useSelector((state) => state.search.isSearchVisible);
+	const isSearchVisible = useSelector((state) => state.ui.isSearchVisible);
 	const dispatch = useDispatch();
 	const searchVisibleHandler = () => {
-		dispatch(searchActions.searchHandler());
+		dispatch(uiActions.searchHandler());
 	};
 
 	return (
