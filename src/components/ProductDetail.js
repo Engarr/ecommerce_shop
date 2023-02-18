@@ -16,10 +16,9 @@ import { GrNext, GrPrevious } from 'react-icons/gr';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import Transition from 'react-transition-group/Transition';
 import { cartItemActions } from '../store/cartItems-slice';
-import { useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-hot-toast';
 import store from '../store/index';
-
 
 const ProductDetail = () => {
 	const [productData, setProductData] = useState([]);
@@ -30,7 +29,6 @@ const ProductDetail = () => {
 	const [index, setIndex] = useState(0);
 	const [quantity, setQuantity] = useState(1);
 	const [isActive, setIsActive] = useState(false);
-
 	const { slug } = useParams();
 	const category = productData.category;
 	let imageLength;
@@ -41,8 +39,6 @@ const ProductDetail = () => {
 
 		setRandomItems(maxProducts);
 	};
-
-	/////REDUX
 	const dispatch = useDispatch();
 	const additemHandler = () => {
 		dispatch(
@@ -71,10 +67,6 @@ const ProductDetail = () => {
 			return prevQty - 1;
 		});
 	};
-
-
-	/////REDUX
-
 	useEffect(() => {
 		updateRandomItems();
 		// eslint-disable-next-line

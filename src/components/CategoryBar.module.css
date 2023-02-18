@@ -26,6 +26,10 @@
 .categoryItem:hover::after {
 	width: 100%;
 }
+.active div {
+	color: rgb(243, 204, 152);
+	
+}
 
 @media only screen and (max-width: 1024px) {
 	.categoryItem {

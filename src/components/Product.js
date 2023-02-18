@@ -41,7 +41,7 @@ const Product = ({ product }) => {
 						return (
 							<>
 								<Link
-									to={`/product/${product?.slug.current}`}
+									to={`product/${product?.slug.current}`}
 									onClick={handleClick}>
 									<div className={`${classes.btnBox} ${classesCss}`}>
 										<button> see detail</button>
