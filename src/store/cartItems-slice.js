@@ -19,7 +19,7 @@ const cartItemsSlice = createSlice({
 		onAddItem: (state, action) => {
 			const newItem = action.payload;
 			const existingItem = state.items.find(
-				(item) => item.id === newItem.id && item.size === newItem.size
+				(item) => item._id === newItem.id && item.size === newItem.size
 			);
 			if (!existingItem) {
 				state.items.push(newItem);

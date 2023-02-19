@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { Link, json, useLoaderData } from 'react-router-dom';
 import { client, urlFor } from '../utils/client';
 import { productDetails, categoryProducts } from '../utils/data';
 import {
@@ -29,9 +29,30 @@ const ProductDetail = () => {
 	const [index, setIndex] = useState(0);
 	const [quantity, setQuantity] = useState(1);
 	const [isActive, setIsActive] = useState(false);
-	const { slug } = useParams();
 	const category = productData.category;
 	let imageLength;
+	const dispatch = useDispatch();
+	const data = useLoaderData();
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		setProductData(data[0]);
+	}, [data]);
+
+	useEffect(() => {
+		let categoryQuery = categoryProducts(category);
+		const loader = async () => {
+			const data = await client.fetch(categoryQuery);
+			setCategoryProductData((prevData) => [...prevData, ...data]);
+			setLoading(false);
+		};
+		loader();
+	}, [category]);
+
+	useEffect(() => {
+		updateRandomItems();
+		// eslint-disable-next-line
+	}, [newCategoryItems]);
 
 	const updateRandomItems = () => {
 		let shuffledItems = newCategoryItems.sort(() => Math.random() - 0.5);
@@ -39,7 +60,17 @@ const ProductDetail = () => {
 
 		setRandomItems(maxProducts);
 	};
-	const dispatch = useDispatch();
+
+	useEffect(() => {
+		setNewCategoryItems(
+			categoryProductData.filter((item) => item._id !== productData._id)
+		);
+	}, [categoryProductData, productData._id]);
+
+	const sizeHandler = (e) => {
+		setSize(e.target.value);
+	};
+
 	const additemHandler = () => {
 		dispatch(
 			cartItemActions.onAddItem({
@@ -67,29 +98,6 @@ const ProductDetail = () => {
 			return prevQty - 1;
 		});
 	};
-	useEffect(() => {
-		updateRandomItems();
-		// eslint-disable-next-line
-	}, [newCategoryItems]);
-
-	useEffect(() => {
-		let query = productDetails(slug);
-		let categoryQuery = categoryProducts(category);
-
-		client.fetch(query).then((data) => setProductData(data[0]));
-		client.fetch(categoryQuery).then((data) => setCategoryProductData(data));
-	}, [slug, category]);
-
-	useEffect(() => {
-		setNewCategoryItems(
-			categoryProductData.filter((item) => item._id !== productData._id)
-		);
-	}, [categoryProductData, productData._id]);
-
-	const sizeHandler = (e) => {
-		setSize(e.target.value);
-	};
-
 	const indexIncrease = () => {
 		if (productData) {
 			imageLength = productData.image.length - 1;
@@ -263,16 +271,36 @@ const ProductDetail = () => {
 
 			<div className={classes.maylikeProductsWrapper}>
 				<h2>You may also like</h2>
-
-				<div className={classes.maylikeProductsContainer}>
-					{randomItems &&
-						randomItems.map((item) => (
-							<Product key={item._id} product={item} />
-						))}
-				</div>
+				{loading ? (
+					<Spinner message='Loading...' />
+				) : (
+					<div className={classes.maylikeProductsContainer}>
+						{randomItems &&
+							randomItems.map((item) => (
+								<Product key={item._id} product={item} />
+							))}
+					</div>
+				)}
 			</div>
 		</div>
 	);
 };
 
 export default ProductDetail;
+
+export async function loader({ request, params }) {
+	const slug = params.slug;
+	let query = productDetails(slug);
+	const response = await client.fetch(query);
+
+	if (response.length < 0) {
+		throw json(
+			{ message: 'Could not fetch details for selected product' },
+			{
+				status: 500,
+			}
+		);
+	} else {
+		return response;
+	}
+}

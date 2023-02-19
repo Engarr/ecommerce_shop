@@ -3,12 +3,17 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	height: 400px;
+	height: 500px;
 	background-color: #333;
 	color: white;
 }
 .main h2 {
-	letter-spacing: 4px;
+	letter-spacing: 1px;
+	margin-bottom: 0.5em;
+	font-size: 3em;
+}
+.main p{
+	font-size: 2em;
 }
 .main a {
 	position: relative;
