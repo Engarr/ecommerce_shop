@@ -11,7 +11,7 @@ import store from '../store/index';
 import { uiActions } from '../store/ui-slice';
 
 const Cart = (props) => {
-	//////////REDUX
+
 	const dispatch = useDispatch();
 	const cartIsVisible = useSelector((state) => state.ui.cartIsVisible);
 	const cartItems = useSelector((state) => state.cartItems.items);
@@ -41,7 +41,6 @@ const Cart = (props) => {
 	const showCartHandler = () => {
 		dispatch(uiActions.cartHandler());
 	};
-	//////////REDUX
 
 	const length = cartItems.length;
 	// const newTotalPrice = totalPrice.toFixed(2);

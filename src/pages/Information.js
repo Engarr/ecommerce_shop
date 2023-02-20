@@ -45,7 +45,7 @@ const Information = () => {
 			street: street === '',
 			zipCode: zipCode === '',
 			city: city === '',
-			tel: tel === '',
+			tel: tel === '' ,
 		});
 	};
 
@@ -113,7 +113,6 @@ const Information = () => {
 			console.log('Validation failed');
 		}
 	};
-console.log(email);
 	return (
 		<div className={classes.wrapper}>
 			<div className={classes.informationContainer}>

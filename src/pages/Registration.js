@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { client } from '../utils/client';
 import { v4 as uuidv4 } from 'uuid';
@@ -8,79 +8,129 @@ import bcrypt from 'bcryptjs';
 
 import classes from '../styles/Registration.module.css';
 const Registration = () => {
-	const [error, setError] = useState(false);
-	const [name, setName] = useState('');
-	const [nameError, setNamError] = useState(false);
-	const [email, setEmail] = useState('');
-	const [emailError, setEmailError] = useState(false);
-	const [password, setPassword] = useState('');
-	const [passwordError, setPasswordError] = useState(false);
-	const [repeatedPassword, setRepeatedPassword] = useState('');
-	const [repeatedpasswordError, setRepeatedPasswordError] = useState(false);
-	const [isChecked, setIsChecked] = useState(false);
-	const [errorIsChecked, setErrorIsChecked] = useState(false);
-	const [isEmailExistError, setIsEmailExistError] = useState(false);
 	const navigate = useNavigate();
+	const [formData, setFormData] = useState({
+		name: '',
+		email: '',
+		password: '',
+		repeatPassword: '',
+		isChecked: false,
+	});
 
-	const nameHandler = (e) => {
-		setName(e.target.value);
+	const [errors, setErrors] = useState({
+		error: false,
+		name: false,
+		email: false,
+		password: false,
+		repeatPassword: false,
+		isChecked: false,
+		isEmailExistError: false,
+	});
+
+	const formDataHandler = (e) => {
+		setFormData((prevData) => ({
+			...prevData,
+			[e.target.name]: e.target.value,
+		}));
 	};
-	const emailHandler = (e) => {
-		setEmail(e.target.value);
+
+	const handleCheckboxChange = (e) => {
+		setFormData((prevFormData) => ({
+			...prevFormData,
+			isChecked: e.target.checked,
+		}));
 	};
-	const passwordHandler = (e) => {
-		setPassword(e.target.value);
-	};
-	const repeatedPasswordHandler = (e) => {
-		setRepeatedPassword(e.target.value);
-	};
+
+	useEffect(() => {
+		if (formData.name !== '') {
+			setErrors((prevErrors) => ({
+				...prevErrors,
+				name: false,
+			}));
+		}
+		if (formData.email !== '') {
+			setErrors((prevErrors) => ({
+				...prevErrors,
+				email: false,
+			}));
+		}
+		if (formData.password !== '') {
+			setErrors((prevErrors) => ({
+				...prevErrors,
+				password: false,
+			}));
+		}
+		if (formData.repeatPassword !== '') {
+			setErrors((prevErrors) => ({
+				...prevErrors,
+				repeatPassword: false,
+			}));
+		}
+		if (formData.isChecked === true) {
+			setErrors((prevErrors) => ({
+				...prevErrors,
+				isChecked: false,
+			}));
+		}
+	}, [formData]);
 
 	const erorrHandler = () => {
-		setError(false);
+		setErrors((prevErrors) => ({
+			...prevErrors,
+			error: false,
+		}));
 	};
 
 	const isDataValid = async () => {
 		let isValid = true;
 		if (!isNameValid()) {
-			setNamError(true);
-			setError(true);
+			setErrors((prevErrors) => ({
+				...prevErrors,
+				name: true,
+				error: true,
+			}));
 			isValid = false;
-		} else {
-			setNamError(false);
 		}
 		if (!isEmailValid()) {
-			setEmailError(true);
-			setError(true);
+			setErrors((prevErrors) => ({
+				...prevErrors,
+				email: true,
+				error: true,
+			}));
 			isValid = false;
 		} else {
-			setEmailError(false);
-			if (await isEmailExists(email)) {
-				setIsEmailExistError(true);
+			if (await isEmailExists(formData.email)) {
+				setErrors((prevErrors) => ({
+					...prevErrors,
+					isEmailExistError: true,
+					error: true,
+				}));
 				isValid = false;
-			} else {
-				setIsEmailExistError(false);
 			}
 		}
 		if (!isPasswordValid()) {
-			setPasswordError(true);
-			setError(true);
+			setErrors((prevErrors) => ({
+				...prevErrors,
+				password: true,
+				error: true,
+			}));
 			isValid = false;
-		} else {
-			setPasswordError(false);
 		}
 		if (!isRepeatPasswordValid()) {
-			setRepeatedPasswordError(true);
-			setError(true);
+			setErrors((prevErrors) => ({
+				...prevErrors,
+				repeatPassword: true,
+				error: true,
+			}));
 			isValid = false;
-		} else {
-			setRepeatedPasswordError(false);
 		}
-		if (!isChecked) {
-			setErrorIsChecked(true);
-			setError(true);
+		if (!formData.isChecked) {
+			setErrors((prevErrors) => ({
+				...prevErrors,
+				isChecked: true,
+				error: true,
+			}));
 			isValid = false;
-		} else {
-			setErrorIsChecked(false);
 		}
 
 		return isValid;
@@ -88,7 +138,7 @@ const Registration = () => {
 
 	const isNameValid = () => {
 		let isValid = true;
-		if (name === '') {
+		if (formData.name === '') {
 			isValid = false;
 		}
 		return isValid;
@@ -98,7 +148,7 @@ const Registration = () => {
 		const re =
 			/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-		if (!re.test(email)) {
+		if (!re.test(formData.email)) {
 			isValid = false;
 		}
 
@@ -116,14 +166,14 @@ const Registration = () => {
 	};
 	const isPasswordValid = () => {
 		let isValid = true;
-		if (password.length < 8) {
+		if (formData.password.length < 8) {
 			isValid = false;
 		}
-		if (!/\d/.test(password)) {
+		if (!/\d/.test(formData.password)) {
 			isValid = false;
 		}
 
-		if (!/[!@#$%^&*()+=._-]/.test(password)) {
+		if (!/[!@#$%^&*()+=._-]/.test(formData.password)) {
 			isValid = false;
 		} else {
 		}
@@ -131,8 +181,7 @@ const Registration = () => {
 	};
 	const isRepeatPasswordValid = () => {
 		let isValid = true;
-		if (password !== repeatedPassword) {
-			setRepeatedPasswordError(true);
+		if (formData.password !== formData.repeatPassword) {
 			isValid = false;
 		}
 		return isValid;
@@ -141,26 +190,28 @@ const Registration = () => {
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		const salt = await bcrypt.genSalt(10);
-		const hash = await bcrypt.hash(password, salt);
+		const hash = await bcrypt.hash(formData.password, salt);
 
 		if (await isDataValid()) {
 			const doc = {
 				_type: 'user',
-				name: name,
-				email: email,
+				name: formData.name,
+				email: formData.email,
 				password: hash,
-				isChecked: isChecked,
+				isChecked: formData.isChecked,
 				userId: uuidv4(),
 			};
 			toast.success(`The account has been created.`);
 			client.create(doc).then(() => {
 				navigate('/home');
 			});
-			setName('');
-			setEmail('');
-			setPassword('');
-			setRepeatedPassword('');
-			setIsChecked(false);
+			setFormData({
+				name: '',
+				email: '',
+				password: '',
+				repeatPassword: '',
+				isChecked: false,
+			});
 		} else {
 			toast.error(`Unfortunately, we were unable to create an account`);
 		}
@@ -168,7 +219,7 @@ const Registration = () => {
 
 	return (
 		<div className={classes.mainContainer}>
-			{error && (
+			{errors.error && (
 				<div className={classes.error}>
 					<AiOutlineClose className={classes.closeBtn} onClick={erorrHandler} />
 					<p>The registration form contains errors.</p>
@@ -179,7 +230,7 @@ const Registration = () => {
 
 				<div
 					className={
-						nameError
+						errors.name
 							? `${classes.nameBox} ${classes.inputError}`
 							: classes.nameBox
 					}>
@@ -187,14 +238,14 @@ const Registration = () => {
 					<input
 						name='name'
 						id='name'
-						value={name}
-						onChange={nameHandler}></input>
-					{nameError && <p>Please write your name</p>}
+						value={formData.name}
+						onChange={formDataHandler}></input>
+					{errors.name && <p>Please write your name</p>}
 				</div>
 
 				<div
 					className={
-						emailError
+						errors.email
 							? `${classes.emailBox} ${classes.inputError}`
 							: classes.emailBox
 					}>
@@ -202,15 +253,17 @@ const Registration = () => {
 					<input
 						name='email'
 						id='email'
-						value={email}
-						onChange={emailHandler}
+						value={formData.email}
+						onChange={formDataHandler}
 						autoComplete='email'></input>
-					{emailError && <p>Invalid email address format</p>}
-					{isEmailExistError && <p>Email already exists in the database</p>}
+					{errors.email && <p>Invalid email address format</p>}
+					{errors.isEmailExistError && (
+						<p>Email already exists in the database</p>
+					)}
 				</div>
 				<div
 					className={
-						passwordError
+						errors.password
 							? `${classes.passwordBox} ${classes.inputError}`
 							: classes.passwordBox
 					}>
@@ -219,16 +272,16 @@ const Registration = () => {
 						name='password'
 						id='password'
 						type='password'
-						value={password}
-						onChange={passwordHandler}
+						value={formData.password}
+						onChange={formDataHandler}
 						autoComplete='new-password'></input>
-					{passwordError && (
+					{errors.password && (
 						<p>The password must meet the described conditions</p>
 					)}
 				</div>
 				<div
 					className={
-						repeatedpasswordError
+						errors.repeatPassword
 							? `${classes.passwordBox} ${classes.inputError}`
 							: classes.passwordBox
 					}>
@@ -237,27 +290,25 @@ const Registration = () => {
 						name='repeatPassword'
 						id='repeatPassword'
 						type='password'
-						value={repeatedPassword}
-						onChange={repeatedPasswordHandler}
+						value={formData.repeatPassword}
+						onChange={formDataHandler}
 						autoComplete='new-password'
 					/>
-					{repeatedpasswordError && <p>The passwords are different</p>}
+					{errors.repeatPassword && <p>The passwords are different</p>}
 				</div>
 				<p>Additional information:</p>
 				<div className={classes.checkBox}>
 					<input
 						type='checkbox'
 						id='check'
-						checked={isChecked}
-						onChange={() => setIsChecked(!isChecked)}
-
-						// className={classes.errorCheckBox}
+						checked={formData.isChecked}
+						onChange={handleCheckboxChange}
 					/>
 					<label htmlFor='check'>
 						I have read the regulations of the online store and accept its
 						content.
 					</label>
-					{errorIsChecked && <p>You have to accept the terms</p>}
+					{errors.isChecked && <p>You have to accept the terms</p>}
 				</div>
 				<div>
 					<button type='submit'>Register</button>
