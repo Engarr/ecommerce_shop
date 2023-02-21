@@ -1,5 +1,5 @@
 .mainContainer {
-	position: fixed;
+	position: absolute;
 	z-index: 10000;
 	top: 10%;
 	left: 0;
@@ -21,17 +21,22 @@
 	border: none;
 	outline: none;
 	width: 100%;
-    font-size: 20px;
-	
+	font-size: 20px;
 }
 
 .icon {
 	margin-right: 0.5em;
 	font-size: 1.4em;
-    color: rgba(0, 0, 0, 0.425);
+	color: rgba(0, 0, 0, 0.425);
 }
-.closeIcon{
-    font-size: 1.2em;
-    color: rgba(0, 0, 0, 0.425);
-    cursor: pointer;
+.closeIcon {
+	font-size: 1.2em;
+	color: rgba(0, 0, 0, 0.425);
+	cursor: pointer;
+}
+.productsContainer {
+	display: flex;
+	flex-wrap: wrap;
+	z-index: 1000;
+	background-color: white;
 }

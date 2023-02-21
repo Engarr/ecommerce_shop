@@ -34,7 +34,6 @@ const ProductDetail = () => {
 	const dispatch = useDispatch();
 	const data = useLoaderData();
 	const [loading, setLoading] = useState(true);
-
 	useEffect(() => {
 		setProductData(data[0]);
 	}, [data]);
