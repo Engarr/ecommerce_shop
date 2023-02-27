@@ -44,6 +44,10 @@ const Product = ({ product }) => {
 									to={`product/${product?.slug.current}`}
 									onClick={handleClick}>
 									<div className={`${classes.btnBox} ${classesCss}`}>
+										<div className={classes.textShadow}>
+											<p className={classes.productName}>{product?.name}</p>
+											<p className={classes.productPrice}>$ {product?.price}</p>
+										</div>
 										<button> see detail</button>
 									</div>
 								</Link>
@@ -51,9 +55,6 @@ const Product = ({ product }) => {
 						);
 					}}
 				</Transition>
-
-				<p className={classes.productName}>{product?.name}</p>
-				<p className={classes.productPrice}>$ {product?.price}</p>
 			</div>
 		</div>
 	);

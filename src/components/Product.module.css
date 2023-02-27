@@ -44,19 +44,28 @@
 	width: 100%;
 	opacity: 0;
 }
+.btnBox p {
+	font-weight: bold;
+	color: var(--main-text-nav);
+}
+.textShadow {
+	margin-bottom: 1px;
+	background-color: rgba(0, 0, 0, 0.6);
+	padding: 10px 20px;
+}
 .btnBox button {
 	text-transform: uppercase;
 	font-weight: bold;
 	cursor: pointer;
 	border: none;
-	width: 90%;
+	width: 100%;
 	padding: 10px 20px;
-	background-color: rgba(0, 0, 0, 0.719);
+	background-color: rgba(0, 0, 0, 0.6);
 	color: var(--main-text-nav);
 }
 
 .showUp {
-	animation: showUp 0.2s forwards;
+	animation: showUp 0.4s forwards;
 }
 .hide {
 	animation: hide 0.3s forwards;
@@ -65,17 +74,17 @@
 @keyframes showUp {
 	0% {
 		opacity: 0;
-		bottom: 20%;
+		bottom: 10%;
 	}
 	100% {
 		opacity: 1;
-		bottom: 40%;
+		bottom: 30%;
 	}
 }
 @keyframes hide {
 	0% {
 		opacity: 1;
-		bottom: 40%;
+		bottom: 30%;
 	}
 	100% {
 		opacity: 0;
