@@ -29,8 +29,8 @@ const Home = () => {
 			<div className={classes.productsHeading}>
 				<h2>Best Seller Products</h2>
 				<div>
-					<Link to={`/products`}>
-						<button className={classes.border}>See all products</button>
+					<Link to={`/products`} className={classes.border}>
+						<button >See all products</button>
 					</Link>
 				</div>
 			</div>

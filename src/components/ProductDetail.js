@@ -210,7 +210,6 @@ const ProductDetail = () => {
 							type='button'
 							className={classes.addToCart}
 							onClick={additemHandler}
-							// onClick={() => onAdd(productData, qty, size)}
 						>
 							Add to Cart
 						</button>
@@ -219,7 +218,6 @@ const ProductDetail = () => {
 								type='button'
 								className={classes.buyNow}
 								onClick={additemHandler}
-								// onClick={() => onAdd(productData, qty, size)}
 							>
 								Buy Now
 							</button>

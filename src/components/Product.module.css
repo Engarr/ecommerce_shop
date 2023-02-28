@@ -35,7 +35,7 @@
 .productPrice {
 	margin-top: 10px;
 	color: var(--black-color);
-	font-size: 0.7em;
+	font-size: 0.8em;
 }
 .btnBox {
 	position: absolute;
@@ -43,6 +43,7 @@
 	transform: translate(-50%);
 	width: 100%;
 	opacity: 0;
+
 }
 .btnBox p {
 	font-weight: bold;

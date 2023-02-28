@@ -129,10 +129,12 @@
 	max-width: 400px;
 	border-top: 1px solid rgba(0, 0, 0, 0.281);
 	margin-top: 1em;
-	height: 0;
 	overflow: hidden;
+
+	height: 0;
 	opacity: 0;
 }
+
 .description {
 	font-size: 16px;
 	font-family: 'Josefin Sans';
@@ -238,10 +240,8 @@
 	animation: rotateDown 0.3s forwards;
 }
 
-
-
 .showBox {
-	animation: showBox 0.5s forwards linear;
+	animation: showBox 0.3s forwards linear;
 }
 .hideBox {
 	animation: hideBox 0.3s forwards;
@@ -251,14 +251,6 @@
 	0% {
 		opacity: 0;
 		height: 0;
-	}
-	25% {
-		opacity: 1;
-		height: 100px;
-	}
-	50% {
-		opacity: 1;
-		height: 200px;
 	}
 
 	100% {
