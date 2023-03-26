@@ -23,6 +23,30 @@ const Registration = () => {
 		isChecked: false,
 		isEmailExistError: false,
 	});
+	const [backendErrors, setBackendErrors] = useState({
+		name: '',
+		email: '',
+		password: '',
+		repeatPassword: '',
+		isChecked: '',
+		isEmailExistError: '',
+	});
+	const [isBackendError, setIsBackendError] = useState({
+		name: false,
+		email: false,
+		password: false,
+		repeatPassword: false,
+		isChecked: false,
+		isEmailExistError: false,
+	});
+
+	useEffect(() => {
+		const newValidation = {};
+		Object.keys(backendErrors).forEach((key) => {
+			newValidation[key] = backendErrors[key] !== '';
+		});
+		setIsBackendError(newValidation);
+	}, [backendErrors]);
 
 	const formDataHandler = (e) => {
 		setFormData((prevData) => ({
@@ -173,6 +197,7 @@ const Registration = () => {
 				name: formData.name,
 				email: formData.email,
 				password: formData.password,
+				repeatPassword: formData.repeatPassword,
 				isChecked: formData.isChecked,
 			};
 			console.log(userData);
@@ -191,6 +216,11 @@ const Registration = () => {
 				navigate('/login');
 			} else {
 				toast.error('Registration failed');
+				const errorObject = {};
+				data.errors.forEach((error) => {
+					errorObject[error.param] = error.msg;
+				});
+				setBackendErrors(errorObject);
 			}
 		}
 	};
@@ -208,7 +238,7 @@ const Registration = () => {
 
 				<div
 					className={
-						errors.name
+						errors.name || backendErrors.name
 							? `${classes.nameBox} ${classes.inputError}`
 							: classes.nameBox
 					}>
@@ -218,12 +248,13 @@ const Registration = () => {
 						id='name'
 						value={formData.name}
 						onChange={formDataHandler}></input>
-					{errors.name && <p>Please write your name</p>}
+					{(errors.name && <p>Please write your name</p>) ||
+						(isBackendError.name && <p>{backendErrors.name}</p>)}
 				</div>
 
 				<div
 					className={
-						errors.email
+						errors.email || backendErrors.email
 							? `${classes.emailBox} ${classes.inputError}`
 							: classes.emailBox
 					}>
@@ -235,13 +266,13 @@ const Registration = () => {
 						onChange={formDataHandler}
 						autoComplete='email'></input>
 					{errors.email && <p>Invalid email address format</p>}
-					{errors.isEmailExistError && (
-						<p>Email already exists in the database</p>
-					)}
+					{errors.isEmailExistError &&
+						(<p>Email already exists in the database</p> ||
+							(isBackendError.email && <p>{backendErrors.email}</p>))}
 				</div>
 				<div
 					className={
-						errors.password
+						errors.password || backendErrors.password
 							? `${classes.passwordBox} ${classes.inputError}`
 							: classes.passwordBox
 					}>
@@ -253,13 +284,14 @@ const Registration = () => {
 						value={formData.password}
 						onChange={formDataHandler}
 						autoComplete='new-password'></input>
-					{errors.password && (
+					{(errors.password && (
 						<p>The password must meet the described conditions</p>
-					)}
+					)) ||
+						(isBackendError.password && <p>{backendErrors.password}</p>)}
 				</div>
 				<div
 					className={
-						errors.repeatPassword
+						errors.repeatPassword || backendErrors.repeatPassword
 							? `${classes.passwordBox} ${classes.inputError}`
 							: classes.passwordBox
 					}>
@@ -272,7 +304,10 @@ const Registration = () => {
 						onChange={formDataHandler}
 						autoComplete='new-password'
 					/>
-					{errors.repeatPassword && <p>The passwords are different</p>}
+					{(errors.repeatPassword && <p>The passwords are different</p>) ||
+						(isBackendError.repeatPassword && (
+							<p>{backendErrors.repeatPassword}</p>
+						))}
 				</div>
 				<p>Additional information:</p>
 				<div className={classes.checkBox}>
@@ -286,7 +321,8 @@ const Registration = () => {
 						I have read the regulations of the online store and accept its
 						content.
 					</label>
-					{errors.isChecked && <p>You have to accept the terms</p>}
+					{(errors.isChecked && <p>You have to accept the terms</p>) ||
+						(isBackendError.isChecked && <p>{backendErrors.repeatPassword}</p>)}
 				</div>
 				<div>
 					<button type='submit'>Register</button>
