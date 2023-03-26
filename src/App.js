@@ -4,9 +4,12 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import Home from './pages/Home';
 import Products from './pages/Products';
-import ProductDetail, {loader as loaderDetails } from './components/ProductDetail';
+import ProductDetail, {
+	loader as loaderDetails,
+} from './components/ProductDetail';
 import Login from './pages/Login';
-import Registration from './pages/Registration';
+import Registration from // {action as registrationAction}
+'./pages/Registration';
 import Information from './pages/Information';
 import Shipping from './pages/Shipping';
 import RootLayout from './pages/Root';
@@ -32,7 +35,11 @@ function App() {
 				},
 
 				{ path: '/login', element: <Login /> },
-				{ path: '/registration', element: <Registration /> },
+				{
+					path: '/registration',
+					element: <Registration />,
+					// action: registrationAction,
+				},
 				{ path: '/information', element: <Information /> },
 				{ path: '/shipping', element: <Shipping /> },
 			],

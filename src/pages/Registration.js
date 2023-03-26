@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
-import { client } from '../utils/client';
-import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import bcrypt from 'bcryptjs';
 
 import classes from '../styles/Registration.module.css';
 const Registration = () => {
@@ -98,15 +95,6 @@ const Registration = () => {
 				error: true,
 			}));
 			isValid = false;
-		} else {
-			if (await isEmailExists(formData.email)) {
-				setErrors((prevErrors) => ({
-					...prevErrors,
-					isEmailExistError: true,
-					error: true,
-				}));
-				isValid = false;
-			}
 		}
 		if (!isPasswordValid()) {
 			setErrors((prevErrors) => ({
@@ -154,19 +142,10 @@ const Registration = () => {
 
 		return isValid;
 	};
-	const isEmailExists = async (email) => {
-		const query = `*[_type == 'user']{
-			email
-		  }`;
 
-		const data = await client.fetch(query);
-		if (data && data.length > 0) {
-			return data.find((user) => user.email === email) !== undefined;
-		}
-	};
 	const isPasswordValid = () => {
 		let isValid = true;
-		if (formData.password.length < 8) {
+		if (formData.password.length < 5) {
 			isValid = false;
 		}
 		if (!/\d/.test(formData.password)) {
@@ -189,31 +168,30 @@ const Registration = () => {
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
-		const salt = await bcrypt.genSalt(10);
-		const hash = await bcrypt.hash(formData.password, salt);
-
 		if (await isDataValid()) {
-			const doc = {
-				_type: 'user',
+			const userData = {
 				name: formData.name,
 				email: formData.email,
-				password: hash,
+				password: formData.password,
 				isChecked: formData.isChecked,
-				userId: uuidv4(),
 			};
-			toast.success(`The account has been created.`);
-			client.create(doc).then(() => {
-				navigate('/home');
+			console.log(userData);
+			const response = await fetch('http://localhost:8080/auth/signup', {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(userData),
 			});
-			setFormData({
-				name: '',
-				email: '',
-				password: '',
-				repeatPassword: '',
-				isChecked: false,
-			});
-		} else {
-			toast.error(`Unfortunately, we were unable to create an account`);
+			const data = await response.json();
+			console.log(data);
+
+			if (response.ok) {
+				toast.success('User has been created!');
+				navigate('/login');
+			} else {
+				toast.error('Registration failed');
+			}
 		}
 	};
 
@@ -323,3 +301,24 @@ const Registration = () => {
 };
 
 export default Registration;
+
+// export async function action({ request }) {
+// 	const data = await request.formData();
+// 	const registerData = {
+// 		name: data.get('name'),
+// 		email: data.get('email'),
+// 		password: data.get('password'),
+// 		repeatPassword: data.get('repeatPassword'),
+// 	};
+
+// 	const response = await fetch('http://localhost:8080/auth/signup', {
+// 		method: 'PUT',
+// 		headers: {
+// 			'Content-Type': 'application/json',
+// 		},
+// 		body: JSON.stringify(registerData),
+// 	});
+// 	if (!response.ok) {
+// 		throw json({ message: 'Could not register the user' }, { status: 500 });
+// 	}
+// }

@@ -34,9 +34,7 @@ const NavBar = () => {
 	////////////// REDUX
 	const dispatch = useDispatch();
 	const cartIsVisible = useSelector((state) => state.ui.cartIsVisible);
-	const totalQuantity = useSelector(
-		(state) => state.cartItems.totalQuantity
-	);
+	const totalQuantity = useSelector((state) => state.cartItems.totalQuantity);
 
 	const searchVisibleHandler = () => {
 		dispatch(uiActions.searchHandler());
