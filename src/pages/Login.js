@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AiOutlineClose } from 'react-icons/ai';
-import bcrypt from 'bcryptjs';
-import { loginUser } from '../utils/data';
-import { client } from '../utils/client';
 import classes from '../styles/Login.module.css';
-import { useStateContext } from '../context/StateContext';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 
 const Login = () => {
-	const { setUserData, setIsLogin } = useStateContext();
 	const navigate = useNavigate();
 
 	const erorrHandler = () => {
@@ -29,6 +24,10 @@ const Login = () => {
 		password: '',
 		email: '',
 	});
+	const [backendErrors, setBackendErrors] = useState({
+		email: '',
+		password: '',
+	});
 	const formDataHandler = (e) => {
 		setFormData((prevData) => ({
 			...prevData,
@@ -41,13 +40,7 @@ const Login = () => {
 		if (formData.password.length < 8) {
 			isValid = false;
 		}
-		if (!/\d/.test(formData.password)) {
-			isValid = false;
-		}
 
-		if (!/[!@#$%^&*()+=._-]/.test(formData.password)) {
-			isValid = false;
-		}
 		return isValid;
 	};
 
@@ -94,51 +87,87 @@ const Login = () => {
 		}
 	}, [formData]);
 
-	const onLoginHandler = async (e) => {
+	const onLogin = async (e) => {
 		e.preventDefault();
-
 		if (validation()) {
 			try {
-				const query = loginUser(formData.email);
-				const response = await client.fetch(query);
-				const data = response[0].password;
-
-				const match = await bcrypt.compare(formData.password, data);
-				if (!match) {
-					setErrors((prevError) => ({
-						...prevError,
-						error: true,
-					}));
-				}
-				if (match) {
-					setUserData({
-						name: response[0].name,
-						email: response[0].email,
+				const response = await fetch('http://localhost:8080/auth/login', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						email: formData.email,
+						password: formData.password,
+					}),
+				});
+				const data = await response.json();
+				if (response.ok) {
+					console.log(data);
+					const token = data.token;
+					localStorage.setItem('token', token);
+					navigate('/');
+					toast.success(`Welcome ${data.name}`);
+				} else {
+					console.log(data);
+					const errorObject = {};
+					data.errors.forEach((error) => {
+						errorObject[error.param] = error.msg;
 					});
-					setIsLogin(true);
-					setFormData({
-						password: '',
-						email: '',
-					});
-
-					toast.success(
-						`You have successfully logged in. Welcome ${response[0].name}!`
-					);
-					navigate('/home');
+					setBackendErrors(errorObject);
 				}
-			} catch {
-				setErrors((prevError) => ({
-					...prevError,
-					error: true,
-				}));
+			} catch (err) {
+				console.log('Error loggingin:', err);
+				toast.error('Login failed');
 			}
-		} else {
-			setErrors((prevError) => ({
-				...prevError,
-				error: true,
-			}));
 		}
 	};
+
+	// const onLoginHandler = async (e) => {
+	// 	e.preventDefault();
+
+	// 	if (validation()) {
+	// 		try {
+	// 			const query = loginUser(formData.email);
+	// 			const response = await client.fetch(query);
+	// 			const data = response[0].password;
+
+	// 			const match = await bcrypt.compare(formData.password, data);
+	// 			if (!match) {
+	// 				setErrors((prevError) => ({
+	// 					...prevError,
+	// 					error: true,
+	// 				}));
+	// 			}
+	// 			if (match) {
+	// 				setUserData({
+	// 					name: response[0].name,
+	// 					email: response[0].email,
+	// 				});
+	// 				setIsLogin(true);
+	// 				setFormData({
+	// 					password: '',
+	// 					email: '',
+	// 				});
+
+	// 				toast.success(
+	// 					`You have successfully logged in. Welcome ${response[0].name}!`
+	// 				);
+	// 				navigate('/home');
+	// 			}
+	// 		} catch {
+	// 			setErrors((prevError) => ({
+	// 				...prevError,
+	// 				error: true,
+	// 			}));
+	// 		}
+	// 	} else {
+	// 		setErrors((prevError) => ({
+	// 			...prevError,
+	// 			error: true,
+	// 		}));
+	// 	}
+	// };
 
 	return (
 		<div className={classes.mainContainer}>
@@ -149,19 +178,21 @@ const Login = () => {
 				</div>
 			)}
 
-			<form className={classes.loginContainer} onSubmit={onLoginHandler}>
+			<form className={classes.loginContainer} onSubmit={onLogin}>
 				<h2>LOGIN</h2>
 				<div className={classes.emailBox}>
 					<label htmlFor='email'> E-mail:</label>
-
 					<input
 						name='email'
 						id='email'
 						onChange={formDataHandler}
 						value={formData.email}
 						autoComplete='off'
-						className={errors.email ? classes.inputError : ''}></input>
-					{errors.email && <p>Please enter your email.</p>}
+						className={
+							errors.email || backendErrors.email ? classes.inputError : ''
+						}></input>
+					{(errors.email && <p>Please enter your email.</p>) ||
+						(backendErrors.email && <p>{backendErrors.email}</p>)}
 				</div>
 				<div className={classes.passwordBox}>
 					<label htmlFor='password'> Password:</label>
@@ -173,8 +204,13 @@ const Login = () => {
 						onChange={formDataHandler}
 						value={formData.password}
 						autoComplete='off'
-						className={errors.password ? classes.inputError : ''}></input>
-					{errors.password && <p>Please enter your password.</p>}
+						className={
+							errors.password || backendErrors.password
+								? classes.inputError
+								: ''
+						}></input>
+					{(errors.password && <p>Please enter your password.</p>) ||
+						(backendErrors.password && <p>{backendErrors.password}</p>)}
 				</div>
 				<button type='submit'>Login</button>
 				<div className={classes.createAccountBox}>

@@ -265,10 +265,8 @@ const Registration = () => {
 						value={formData.email}
 						onChange={formDataHandler}
 						autoComplete='email'></input>
-					{errors.email && <p>Invalid email address format</p>}
-					{errors.isEmailExistError &&
-						(<p>Email already exists in the database</p> ||
-							(isBackendError.email && <p>{backendErrors.email}</p>))}
+					{(errors.email && <p>Invalid email address format</p>) ||
+						(isBackendError.email && <p>{backendErrors.email}</p>)}
 				</div>
 				<div
 					className={
