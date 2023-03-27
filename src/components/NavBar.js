@@ -5,7 +5,7 @@ import React, {
 	useCallback,
 	useMemo,
 } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useRouteLoaderData } from 'react-router-dom';
 import classes from './NavBar.module.css';
 import { IoIosSearch } from 'react-icons/io';
 import { BsBag } from 'react-icons/bs';
@@ -25,6 +25,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { uiActions } from '../store/ui-slice';
 
 const NavBar = () => {
+	const token = useRouteLoaderData('root');
 	const [hide, setHide] = useState(true);
 	const [showProfilCard, setShowProfilCard] = useState(false);
 	const [isClassAdded, setIsClassAdded] = useState(false);
@@ -145,9 +146,10 @@ const NavBar = () => {
 								</div>
 								<div>
 									<ProfilCard
+										token={token}
 										showProfilCard={showProfilCard}
 										logout={logout}
-										profilActionHandler={profilActionHandler}
+										profilActionHandler={profilActionHandler && menuHandler}
 									/>
 								</div>
 							</div>
@@ -205,6 +207,7 @@ const NavBar = () => {
 							</div>
 							<div>
 								<ProfilCard
+									token={token}
 									showProfilCard={showProfilCard}
 									logout={logout}
 									profilActionHandler={profilActionHandler}

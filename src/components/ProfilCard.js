@@ -1,22 +1,18 @@
 import React from 'react';
 import Transition from 'react-transition-group/Transition';
-import { useStateContext } from '../context/StateContext';
-import { Link } from 'react-router-dom';
+import { Link, Form } from 'react-router-dom';
+import {
+	AiOutlineLogout,
+	AiOutlineUser,
+	AiOutlineUserAdd,
+} from 'react-icons/ai';
 
+import classes from './ProfilCard.module.css';
 
-
-import classes from "./ProfilCard.module.css"
-
-
-
-const ProfilCard = ({showProfilCard, logout, profilActionHandler}) => {
-    const { isLogin } =
-    useStateContext();
-
-    
+const ProfilCard = ({ showProfilCard, profilActionHandler, token }) => {
+	const userId = localStorage.getItem('userId');
 	return (
 		<>
-        
 			<Transition in={showProfilCard} mountOnEnter unmountOnExit timeout={200}>
 				{(state) => {
 					const classesCss = [
@@ -28,42 +24,50 @@ const ProfilCard = ({showProfilCard, logout, profilActionHandler}) => {
 					];
 
 					return (
-						<div className={`${classes.profilAcctionContainer} ${classesCss}`}>
-							{isLogin ? (
+						<ul className={`${classes.profilAcctionContainer} ${classesCss}`}>
+							{token ? (
 								<>
-									<div>
-										<Link>
-											<button>Your account</button>
+									<li>
+										<Link to={`/profil/${userId}`}>
+											<button onClick={profilActionHandler}>
+												<AiOutlineUser className={classes.icon} />
+												<p>Your account</p>
+											</button>
 										</Link>
-									</div>
-									<div>
-										<button type='button' onClick={logout}>
-											Logout
-										</button>
-									</div>
+									</li>
+									<li>
+										<Form action='/logout' method='POST'>
+											<button onClick={profilActionHandler}>
+												<AiOutlineLogout className={classes.icon} />
+												<p>Logout</p>
+											</button>
+										</Form>
+									</li>
 								</>
 							) : (
 								<>
-									<div>
+									<li>
 										<Link to='/login'>
 											<button type='button' onClick={profilActionHandler}>
-												Login
+												<AiOutlineUser className={classes.icon} />
+												<p>Login</p>
 											</button>
 										</Link>
-									</div>
+									</li>
 
 									<p>Don't have account?</p>
 
-									<div>
+									<li>
 										<Link to='/registration'>
 											<button type='button' onClick={profilActionHandler}>
-												Create account
+												<AiOutlineUserAdd className={classes.icon} />
+												<p>Create account</p>
 											</button>
 										</Link>
-									</div>
+									</li>
 								</>
 							)}
-						</div>
+						</ul>
 					);
 				}}
 			</Transition>

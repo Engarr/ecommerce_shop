@@ -106,6 +106,7 @@ const Login = () => {
 					console.log(data);
 					const token = data.token;
 					localStorage.setItem('token', token);
+					localStorage.setItem('userId', data.userId);
 					navigate('/');
 					toast.success(`Welcome ${data.name}`);
 				} else {

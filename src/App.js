@@ -8,12 +8,16 @@ import ProductDetail, {
 	loader as loaderDetails,
 } from './components/ProductDetail';
 import Login from './pages/Login';
-import Registration from // {action as registrationAction}
-'./pages/Registration';
+import Registration from './pages/Registration'; // {action as registrationAction}
 import Information from './pages/Information';
 import Shipping from './pages/Shipping';
 import RootLayout from './pages/Root';
 import ErrorPage from './pages/ErrorPage';
+import UserPage from './pages/UserPage';
+import NewProduct from './pages/NewProduct';
+import { checkAuthToken, tokenLoader } from './utils/auth';
+import { action as logoutaAction } from './pages/Logout';
+
 //////REDUX
 
 function App() {
@@ -22,6 +26,8 @@ function App() {
 			path: '/',
 			element: <RootLayout />,
 			errorElement: <ErrorPage />,
+			id: 'root',
+			loader: tokenLoader,
 			children: [
 				{ path: '', element: <Navigate to='/home' /> },
 				{ path: '/home', element: <Home /> },
@@ -42,6 +48,13 @@ function App() {
 				},
 				{ path: '/information', element: <Information /> },
 				{ path: '/shipping', element: <Shipping /> },
+				{ path: '/logout', action: logoutaAction },
+				{
+					path: '/profil/:userId',
+					element: <UserPage />,
+					loader: checkAuthToken,
+				},
+				{ path: '/add-product/:userId', element: <NewProduct /> },
 			],
 		},
 	]);

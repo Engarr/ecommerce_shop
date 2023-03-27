@@ -1,0 +1,79 @@
+.mainContainer {
+	height: 100vh;
+	width: 100%;
+}
+.profilBox {
+	margin: 2em;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	padding: 10px 20px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.329);
+}
+.profilBox div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.profilBox h3 {
+	font-size: 2em;
+	margin-left: 0.5em;
+}
+.imageBox {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 80px;
+	width: 80px;
+	border-radius: 50%;
+	overflow: hidden;
+	box-shadow: 0 0 5px black;
+}
+.image {
+	height: 80%;
+	width: 80%;
+	cursor: pointer;
+}
+.optionIcon {
+	font-size: 1.8em;
+	cursor: pointer;
+	transition: transform 0.3s;
+}
+.optionIcon:hover {
+	transform: scale(1.05);
+}
+
+.addBtnBox {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+    margin-bottom: 2em;
+}
+.addBtn {
+	padding: 10px 20px;
+	border: none;
+	font-family: Josefin Sans;
+	font-size: 1.2em;
+	box-shadow: 0 0 2px black;
+	letter-spacing: 2px;
+	background-color: var(--main-text-nav);
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+.addBtn:hover {
+	background-color: rgb(248, 222, 187);
+}
+@media only screen and (max-width: 1024px) {
+	.profilBox {
+		justify-content: space-between;
+	}
+	.profilBox h3 {
+		font-size: 1.4em;
+		margin-left: 0.5em;
+	}
+	.imageBox {
+		height: 60px;
+		width: 60px;
+	}
+}
