@@ -1,0 +1,59 @@
+.photoContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+.photoBox {
+	display: flex;
+	flex-direction: row;
+	position: relative;
+}
+.photoBox div {
+	margin-right: 0.5em;
+}
+.customFileUpload {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #f2f2f2;
+	border: 1px solid #ccc;
+	box-shadow: 0 5px 20px black;
+	border-radius: 3px;
+	font-size: 16px;
+	font-weight: bold;
+	cursor: pointer;
+	height: auto;
+	min-height: 250px;
+	width: 200px;
+	overflow: hidden;
+}
+
+.customFileUpload p {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	font-size: 20px;
+	margin-right: 0.5em;
+}
+.uploadIcon {
+	font-size: 45px;
+	margin-bottom: 0.05em;
+}
+
+input[type='file'] {
+	position: absolute;
+	left: -9999px;
+}
+
+.addedImg {
+	position: relative;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	background-position: center;
+}

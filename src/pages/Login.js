@@ -103,14 +103,12 @@ const Login = () => {
 				});
 				const data = await response.json();
 				if (response.ok) {
-					console.log(data);
 					const token = data.token;
 					localStorage.setItem('token', token);
 					localStorage.setItem('userId', data.userId);
 					navigate('/');
 					toast.success(`Welcome ${data.name}`);
 				} else {
-					console.log(data);
 					const errorObject = {};
 					data.errors.forEach((error) => {
 						errorObject[error.param] = error.msg;
@@ -123,52 +121,6 @@ const Login = () => {
 			}
 		}
 	};
-
-	// const onLoginHandler = async (e) => {
-	// 	e.preventDefault();
-
-	// 	if (validation()) {
-	// 		try {
-	// 			const query = loginUser(formData.email);
-	// 			const response = await client.fetch(query);
-	// 			const data = response[0].password;
-
-	// 			const match = await bcrypt.compare(formData.password, data);
-	// 			if (!match) {
-	// 				setErrors((prevError) => ({
-	// 					...prevError,
-	// 					error: true,
-	// 				}));
-	// 			}
-	// 			if (match) {
-	// 				setUserData({
-	// 					name: response[0].name,
-	// 					email: response[0].email,
-	// 				});
-	// 				setIsLogin(true);
-	// 				setFormData({
-	// 					password: '',
-	// 					email: '',
-	// 				});
-
-	// 				toast.success(
-	// 					`You have successfully logged in. Welcome ${response[0].name}!`
-	// 				);
-	// 				navigate('/home');
-	// 			}
-	// 		} catch {
-	// 			setErrors((prevError) => ({
-	// 				...prevError,
-	// 				error: true,
-	// 			}));
-	// 		}
-	// 	} else {
-	// 		setErrors((prevError) => ({
-	// 			...prevError,
-	// 			error: true,
-	// 		}));
-	// 	}
-	// };
 
 	return (
 		<div className={classes.mainContainer}>

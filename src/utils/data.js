@@ -1,11 +1,10 @@
 export const categories = [
-	{ name: 'One pieces' },
-	{ name: 'Two pieces' },
-	{ name: 'SWIMMING TRUNKS' },
-	{ name: 'TUNICS' },
-	{ name: 'Top of the outfit' },
-	{ name: 'Bottom of the outfit' },
-	{ name: 'FAQ' },
+	{ id: 1, name: 'One pieces' },
+	{ id: 2, name: 'Two pieces' },
+	{ id: 3, name: 'Swimming trunks' },
+	{ id: 4, name: 'Tunics' },
+	{ id: 5, name: 'Top of the outfit' },
+	{ id: 6, name: 'Bottom of the outfit' },
 ];
 
 export const shippingCost = [

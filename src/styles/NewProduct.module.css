@@ -1,0 +1,154 @@
+.mainContainer {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	left: 50%;
+	transform: translate(-50%);
+	width: 100%;
+	max-width: 1400px;
+	margin-top: 4em;
+	margin-bottom: 5em;
+}
+.mainContainer h2 {
+	font-size: 2em;
+	letter-spacing: 1px;
+}
+.formContainer {
+	position: relative;
+	margin-top: 2em;
+	width: 70%;
+	left: 50%;
+	transform: translate(-50%);
+}
+.photoContainer {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.formData {
+	position: relative;
+	width: 50%;
+	left: 50%;
+	transform: translate(-50%);
+}
+select {
+	appearance: none;
+	outline: 0;
+	box-shadow: none;
+	border: 0;
+	cursor: pointer;
+	font-family: 'Josefin Sans';
+	color: gray;
+	font-size: 1em;
+}
+select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-ms-appearance: none;
+	appearance: none;
+	outline: 0;
+	box-shadow: none;
+	border: 0 !important;
+	background-image: none;
+	flex: 1;
+	padding: 0 0.5em;
+	appearance: none;
+	outline: 0;
+	box-shadow: none;
+	cursor: pointer;
+	font-family: 'Josefin Sans';
+	color: gray;
+	font-size: 1em;
+}
+select::-ms-expand {
+	display: none;
+}
+.select {
+	height: 3em;
+	line-height: 3;
+	overflow: hidden;
+	position: relative;
+	display: flex;
+	width: 100%;
+	min-width: 290px;
+	border: 1px solid rgba(2, 2, 2, 0.349);
+	border-radius: 5px;
+	margin: 1em 0;
+}
+.select::after {
+	content: '\25BC';
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 0 1em;
+	cursor: pointer;
+	pointer-events: none;
+	transition: 0.25s all ease;
+}
+.select:hover::after {
+	color: grey;
+}
+.saveBtn {
+	padding: 10px 20px;
+	border: none;
+	font-family: Josefin Sans;
+	font-size: 1.2em;
+	box-shadow: 0 0 2px black;
+	letter-spacing: 2px;
+	background-color: var(--main-text-nav);
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+.saveBtn:hover {
+	background-color: rgb(248, 222, 187);
+}
+
+.uploadImg {
+	margin-right: 0.2em;
+	font-size: 40px;
+}
+.textareaBox {
+	position: relative;
+	width: 100%;
+	min-width: 290px;
+}
+
+.textareaBox textarea {
+	width: 100%;
+	min-height: 200px;
+	resize: vertical;
+	padding: 14px;
+	border: 1px solid rgba(2, 2, 2, 0.349);
+	border-radius: 5px;
+	outline: none;
+	font-size: 1em;
+	margin-bottom: 1em;
+}
+.textareaBox textarea::placeholder {
+	color: transparent;
+}
+.textareaBox label {
+	position: absolute;
+	left: 0;
+	padding: 10px;
+	pointer-events: none;
+	font-size: 1em;
+	color: gray;
+	transition: 0.5s;
+}
+.textareaBox textarea:focus ~ .label,
+.textarea:not(:placeholder-shown).textarea:not(:focus) ~ .label {
+	color: black;
+	transform: translate(10px) translateY(-7px);
+	font-size: 0.95em;
+	padding: 0 5px;
+	letter-spacing: 1px;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+	background-color: #fff;
+}
+.inputBox input:focus {
+	border: 1px solid black;
+}

@@ -3,7 +3,7 @@
 	position: relative;
 	min-width: 290px;
 	width: 100%;
-	padding-right: 1em;
+	/* padding-right: 1em; */
 }
 
 .inputBox input {
@@ -18,6 +18,9 @@
 }
 .inputBox input::placeholder {
 	color: transparent;
+}
+.inputBox input[type='number']::-webkit-inner-spin-button {
+	display: none;
 }
 
 .inputBox label {
