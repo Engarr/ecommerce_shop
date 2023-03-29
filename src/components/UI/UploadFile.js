@@ -1,23 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classes from './UploadFile.module.css';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 
-const UploadFile = () => {
-	const [imageSrcs, setImageSrcs] = useState([]);
-
-	const handleFileSelect = (event) => {
-		const file = event.target.files[0];
-		const reader = new FileReader();
-
-		let name = event.target.name;
-		reader.onload = (event) => {
-			const newImageSrcs = [...imageSrcs];
-			newImageSrcs[name] = event.target.result;
-			setImageSrcs(newImageSrcs);
-		};
-
-		reader.readAsDataURL(file);
-	};
+const UploadFile = ({ onChange, imageSrcs }) => {
 	return (
 		<div className={classes.photoBox}>
 			<div>
@@ -36,14 +21,9 @@ const UploadFile = () => {
 						</p>
 					)}
 				</label>
-				<input
-					id='file-input-0'
-					type='file'
-					onChange={handleFileSelect}
-					name='0'
-				/>
+				<input id='file-input-0' type='file' onChange={onChange} name='0' />
 			</div>
-			{imageSrcs[0] && (
+			{/* {imageSrcs[0] && (
 				<div>
 					<label htmlFor='file-input-1' className={classes.customFileUpload}>
 						{imageSrcs[1] ? (
@@ -60,12 +40,7 @@ const UploadFile = () => {
 							</p>
 						)}
 					</label>
-					<input
-						id='file-input-1'
-						type='file'
-						onChange={handleFileSelect}
-						name='1'
-					/>
+					<input id='file-input-1' type='file' onChange={onChange} name='1' />
 				</div>
 			)}
 			{imageSrcs[1] && (
@@ -85,14 +60,9 @@ const UploadFile = () => {
 							</p>
 						)}
 					</label>
-					<input
-						id='file-input-3'
-						type='file'
-						onChange={handleFileSelect}
-						name='2'
-					/>
+					<input id='file-input-3' type='file' onChange={onChange} name='2' />
 				</div>
-			)}
+			)} */}
 		</div>
 	);
 };

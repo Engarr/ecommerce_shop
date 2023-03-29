@@ -43,10 +43,10 @@
 	margin-bottom: 0.05em;
 }
 
-input[type='file'] {
+/* .photoBox input[type='file'] {
 	position: absolute;
 	left: -9999px;
-}
+} */
 
 .addedImg {
 	position: relative;

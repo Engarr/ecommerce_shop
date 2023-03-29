@@ -9,13 +9,21 @@ import { toast } from 'react-hot-toast';
 const NewProduct = () => {
 	const param = useParams();
 	const userId = param.userId;
+	const [imageSrcs, setImageSrcs] = useState('');
+	const [image, setImage] = useState(null);
 	const [productData, setProductData] = useState({
 		name: '',
 		category: '',
 		price: '',
 		description: '',
 	});
+	////
 
+	const fileSelectedHandler = (e) => {
+		setImage(e.target.files[0]);
+	};
+
+	///
 	const productDataHandler = (e) => {
 		setProductData((prevData) => ({
 			...prevData,
@@ -23,21 +31,38 @@ const NewProduct = () => {
 		}));
 	};
 
+	// const handleFileSelect = (event) => {
+	// 	setSelectedImage(event.target.files[0]);
+	// 	console.log(selectedImage);
+
+	// 	const file = event.target.files[0];
+	// 	const reader = new FileReader();
+
+	// 	let name = event.target.name;
+	// 	reader.onload = (event) => {
+	// 		const newImageSrcs = [...imageSrcs];
+	// 		newImageSrcs[name] = event.target.result;
+	// 		setImageSrcs(newImageSrcs);
+	// 	};
+
+	// 	reader.readAsDataURL(file);
+	// };
+
 	const onSubmit = async (e) => {
 		e.preventDefault();
+
 		try {
+			const formData = new FormData();
+			formData.append('name', productData.name);
+			formData.append('category', productData.category);
+			formData.append('price', productData.price);
+			formData.append('description', productData.description);
+			formData.append('userId', userId);
+			formData.append('image', image);
+
 			const response = await fetch('http://localhost:8080/feed/add-product', {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					name: productData.name,
-					category: productData.category,
-					price: productData.price,
-					description: productData.description,
-					userId: userId,
-				}),
+				body: formData,
 			});
 			const data = await response.json();
 			if (response.ok) {
@@ -50,7 +75,6 @@ const NewProduct = () => {
 			toast.error('Adding a product failed');
 		}
 	};
-	console.log(productData);
 	return (
 		<div>
 			<div className={classes.mainContainer}>
@@ -74,10 +98,13 @@ const NewProduct = () => {
 									))}
 								</select>
 							</div>
-
-							<div className={classes.photoContainer}>
-								<UploadFile />
+							<div>
+								<input type='file' onChange={fileSelectedHandler} />
 							</div>
+
+							{/* <div className={classes.photoContainer}>
+								<UploadFile onChange={handleFileSelect} imageSrcs={imageSrcs} />
+							</div> */}
 							<Input
 								data='price'
 								text=' Product price:'
