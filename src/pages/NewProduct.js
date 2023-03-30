@@ -70,7 +70,7 @@ const NewProduct = () => {
 				toast.success('Product has been created.');
 			} else {
 				console.log(data);
-				toast.error('Product cannot be created. Something went wrong');
+				toast.error('Product cannot be created.Something went wrong');
 			}
 		} catch (err) {
 			console.log('Error adding product', err);

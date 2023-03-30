@@ -2,7 +2,8 @@
 	height: 100vh;
 	width: 100%;
 }
-.profilBox {
+.profilBox,
+.border {
 	margin: 2em;
 	display: flex;
 	justify-content: space-around;
@@ -37,10 +38,14 @@
 .optionIcon {
 	font-size: 1.8em;
 	cursor: pointer;
-	transition: transform 0.3s;
+	border-radius: 50%;
+	padding: 5px;
+	transition: transform 0.3s, background-color 0.3s, color 0.3s;
 }
 .optionIcon:hover {
 	transform: scale(1.05);
+	color: rgb(248, 222, 187);
+	background-color: rgba(0, 0, 0, 0.548);
 }
 
 .addBtnBox {
@@ -48,7 +53,7 @@
 	justify-content: center;
 	align-items: center;
 	width: 100%;
-    margin-bottom: 2em;
+	margin-bottom: 2em;
 }
 .addBtn {
 	padding: 10px 20px;
@@ -64,6 +69,68 @@
 .addBtn:hover {
 	background-color: rgb(248, 222, 187);
 }
+
+/* ////////////////////// */
+.title {
+	width: 100%;
+	margin-bottom: 1em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 2em;
+	letter-spacing: 2px;
+}
+
+.productsContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+.productData {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	margin-right: 0.5em;
+}
+.productData img {
+	box-shadow: 0 0px 2px 0.5px black;
+}
+.productBox {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	width: 80%;
+	margin: 0.5em 0;
+}
+.nameBox {
+	margin-top: 1em;
+	margin-left: 1em;
+}
+.nameBox p {
+	padding: 10px 0px;
+}
+
+.buttonBox button {
+	margin: 0.5em;
+	padding: 5px 5px;
+	background: none;
+	border: none;
+	font-size: 20px;
+	cursor: pointer;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: transform 0.3s, background-color 0.3s, color 0.3s;
+}
+.buttonBox button:hover {
+	transform: scale(1.1);
+	color: rgb(248, 222, 187);
+	background-color: rgba(0, 0, 0, 0.548);
+}
+/* ////////////////////// */
 @media only screen and (max-width: 1024px) {
 	.profilBox {
 		justify-content: space-between;
