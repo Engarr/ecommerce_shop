@@ -10,9 +10,9 @@ const Input = ({
 	type,
 	message,
 	maxLength,
-	pattern,
 	min,
-	max,
+
+	step,
 }) => {
 	return (
 		<div className={`${classes.inputBox} ${error ? classes.error : ''}`}>
@@ -25,9 +25,8 @@ const Input = ({
 				placeholder={error ? message : 'text'}
 				className={classes.input}
 				maxLength={maxLength}
-				pattern={pattern}
 				min={min}
-				max={max}
+				step={step}
 			/>
 			<label htmlFor={data} className={classes.label}>
 				{text}

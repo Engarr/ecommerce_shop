@@ -5,6 +5,7 @@ import Input from '../components/UI/Input';
 import UploadFile from '../components/UI/UploadFile';
 import { categories } from '../utils/data';
 import { toast } from 'react-hot-toast';
+import { redirect } from 'react-router-dom';
 
 const NewProduct = () => {
 	const param = useParams();
@@ -19,7 +20,7 @@ const NewProduct = () => {
 	});
 	////
 
-	const fileSelectedHandler = (e) => {
+	const imageHandler = (e) => {
 		setImage(e.target.files[0]);
 	};
 
@@ -31,22 +32,20 @@ const NewProduct = () => {
 		}));
 	};
 
-	// const handleFileSelect = (event) => {
-	// 	setSelectedImage(event.target.files[0]);
-	// 	console.log(selectedImage);
+	const handleFileSelect = (event) => {
+		imageHandler(event);
+		const file = event.target.files[0];
+		const reader = new FileReader();
 
-	// 	const file = event.target.files[0];
-	// 	const reader = new FileReader();
+		let name = event.target.name;
+		reader.onload = (event) => {
+			const newImageSrcs = [...imageSrcs];
+			newImageSrcs[name] = event.target.result;
+			setImageSrcs(newImageSrcs);
+		};
 
-	// 	let name = event.target.name;
-	// 	reader.onload = (event) => {
-	// 		const newImageSrcs = [...imageSrcs];
-	// 		newImageSrcs[name] = event.target.result;
-	// 		setImageSrcs(newImageSrcs);
-	// 	};
-
-	// 	reader.readAsDataURL(file);
-	// };
+		reader.readAsDataURL(file);
+	};
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
@@ -67,8 +66,11 @@ const NewProduct = () => {
 			const data = await response.json();
 			if (response.ok) {
 				console.log(data);
+				redirect(`/profil/${userId}`);
+				toast.success('Product has been created.');
 			} else {
 				console.log(data);
+				toast.error('Product cannot be created. Something went wrong');
 			}
 		} catch (err) {
 			console.log('Error adding product', err);
@@ -89,8 +91,13 @@ const NewProduct = () => {
 								onChange={productDataHandler}
 							/>
 							<div className={classes.select}>
-								<select onChange={productDataHandler} name='category'>
-									<option disabled>Chose category:</option>
+								<select
+									onChange={productDataHandler}
+									name='category'
+									defaultValue='chose category'>
+									<option value='chose category' disabled>
+										Chose category
+									</option>
 									{categories.map((category) => (
 										<option key={category.id} value={category.name}>
 											{category.name}
@@ -98,18 +105,15 @@ const NewProduct = () => {
 									))}
 								</select>
 							</div>
-							<div>
-								<input type='file' onChange={fileSelectedHandler} />
-							</div>
 
-							{/* <div className={classes.photoContainer}>
+							<div className={classes.photoContainer}>
 								<UploadFile onChange={handleFileSelect} imageSrcs={imageSrcs} />
-							</div> */}
+							</div>
 							<Input
 								data='price'
 								text=' Product price:'
 								type='number'
-								min='1'
+								step={0.01}
 								onChange={productDataHandler}
 							/>
 							<div className={classes.textareaBox}>
