@@ -209,16 +209,14 @@ const ProductDetail = () => {
 						<button
 							type='button'
 							className={classes.addToCart}
-							onClick={additemHandler}
-						>
+							onClick={additemHandler}>
 							Add to Cart
 						</button>
 						<Link to='/information'>
 							<button
 								type='button'
 								className={classes.buyNow}
-								onClick={additemHandler}
-							>
+								onClick={additemHandler}>
 								Buy Now
 							</button>
 						</Link>
@@ -289,7 +287,7 @@ export async function loader({ request, params }) {
 	const slug = params.slug;
 	let query = productDetails(slug);
 	const response = await client.fetch(query);
-
+	console.log(response);
 	if (response.length < 0) {
 		throw json(
 			{ message: 'Could not fetch details for selected product' },

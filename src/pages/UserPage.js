@@ -25,6 +25,7 @@ const UserPage = () => {
 					price: product.price,
 					imageUrl: `http://localhost:8080/${product.imageUrl[0]}`,
 					description: product.description,
+					userId: product.creator,
 				};
 			});
 			setProductsData(products);
@@ -32,7 +33,6 @@ const UserPage = () => {
 			console.log('Error loggingin:', err);
 		}
 	};
-
 	useEffect(() => {
 		fetchUserData();
 		// eslint-disable-next-line
@@ -77,7 +77,7 @@ const UserPage = () => {
 									<div>
 										<img
 											src={product.imageUrl}
-											height={100}
+											height={80}
 											alt={product.name}
 										/>
 									</div>
@@ -88,9 +88,10 @@ const UserPage = () => {
 								</div>
 
 								<div className={classes.buttonBox}>
-									<button>
+									<Link>
 										<AiOutlineEdit />
-									</button>
+									</Link>
+
 									<button>
 										<AiOutlineDelete />
 									</button>

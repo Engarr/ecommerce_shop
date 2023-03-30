@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { client } from '../utils/client';
-import { categoryProducts, feedProducts } from '../utils/data';
 import { useParams } from 'react-router-dom';
 import Spinner from '../components/Spinner';
 import { MdKeyboardArrowDown } from 'react-icons/md';
@@ -13,14 +11,29 @@ const Products = () => {
 
 	const { category } = useParams();
 
-	useEffect(() => {
+	const fetchProducts = async () => {
+		let url = 'http://localhost:8080/feed/products';
 		if (category) {
-			let query = categoryProducts(category);
-			client.fetch(query).then((data) => setProductsData(data));
-		} else {
-			let query = feedProducts;
-			client.fetch(query).then((data) => setProductsData(data));
+			url = `http://localhost:8080/feed/products/${category}`;
 		}
+
+		const response = await fetch(url);
+		const data = await response.json();
+		const products = data.products.map((product) => {
+			return {
+				_id: product._id,
+				name: product.name,
+				price: product.price,
+				imageUrl: `http://localhost:8080/${product.imageUrl[0]}`,
+				userId: product.creator,
+			};
+		});
+
+		setProductsData(products);
+	};
+	useEffect(() => {
+		fetchProducts();
+		// eslint-disable-next-line
 	}, [category]);
 
 	let sortedProducts = [...productsData];

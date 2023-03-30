@@ -1,5 +1,4 @@
 .mainContainer {
-	height: 100vh;
 	width: 100%;
 }
 .profilBox,
@@ -95,6 +94,8 @@
 	margin-right: 0.5em;
 }
 .productData img {
+	height: 100px;
+	width: 100px;
 	box-shadow: 0 0px 2px 0.5px black;
 }
 .productBox {
@@ -112,7 +113,8 @@
 	padding: 10px 0px;
 }
 
-.buttonBox button {
+.buttonBox button,
+.buttonBox a {
 	margin: 0.5em;
 	padding: 5px 5px;
 	background: none;
@@ -125,7 +127,8 @@
 	align-items: center;
 	transition: transform 0.3s, background-color 0.3s, color 0.3s;
 }
-.buttonBox button:hover {
+.buttonBox button:hover,
+.buttonBox a:hover {
 	transform: scale(1.1);
 	color: rgb(248, 222, 187);
 	background-color: rgba(0, 0, 0, 0.548);

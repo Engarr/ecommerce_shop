@@ -20,10 +20,10 @@ const Product = ({ product }) => {
 				className={classes.productCard}
 				onMouseEnter={activeHandler}
 				onMouseLeave={activeHandler}>
-				<Link to={`/product/${product?.slug.current}`} onClick={handleClick}>
+				<Link to={`/product/${product._id}`} onClick={handleClick}>
 					<img
-						src={urlFor(product?.image[0]).url()}
-						alt={product?.name}
+						src={product.imageUrl}
+						alt={product.name}
 						width={250}
 						height={250}
 						className={classes.productImage}
@@ -40,9 +40,7 @@ const Product = ({ product }) => {
 						];
 						return (
 							<>
-								<Link
-									to={`product/${product?.slug.current}`}
-									onClick={handleClick}>
+								<Link to={`product/${product._id}`} onClick={handleClick}>
 									<div className={`${classes.btnBox} ${classesCss}`}>
 										<div className={classes.textShadow}>
 											<p className={classes.productName}>{product?.name}</p>
