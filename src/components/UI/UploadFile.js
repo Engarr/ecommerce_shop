@@ -23,7 +23,7 @@ const UploadFile = ({ onChange, imageSrcs }) => {
 				</label>
 				<input id='file-input-0' type='file' onChange={onChange} name='0' />
 			</div>
-			{/* {imageSrcs[0] && (
+			{imageSrcs[0] && (
 				<div>
 					<label htmlFor='file-input-1' className={classes.customFileUpload}>
 						{imageSrcs[1] ? (
@@ -62,7 +62,7 @@ const UploadFile = ({ onChange, imageSrcs }) => {
 					</label>
 					<input id='file-input-3' type='file' onChange={onChange} name='2' />
 				</div>
-			)} */}
+			)}
 		</div>
 	);
 };

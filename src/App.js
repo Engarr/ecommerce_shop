@@ -35,7 +35,7 @@ function App() {
 				{ path: '/products', element: <Products /> },
 
 				{
-					path: '/product/:slug',
+					path: '/product/:productId',
 					element: <ProductDetail />,
 					loader: loaderDetails,
 				},

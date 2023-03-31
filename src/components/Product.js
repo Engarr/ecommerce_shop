@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import classes from './Product.module.css';
-import { urlFor } from '../utils/client';
 import { Link } from 'react-router-dom';
 import Transition from 'react-transition-group/Transition';
 

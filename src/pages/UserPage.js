@@ -33,11 +33,13 @@ const UserPage = () => {
 			console.log('Error loggingin:', err);
 		}
 	};
+	// eslint-disable-next-line
 	useEffect(() => {
 		fetchUserData();
 		// eslint-disable-next-line
 	}, [userId]);
 
+	console.log(productsData);
 	if (!userData) {
 		return <div>Loading...</div>;
 	}
@@ -69,37 +71,43 @@ const UserPage = () => {
 					</Link>
 				</div>
 				<div className={classes.border}></div>
-				<div className={classes.productsContainer}>
-					{productsData.map((product) => {
-						return (
-							<div key={product.id} className={classes.productBox}>
-								<div className={classes.productData}>
-									<div>
-										<img
-											src={product.imageUrl}
-											height={80}
-											alt={product.name}
-										/>
+				{productsData.length === 0 ? (
+					<div>
+						<p>No products</p>
+					</div>
+				) : (
+					<div className={classes.productsContainer}>
+						{productsData.map((product) => {
+							return (
+								<div key={product._id} className={classes.productBox}>
+									<div className={classes.productData}>
+										<div>
+											<img
+												src={product.imageUrl}
+												height={80}
+												alt={product.name}
+											/>
+										</div>
+										<div className={classes.nameBox}>
+											<p>id: {product.id}</p>
+											<p>{product.name}</p>
+										</div>
 									</div>
-									<div className={classes.nameBox}>
-										<p>id: {product.id}</p>
-										<p>{product.name}</p>
+
+									<div className={classes.buttonBox}>
+										<Link>
+											<AiOutlineEdit />
+										</Link>
+
+										<button>
+											<AiOutlineDelete />
+										</button>
 									</div>
 								</div>
-
-								<div className={classes.buttonBox}>
-									<Link>
-										<AiOutlineEdit />
-									</Link>
-
-									<button>
-										<AiOutlineDelete />
-									</button>
-								</div>
-							</div>
-						);
-					})}
-				</div>
+							);
+						})}
+					</div>
+				)}
 			</div>
 		</div>
 	);

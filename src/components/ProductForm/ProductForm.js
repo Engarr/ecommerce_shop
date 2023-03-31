@@ -12,7 +12,7 @@ const ProductForm = () => {
 	const navigate = useNavigate();
 	const userId = param.userId;
 	const [imageSrcs, setImageSrcs] = useState('');
-	const [image, setImage] = useState(null);
+	const [images, setImages] = useState(null);
 	const [productData, setProductData] = useState({
 		name: '',
 		category: '',
@@ -20,9 +20,11 @@ const ProductForm = () => {
 		description: '',
 	});
 	////
-
 	const imageHandler = (e) => {
-		setImage(e.target.files[0]);
+		setImages((prevImages) => ({
+			...prevImages,
+			[e.target.name]: e.target.files[0],
+		}));
 	};
 
 	///
@@ -58,10 +60,14 @@ const ProductForm = () => {
 			formData.append('price', productData.price);
 			formData.append('description', productData.description);
 			formData.append('userId', userId);
-			formData.append('image', image);
+
+			for (let i = 0; i < Object.keys(images).length; i++) {
+				formData.append('images', images[i]);
+			}
 
 			const response = await fetch('http://localhost:8080/feed/add-product', {
 				method: 'POST',
+
 				body: formData,
 			});
 			const data = await response.json();

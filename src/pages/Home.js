@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Banner from '../components/Banner';
-import { client } from '../utils/client';
-import { categoryProducts } from '../utils/data';
 import classes from '../styles/Home.module.css';
 import Product from '../components/Product';
+import { fetchProducts } from '../utils/fetch-products';
 
 const Home = () => {
 	const [products, setProducts] = useState([]);
@@ -13,14 +12,18 @@ const Home = () => {
 	const maxProductsOnePcs = productOnePcs.slice(0, 4);
 	let category = 'Two pieces';
 
-	useEffect(() => {
-		const query = `*[_type == 'product']`;
-		client.fetch(query).then((data) => setProducts(data));
-	}, []);
-	useEffect(() => {
-		let query = categoryProducts(category);
+	async function fetchData() {
+		const productsData = await fetchProducts();
+		setProducts(productsData);
+	}
+	async function fetchDataBYCategory(categoryProduct) {
+		const products = await fetchProducts(categoryProduct);
+		setProductOnePcs(products);
+	}
 
-		client.fetch(query).then((data) => setProductOnePcs(data));
+	useEffect(() => {
+		fetchData();
+		fetchDataBYCategory(category);
 	}, [category]);
 
 	return (
@@ -40,7 +43,7 @@ const Home = () => {
 			</div>{' '}
 			<Banner />
 			<div className={classes.productsHeading}>
-				<h2>Two-pieces swimwear</h2>
+				<h2>{category} swimwear</h2>
 				<div>
 					<Link to={`/category/${category}`}>
 						<button>Look for more</button>

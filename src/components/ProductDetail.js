@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link, json, useLoaderData } from 'react-router-dom';
-import { client, urlFor } from '../utils/client';
-import { productDetails, categoryProducts } from '../utils/data';
 import {
 	AiOutlineMinus,
 	AiOutlinePlus,
@@ -19,52 +17,65 @@ import { cartItemActions } from '../store/cartItems-slice';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-hot-toast';
 import store from '../store/index';
+import { fetchProducts } from '../utils/fetch-products';
 
 const ProductDetail = () => {
-	const [productData, setProductData] = useState([]);
+	const [productData, setProductData] = useState({
+		_id: '',
+		name: '',
+		price: '',
+		imageUrl: [],
+		description: '',
+		category: '',
+	});
+
 	const [size, setSize] = useState('S');
-	const [categoryProductData, setCategoryProductData] = useState([]);
-	const [newCategoryItems, setNewCategoryItems] = useState([]);
 	const [randomItems, setRandomItems] = useState([]);
 	const [index, setIndex] = useState(0);
 	const [quantity, setQuantity] = useState(1);
 	const [isActive, setIsActive] = useState(false);
-	const category = productData.category;
 	let imageLength;
 	const dispatch = useDispatch();
 	const data = useLoaderData();
 	const [loading, setLoading] = useState(true);
+	const category = productData.category;
+
+	const fetchProductData = () => {
+		const prefix = 'http://localhost:8080/';
+		const imagesLinks = data.imageUrl.map((image) => prefix + image);
+
+		setProductData({
+			_id: data._id,
+			name: data.name,
+			price: data.price,
+			description: data.description,
+			imageUrl: imagesLinks,
+			category: data.category,
+		});
+	};
 	useEffect(() => {
-		setProductData(data[0]);
-	}, [data]);
+		fetchProductData();
+		// eslint-disable-next-line
+	}, []);
 
 	useEffect(() => {
-		let categoryQuery = categoryProducts(category);
-		const loader = async () => {
-			const data = await client.fetch(categoryQuery);
-			setCategoryProductData((prevData) => [...prevData, ...data]);
+		const fetchProductsData = async (categoryParam) => {
+			const productsData = await fetchProducts(categoryParam);
+
+			const newArr = await productsData.filter(
+				(item) => item._id !== productData._id
+			);
+
+			let shuffledItems = newArr.sort(() => Math.random() - 0.5);
+			let maxProducts = shuffledItems.slice(0, 3);
+
+			setRandomItems(maxProducts);
 			setLoading(false);
 		};
-		loader();
-	}, [category]);
-
-	useEffect(() => {
-		updateRandomItems();
-		// eslint-disable-next-line
-	}, [newCategoryItems]);
-
-	const updateRandomItems = () => {
-		let shuffledItems = newCategoryItems.sort(() => Math.random() - 0.5);
-		let maxProducts = shuffledItems.slice(0, 5);
-
-		setRandomItems(maxProducts);
-	};
-
-	useEffect(() => {
-		setNewCategoryItems(
-			categoryProductData.filter((item) => item._id !== productData._id)
-		);
-	}, [categoryProductData, productData._id]);
+		if (category && randomItems.length === 0) {
+			fetchProductsData(category);
+		}
+	}, [category, productData._id, randomItems.length]);
 
 	const sizeHandler = (e) => {
 		setSize(e.target.value);
@@ -99,7 +110,7 @@ const ProductDetail = () => {
 	};
 	const indexIncrease = () => {
 		if (productData) {
-			imageLength = productData.image.length - 1;
+			imageLength = productData.imageUrl.length - 1;
 			if (index < imageLength) {
 				setIndex((prevIndex) => prevIndex + 1);
 			} else {
@@ -109,7 +120,7 @@ const ProductDetail = () => {
 	};
 	const indexDecrease = () => {
 		if (productData) {
-			imageLength = productData.image.length - 1;
+			imageLength = productData.imageUrl.length - 1;
 			if (index > 0) {
 				setIndex((prevIndex) => prevIndex - 1);
 			} else {
@@ -129,18 +140,17 @@ const ProductDetail = () => {
 			<div className={classes.productDetailContainer}>
 				<div className={classes.imageContainer}>
 					<div className={classes.smallImagesContainer}>
-						{productData?.image &&
-							productData?.image.map((item, i) => (
-								<img
-									alt={productData.name}
-									key={i}
-									src={urlFor(item)}
-									className={
-										i === index ? classes.selectedImage : classes.smallImage
-									}
-									onMouseEnter={() => setIndex(i)}
-								/>
-							))}
+						{productData.imageUrl.map((item, i) => (
+							<img
+								alt={productData.name}
+								key={i}
+								src={item}
+								className={
+									i === index ? classes.selectedImage : classes.smallImage
+								}
+								onMouseEnter={() => setIndex(i)}
+							/>
+						))}
 					</div>
 					<div className={classes.imageContainer}>
 						<div className={classes.buttonBox}>
@@ -153,9 +163,7 @@ const ProductDetail = () => {
 						</div>
 
 						<img
-							src={
-								productData?.image && urlFor(productData?.image[index]).url()
-							}
+							src={productData.imageUrl[index]}
 							alt={productData.name}
 							className={classes.productMainImage}
 						/>
@@ -256,7 +264,9 @@ const ProductDetail = () => {
 
 							return (
 								<div className={`${classes.descBox} ${classesCssBox}`}>
-									<p className={classes.description}>{productData.details}</p>
+									<p className={classes.description}>
+										{productData.description}
+									</p>
 								</div>
 							);
 						}}
@@ -265,16 +275,17 @@ const ProductDetail = () => {
 			</div>
 
 			<div className={classes.maylikeProductsWrapper}>
-				<h2>You may also like</h2>
+				{randomItems.length > 0 && <h2>You may also like</h2>}
 				{loading ? (
 					<Spinner message='Loading...' />
 				) : (
-					<div className={classes.maylikeProductsContainer}>
-						{randomItems &&
-							randomItems.map((item) => (
+					<>
+						<div className={classes.maylikeProductsContainer}>
+							{randomItems.map((item) => (
 								<Product key={item._id} product={item} />
 							))}
-					</div>
+						</div>
+					</>
 				)}
 			</div>
 		</div>
@@ -284,11 +295,13 @@ const ProductDetail = () => {
 export default ProductDetail;
 
 export async function loader({ request, params }) {
-	const slug = params.slug;
-	let query = productDetails(slug);
-	const response = await client.fetch(query);
-	console.log(response);
-	if (response.length < 0) {
+	const productId = params.productId;
+
+	const response = await fetch(`http://localhost:8080/feed/${productId}`);
+
+	const data = await response.json();
+	const product = await data.product;
+	if (!response.ok) {
 		throw json(
 			{ message: 'Could not fetch details for selected product' },
 			{
@@ -296,6 +309,6 @@ export async function loader({ request, params }) {
 			}
 		);
 	} else {
-		return response;
+		return product;
 	}
 }

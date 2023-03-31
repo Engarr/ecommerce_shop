@@ -4,6 +4,7 @@ import Spinner from '../components/Spinner';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import classes from '../styles/Products.module.css';
 import Product from '../components/Product';
+import { fetchProducts } from '../utils/fetch-products';
 
 const Products = () => {
 	const [productsData, setProductsData] = useState([]);
@@ -11,28 +12,13 @@ const Products = () => {
 
 	const { category } = useParams();
 
-	const fetchProducts = async () => {
-		let url = 'http://localhost:8080/feed/products';
-		if (category) {
-			url = `http://localhost:8080/feed/products/${category}`;
-		}
-
-		const response = await fetch(url);
-		const data = await response.json();
-		const products = data.products.map((product) => {
-			return {
-				_id: product._id,
-				name: product.name,
-				price: product.price,
-				imageUrl: `http://localhost:8080/${product.imageUrl[0]}`,
-				userId: product.creator,
-			};
-		});
-
-		setProductsData(products);
+	const fetchProductsData = async (categoryParam) => {
+		const productsData = await fetchProducts(categoryParam);
+		console.log(productsData);
+		setProductsData(productsData);
 	};
 	useEffect(() => {
-		fetchProducts();
+		fetchProductsData(category);
 		// eslint-disable-next-line
 	}, [category]);
 
@@ -56,7 +42,12 @@ const Products = () => {
 		sortedProducts.sort((a, b) => b.price - a.price);
 	}
 
-	if (productsData.length === 0) return <Spinner message='Loading...' />;
+	if (productsData.length === 0)
+		return (
+			<div className={classes.loading}>
+				<Spinner message='Loading...' />
+			</div>
+		);
 
 	return (
 		<div className={classes.container}>

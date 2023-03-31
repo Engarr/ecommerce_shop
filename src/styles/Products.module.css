@@ -87,6 +87,12 @@
 .productBox p {
 	font-size: 1em;
 }
+.loading {
+	height: 500px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 
 @media screen and (max-width: 767px) {
 	.productBox {
