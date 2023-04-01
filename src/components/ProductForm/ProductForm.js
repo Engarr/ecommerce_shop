@@ -7,7 +7,7 @@ import { categories } from '../../utils/data';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-const ProductForm = () => {
+const ProductForm = ({ method, prodData }) => {
 	const param = useParams();
 	const navigate = useNavigate();
 	const userId = param.userId;
@@ -70,13 +70,12 @@ const ProductForm = () => {
 
 				body: formData,
 			});
-			const data = await response.json();
+			await response.json();
+
 			if (response.ok) {
-				console.log(data);
 				navigate(`/profil/${userId}`);
 				toast.success('Product has been created.');
 			} else {
-				console.log(data);
 				toast.error('Product cannot be created.Something went wrong');
 			}
 		} catch (err) {
@@ -89,21 +88,29 @@ const ProductForm = () => {
 			<div className={classes.mainContainer}>
 				<h2>Please file the fields to add new product</h2>
 				<div>
-					<form className={classes.formContainer} onSubmit={onSubmit}>
+					<form
+						method={method}
+						className={classes.formContainer}
+						onSubmit={onSubmit}>
 						<div className={classes.formData}>
 							<Input
 								data='name'
 								text='Product name:'
-								tupe='text'
+								value={prodData ? prodData.name : ''}
+								type='text'
 								onChange={productDataHandler}
 							/>
 							<div className={classes.select}>
 								<select
 									onChange={productDataHandler}
 									name='category'
-									defaultValue='chose category'>
-									<option value='chose category' disabled>
-										Chose category
+									defaultValue={
+										prodData ? prodData.category : 'Chose category'
+									}>
+									<option
+										value={prodData ? prodData.category : 'Chose category'}
+										disabled>
+										{prodData ? prodData.category : 'Chose category'}
 									</option>
 									{categories.map((category) => (
 										<option key={category.id} value={category.name}>
@@ -114,11 +121,16 @@ const ProductForm = () => {
 							</div>
 
 							<div className={classes.photoContainer}>
-								<UploadFile onChange={handleFileSelect} imageSrcs={imageSrcs} />
+								<UploadFile
+									onChange={handleFileSelect}
+									imageSrcs={imageSrcs}
+									prodData={prodData}
+								/>
 							</div>
 							<Input
 								data='price'
 								text=' Product price:'
+								value={prodData ? prodData.price : ''}
 								type='number'
 								step={0.01}
 								onChange={productDataHandler}
@@ -128,6 +140,7 @@ const ProductForm = () => {
 									className={classes.textarea}
 									id='description'
 									name='description'
+									value={prodData ? prodData.description : ''}
 									placeholder='Description:'
 									onChange={productDataHandler}
 								/>

@@ -200,7 +200,6 @@ const Registration = () => {
 				repeatPassword: formData.repeatPassword,
 				isChecked: formData.isChecked,
 			};
-			console.log(userData);
 			const response = await fetch('http://localhost:8080/auth/signup', {
 				method: 'PUT',
 				headers: {
@@ -209,7 +208,6 @@ const Registration = () => {
 				body: JSON.stringify(userData),
 			});
 			const data = await response.json();
-			console.log(data);
 
 			if (response.ok) {
 				toast.success('User has been created!');

@@ -78,7 +78,7 @@ const UserPage = () => {
 					<div className={classes.productsContainer}>
 						{productsData.map((product) => {
 							return (
-								<div key={product._id} className={classes.productBox}>
+								<div key={product.id} className={classes.productBox}>
 									<div className={classes.productData}>
 										<div>
 											<img
@@ -94,7 +94,7 @@ const UserPage = () => {
 									</div>
 
 									<div className={classes.buttonBox}>
-										<Link>
+										<Link to={`/product/${product.id}/edit`}>
 											<AiOutlineEdit />
 										</Link>
 

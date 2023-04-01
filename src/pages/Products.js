@@ -14,7 +14,6 @@ const Products = () => {
 
 	const fetchProductsData = async (categoryParam) => {
 		const productsData = await fetchProducts(categoryParam);
-		console.log(productsData);
 		setProductsData(productsData);
 	};
 	useEffect(() => {

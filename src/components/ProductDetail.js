@@ -1,5 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Link, json, useLoaderData, useParams } from 'react-router-dom';
+import {
+	Link,
+	json,
+	useRouteLoaderData,
+	useParams,
+	defer,
+} from 'react-router-dom';
 import {
 	AiOutlineMinus,
 	AiOutlinePlus,
@@ -38,21 +44,21 @@ const ProductDetail = () => {
 	const [isActive, setIsActive] = useState(false);
 	let imageLength;
 	const dispatch = useDispatch();
-	const data = useLoaderData();
+	const { product } = useRouteLoaderData('product-detail');
 	const [loading, setLoading] = useState(true);
 	const category = productData.category;
 
 	const fetchProductData = async () => {
 		const prefix = 'http://localhost:8080/';
-		const imagesLinks = await data.imageUrl.map((image) => prefix + image);
+		const imagesLinks = await product.imageUrl.map((image) => prefix + image);
 
 		setProductData({
-			_id: data._id,
-			name: data.name,
-			price: data.price,
-			description: data.description,
+			_id: product._id,
+			name: product.name,
+			price: product.price,
+			description: product.description,
 			imageUrl: imagesLinks,
-			category: data.category,
+			category: product.category,
 		});
 	};
 
@@ -314,6 +320,8 @@ export async function loader({ request, params }) {
 			}
 		);
 	} else {
-		return product;
+		return defer({
+			product: product,
+		});
 	}
 }
