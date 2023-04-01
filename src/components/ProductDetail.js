@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Link, json, useLoaderData } from 'react-router-dom';
+import { Link, json, useLoaderData, useParams } from 'react-router-dom';
 import {
 	AiOutlineMinus,
 	AiOutlinePlus,
@@ -20,6 +20,8 @@ import store from '../store/index';
 import { fetchProducts } from '../utils/fetch-products';
 
 const ProductDetail = () => {
+	const param = useParams();
+	const productId = param.productId;
 	const [productData, setProductData] = useState({
 		_id: '',
 		name: '',
@@ -40,9 +42,9 @@ const ProductDetail = () => {
 	const [loading, setLoading] = useState(true);
 	const category = productData.category;
 
-	const fetchProductData = () => {
+	const fetchProductData = async () => {
 		const prefix = 'http://localhost:8080/';
-		const imagesLinks = data.imageUrl.map((image) => prefix + image);
+		const imagesLinks = await data.imageUrl.map((image) => prefix + image);
 
 		setProductData({
 			_id: data._id,
@@ -53,29 +55,32 @@ const ProductDetail = () => {
 			category: data.category,
 		});
 	};
+
+	const fetchProductsData = async (categoryParam) => {
+		const productsData = await fetchProducts(categoryParam);
+
+		const newArr = await productsData.filter(
+			(item) => item._id !== productData._id
+		);
+
+		let shuffledItems = await newArr.sort(() => Math.random() - 0.5);
+		let maxProducts = await shuffledItems.slice(0, 3);
+
+		setRandomItems(maxProducts);
+		setLoading(false);
+	};
+	if (category && randomItems.length === 0) {
+		fetchProductsData(category);
+	}
+
 	useEffect(() => {
 		fetchProductData();
 		// eslint-disable-next-line
-	}, []);
-
+	}, [productId]);
 	useEffect(() => {
-		const fetchProductsData = async (categoryParam) => {
-			const productsData = await fetchProducts(categoryParam);
-
-			const newArr = await productsData.filter(
-				(item) => item._id !== productData._id
-			);
-
-			let shuffledItems = newArr.sort(() => Math.random() - 0.5);
-			let maxProducts = shuffledItems.slice(0, 3);
-
-			setRandomItems(maxProducts);
-			setLoading(false);
-		};
-		if (category && randomItems.length === 0) {
-			fetchProductsData(category);
-		}
-	}, [category, productData._id, randomItems.length]);
+		fetchProductsData(category);
+		// eslint-disable-next-line
+	}, [productData]);
 
 	const sizeHandler = (e) => {
 		setSize(e.target.value);
@@ -86,7 +91,7 @@ const ProductDetail = () => {
 			cartItemActions.onAddItem({
 				_id: productData._id.concat(size),
 				price: productData.price,
-				image: productData.image[0],
+				image: productData.imageUrl[0],
 				size: size,
 				quantity: quantity,
 				name: productData.name,

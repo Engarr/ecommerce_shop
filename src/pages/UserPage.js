@@ -39,7 +39,6 @@ const UserPage = () => {
 		// eslint-disable-next-line
 	}, [userId]);
 
-	console.log(productsData);
 	if (!userData) {
 		return <div>Loading...</div>;
 	}

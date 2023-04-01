@@ -39,7 +39,7 @@ const Product = ({ product }) => {
 						];
 						return (
 							<>
-								<Link to={`product/${product._id}`} onClick={handleClick}>
+								<Link to={`/product/${product._id}`} onClick={handleClick}>
 									<div className={`${classes.btnBox} ${classesCss}`}>
 										<div className={classes.textShadow}>
 											<p className={classes.productName}>{product?.name}</p>
