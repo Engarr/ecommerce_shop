@@ -8,16 +8,21 @@ import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 const ProductForm = ({ method, prodData }) => {
+	if (!method) {
+		method = 'POST';
+	}
 	const param = useParams();
 	const navigate = useNavigate();
-	const userId = param.userId;
+	const userId = prodData.creator;
+	const productId = param.productId;
+
 	const [imageSrcs, setImageSrcs] = useState('');
-	const [images, setImages] = useState(null);
+	const [images, setImages] = useState(prodData?.imageUrl || null);
 	const [productData, setProductData] = useState({
-		name: '',
-		category: '',
-		price: '',
-		description: '',
+		name: prodData?.name || '',
+		category: prodData?.category || '',
+		price: +prodData?.price || 0,
+		description: prodData?.description || '',
 	});
 	////
 	const imageHandler = (e) => {
@@ -26,7 +31,6 @@ const ProductForm = ({ method, prodData }) => {
 			[e.target.name]: e.target.files[0],
 		}));
 	};
-
 	///
 	const productDataHandler = (e) => {
 		setProductData((prevData) => ({
@@ -49,10 +53,9 @@ const ProductForm = ({ method, prodData }) => {
 
 		reader.readAsDataURL(file);
 	};
-
 	const onSubmit = async (e) => {
 		e.preventDefault();
-
+		let url;
 		try {
 			const formData = new FormData();
 			formData.append('name', productData.name);
@@ -64,10 +67,14 @@ const ProductForm = ({ method, prodData }) => {
 			for (let i = 0; i < Object.keys(images).length; i++) {
 				formData.append('images', images[i]);
 			}
+			if (method === 'PUT') {
+				url = `http://localhost:8080/feed/product/${productId}`;
+			} else {
+				url = 'http://localhost:8080/feed/add-product';
+			}
 
-			const response = await fetch('http://localhost:8080/feed/add-product', {
-				method: 'POST',
-
+			const response = await fetch(url, {
+				method: method,
 				body: formData,
 			});
 			await response.json();
@@ -88,15 +95,12 @@ const ProductForm = ({ method, prodData }) => {
 			<div className={classes.mainContainer}>
 				<h2>Please file the fields to add new product</h2>
 				<div>
-					<form
-						method={method}
-						className={classes.formContainer}
-						onSubmit={onSubmit}>
+					<form className={classes.formContainer} onSubmit={onSubmit}>
 						<div className={classes.formData}>
 							<Input
 								data='name'
 								text='Product name:'
-								value={prodData ? prodData.name : ''}
+								defaultValue={prodData ? prodData.name : ''}
 								type='text'
 								onChange={productDataHandler}
 							/>
@@ -130,7 +134,7 @@ const ProductForm = ({ method, prodData }) => {
 							<Input
 								data='price'
 								text=' Product price:'
-								value={prodData ? prodData.price : ''}
+								defaultValue={prodData ? prodData.price : 1}
 								type='number'
 								step={0.01}
 								onChange={productDataHandler}
@@ -140,7 +144,7 @@ const ProductForm = ({ method, prodData }) => {
 									className={classes.textarea}
 									id='description'
 									name='description'
-									value={prodData ? prodData.description : ''}
+									defaultValue={prodData ? prodData.description : ''}
 									placeholder='Description:'
 									onChange={productDataHandler}
 								/>

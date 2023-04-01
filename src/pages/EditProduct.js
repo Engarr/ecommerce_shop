@@ -7,7 +7,7 @@ const EditProduct = () => {
 
 	return (
 		<div>
-			<ProductForm method='patch' prodData={product} />
+			<ProductForm method='PUT' prodData={product} />
 		</div>
 	);
 };

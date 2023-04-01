@@ -4,7 +4,7 @@ import classes from './Input.module.css';
 const Input = ({
 	text,
 	data,
-	value,
+	defaultValue,
 	onChange,
 	error,
 	type,
@@ -20,7 +20,7 @@ const Input = ({
 				type={type}
 				id={data}
 				name={data}
-				value={value}
+				defaultValue={defaultValue}
 				onChange={onChange}
 				placeholder={error ? message : 'text'}
 				className={classes.input}
