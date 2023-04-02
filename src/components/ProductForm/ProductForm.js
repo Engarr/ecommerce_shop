@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import classes from './ProductForm.module.css';
 import Input from '../../components/UI/Input';
@@ -13,25 +13,37 @@ const ProductForm = ({ method, prodData }) => {
 	}
 	const param = useParams();
 	const navigate = useNavigate();
-	const userId = prodData.creator;
-	const productId = param.productId;
+	const userId = prodData?.creator || param.userId;
+	const prductId = param.productId;
+	const [imageSrcs, setImageSrcs] = useState(prodData?.imageUrl || '');
 
-	const [imageSrcs, setImageSrcs] = useState('');
-	const [images, setImages] = useState(prodData?.imageUrl || null);
+	const [images, setImages] = useState(prodData.imageUrl || []);
+	console.log(images);
 	const [productData, setProductData] = useState({
 		name: prodData?.name || '',
 		category: prodData?.category || '',
 		price: +prodData?.price || 0,
 		description: prodData?.description || '',
 	});
-	////
+	const fetchImages = () => {
+		if (prodData.imageUrl) {
+			const prefix = 'http://localhost:8080/';
+			const newArr = prodData.imageUrl.map((image) => prefix + image);
+			setImageSrcs(newArr);
+		}
+	};
+	useEffect(() => {
+		fetchImages();
+		// eslint-disable-next-line
+	}, [prodData.imageUrl]);
+	console.log(images);
 	const imageHandler = (e) => {
 		setImages((prevImages) => ({
 			...prevImages,
 			[e.target.name]: e.target.files[0],
 		}));
 	};
-	///
+
 	const productDataHandler = (e) => {
 		setProductData((prevData) => ({
 			...prevData,
@@ -53,6 +65,7 @@ const ProductForm = ({ method, prodData }) => {
 
 		reader.readAsDataURL(file);
 	};
+
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		let url;
@@ -68,7 +81,7 @@ const ProductForm = ({ method, prodData }) => {
 				formData.append('images', images[i]);
 			}
 			if (method === 'PUT') {
-				url = `http://localhost:8080/feed/product/${productId}`;
+				url = `http://localhost:8080/feed/product/${prductId}`;
 			} else {
 				url = 'http://localhost:8080/feed/add-product';
 			}
@@ -125,11 +138,7 @@ const ProductForm = ({ method, prodData }) => {
 							</div>
 
 							<div className={classes.photoContainer}>
-								<UploadFile
-									onChange={handleFileSelect}
-									imageSrcs={imageSrcs}
-									prodData={prodData}
-								/>
+								<UploadFile onChange={handleFileSelect} imageSrcs={imageSrcs} />
 							</div>
 							<Input
 								data='price'
