@@ -6,16 +6,27 @@ import { SlOptions } from 'react-icons/sl';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import { getAuthToken } from '../utils/auth';
 import { toast } from 'react-hot-toast';
+import Modal from '../components/Modal';
+import UpdateData from '../components/UpdateProfil/UpdateData';
 
 const UserPage = () => {
 	const [userData, setUserData] = useState(null);
 	const [productsData, setProductsData] = useState([]);
+	const [isActive, setIsActive] = useState(false);
 	const params = useParams();
 	const userId = params.userId;
+	const token = getAuthToken();
 
 	const fetchUserData = async () => {
 		try {
-			const response = await fetch(`http://localhost:8080/feed/user/` + userId);
+			const response = await fetch(
+				`http://localhost:8080/feed/user/` + userId,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
 			const user = await response.json();
 
 			setUserData(user.userData);
@@ -40,10 +51,11 @@ const UserPage = () => {
 		fetchUserData();
 		// eslint-disable-next-line
 	}, [userId]);
+	const optionHandler = () => {
+		setIsActive((prev) => (prev = !prev));
+	};
 
 	const deleteProduct = async (id) => {
-		const token = getAuthToken();
-
 		const response = await fetch(`http://localhost:8080/feed/product/${id}`, {
 			method: 'DELETE',
 			headers: {
@@ -67,6 +79,9 @@ const UserPage = () => {
 	}
 	return (
 		<div className={classes.mainContainer}>
+			<Modal show={isActive} handler={optionHandler} />
+			{isActive && <UpdateData optionHandler={optionHandler} />}
+
 			<div className={classes.profilBox}>
 				<div>
 					<div className={classes.imageBox}>
@@ -76,12 +91,13 @@ const UserPage = () => {
 					<h3>{userData.name}</h3>
 				</div>
 
-				<div className={classes.optionIcon}>
+				<div className={classes.optionIcon} onClick={optionHandler}>
 					<SlOptions />
 				</div>
 			</div>
 
-			<div>
+			<div className={classes.productsMainContainer}>
+				<div className={classes.border}></div>
 				<div className={classes.title}>
 					<p>Your products:</p>
 				</div>
@@ -92,7 +108,6 @@ const UserPage = () => {
 						</button>
 					</Link>
 				</div>
-				<div className={classes.border}></div>
 				{productsData.length === 0 ? (
 					<div>
 						<p>No products</p>
@@ -104,11 +119,13 @@ const UserPage = () => {
 								<div key={product.id} className={classes.productBox}>
 									<div className={classes.productData}>
 										<div>
-											<img
-												src={product.imageUrl}
-												height={80}
-												alt={product.name}
-											/>
+											<Link to={`/product/${product.id}`}>
+												<img
+													src={product.imageUrl}
+													height={80}
+													alt={product.name}
+												/>
+											</Link>
 										</div>
 										<div className={classes.nameBox}>
 											<p>id: {product.id}</p>
@@ -136,28 +153,3 @@ const UserPage = () => {
 };
 
 export default UserPage;
-
-// export async function action({ request, params }) {
-// 	const productId = params.productId;
-
-// 	const token = getAuthToken();
-// 	const userId = getUserId();
-
-// 	console.log(userId);
-// 	const response = await fetch(
-// 		`http//localhost:8080/feed/product/${productId}`,
-// 		{
-// 			method: 'DELETE',
-// 			headers: {
-// 				Authorization: 'Bearer ' + token,
-// 			},
-// 		}
-// 	);
-// 	if (!response.ok) {
-// 		console.log('nie ok');
-// 	} else {
-// 		console.log('ok');
-// 	}
-
-// 	// return redirect(`/profil/${userId}`);
-// }

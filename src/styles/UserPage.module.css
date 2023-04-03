@@ -1,5 +1,9 @@
 .mainContainer {
+	position: relative;
 	width: 100%;
+}
+.proba {
+	position: relative;
 }
 .profilBox,
 .border {
@@ -8,6 +12,8 @@
 	justify-content: space-around;
 	align-items: center;
 	padding: 10px 20px;
+}
+.border {
 	border-bottom: 1px solid rgba(0, 0, 0, 0.329);
 }
 .profilBox div {
@@ -70,6 +76,9 @@
 }
 
 /* ////////////////////// */
+.productsMainContainer {
+	margin-bottom: 4rem;
+}
 .title {
 	width: 100%;
 	margin-bottom: 1em;
@@ -98,6 +107,7 @@
 	width: 100px;
 	box-shadow: 0 0px 2px 0.5px black;
 }
+
 .productBox {
 	display: flex;
 	justify-content: space-around;
@@ -127,12 +137,17 @@
 	align-items: center;
 	transition: transform 0.3s, background-color 0.3s, color 0.3s;
 }
+.buttonBox {
+	position: relative;
+}
 .buttonBox button:hover,
 .buttonBox a:hover {
 	transform: scale(1.1);
 	color: rgb(248, 222, 187);
 	background-color: rgba(0, 0, 0, 0.548);
 }
+/* ///////////  Option container /////////// */
+
 /* ////////////////////// */
 @media only screen and (max-width: 1024px) {
 	.profilBox {

@@ -13,10 +13,16 @@ export function tokenLoader() {
 	return getAuthToken();
 }
 
-export function checkAuthToken() {
+export function checkAuthToken({ params }) {
 	const token = getAuthToken();
+	const userId = getUserId();
+	const userIdAccount = params.userId;
 	if (!token) {
 		return redirect('/login');
 	}
+	if (userId !== userIdAccount) {
+		return redirect(`/profil/${userId}`);
+	}
+
 	return null;
 }

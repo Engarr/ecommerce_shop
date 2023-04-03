@@ -6,6 +6,7 @@ import UploadFile from '../../components/UI/UploadFile';
 import { categories } from '../../utils/data';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { getAuthToken } from '../../utils/auth';
 
 const ProductForm = ({ method, prodData }) => {
 	if (!method) {
@@ -81,6 +82,7 @@ const ProductForm = ({ method, prodData }) => {
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
+		const token = getAuthToken();
 		let url;
 		try {
 			const formData = new FormData();
@@ -101,6 +103,10 @@ const ProductForm = ({ method, prodData }) => {
 
 			const response = await fetch(url, {
 				method: method,
+				headers: {
+					Authorization: `Bearer ${token}`,
+					'X-User-Id': userId,
+				},
 				body: formData,
 			});
 			const data = await response.json();
