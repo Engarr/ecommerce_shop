@@ -17,6 +17,7 @@ import UserPage from './pages/UserPage';
 import NewProduct from './pages/NewProduct';
 import { checkAuthToken, tokenLoader } from './utils/auth';
 import { action as logoutaAction } from './pages/Logout';
+
 import EditProduct from './pages/EditProduct';
 
 //////REDUX
@@ -40,7 +41,11 @@ function App() {
 					id: 'product-detail',
 					loader: loaderDetails,
 					children: [
-						{ index: true, element: <ProductDetail /> },
+						{
+							index: true,
+							element: <ProductDetail />,
+							// action: deleteProduct,
+						},
 						{ path: 'edit', element: <EditProduct /> },
 					],
 				},
@@ -53,7 +58,9 @@ function App() {
 				},
 				{ path: '/information', element: <Information /> },
 				{ path: '/shipping', element: <Shipping /> },
+
 				{ path: '/logout', action: logoutaAction },
+
 				{
 					path: '/profil/:userId',
 					element: <UserPage />,

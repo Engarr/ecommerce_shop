@@ -15,10 +15,9 @@ const ProductForm = ({ method, prodData }) => {
 	const navigate = useNavigate();
 	const userId = prodData?.creator || param.userId;
 	const prductId = param.productId;
-	const [imageSrcs, setImageSrcs] = useState(prodData?.imageUrl || '');
+	const [imageSrcs, setImageSrcs] = useState(prodData?.imageUrl || []);
 
-	const [images, setImages] = useState(prodData.imageUrl || []);
-	console.log(images);
+	const [images, setImages] = useState(prodData?.imageUrl || []);
 	const [productData, setProductData] = useState({
 		name: prodData?.name || '',
 		category: prodData?.category || '',
@@ -33,10 +32,11 @@ const ProductForm = ({ method, prodData }) => {
 		}
 	};
 	useEffect(() => {
-		fetchImages();
+		if (prodData) {
+			fetchImages();
+		}
 		// eslint-disable-next-line
-	}, [prodData.imageUrl]);
-	console.log(images);
+	}, [prodData?.imageUrl]);
 	const imageHandler = (e) => {
 		setImages((prevImages) => ({
 			...prevImages,

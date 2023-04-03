@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { formActions } from '../store/form-slice';
 
-
 import Basket from '../components/Basket';
 const Information = () => {
 	const [errors, setErrors] = useState({
@@ -45,7 +44,7 @@ const Information = () => {
 			street: street === '',
 			zipCode: zipCode === '',
 			city: city === '',
-			tel: tel === '' ,
+			tel: tel === '',
 		});
 	};
 
@@ -126,7 +125,7 @@ const Information = () => {
 							value={email}
 							onChange={handleInputChange}
 							message={'Enter your Email'}
-							 error={errors.email}
+							error={errors.email}
 						/>
 
 						<input
