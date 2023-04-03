@@ -11,7 +11,7 @@ const Input = ({
 	message,
 	maxLength,
 	min,
-
+	placeholder,
 	step,
 }) => {
 	return (
@@ -22,7 +22,7 @@ const Input = ({
 				name={data}
 				defaultValue={defaultValue}
 				onChange={onChange}
-				placeholder={error ? message : 'text'}
+				placeholder={placeholder}
 				className={classes.input}
 				maxLength={maxLength}
 				min={min}

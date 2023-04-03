@@ -90,6 +90,7 @@ select::-ms-expand {
 .select:hover::after {
 	color: grey;
 }
+
 .saveBtn {
 	padding: 10px 20px;
 	border: none;
@@ -117,15 +118,17 @@ select::-ms-expand {
 
 .textareaBox textarea {
 	width: 100%;
+	border: 1px solid rgba(2, 2, 2, 0.349);
 	min-height: 200px;
 	resize: vertical;
 	padding: 14px;
-	border: 1px solid rgba(2, 2, 2, 0.349);
 	border-radius: 5px;
 	outline: none;
 	font-size: 1em;
 	margin-bottom: 1em;
+	font-family: Josefin Sans;
 }
+
 .textareaBox textarea::placeholder {
 	color: transparent;
 }
@@ -151,4 +154,25 @@ select::-ms-expand {
 }
 .inputBox input:focus {
 	border: 1px solid black;
+}
+
+.error p {
+	color: red;
+	text-align: left;
+	margin-bottom: 1em;
+}
+.errorBorderInput,
+.errorBorder textarea {
+	border: 1px solid red;
+}
+
+.errorBorder textarea ~ .label {
+	color: red;
+	transform: translate(10px) translateY(-7px);
+	font-size: 0.95em;
+	padding: 0 5px;
+	letter-spacing: 1px;
+	border-left: 1px solid red;
+	border-right: 1px solid red;
+	background-color: #fff;
 }

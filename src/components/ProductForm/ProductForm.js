@@ -24,6 +24,15 @@ const ProductForm = ({ method, prodData }) => {
 		price: +prodData?.price || 0,
 		description: prodData?.description || '',
 	});
+
+	const [errorsBackend, setErrorsBackend] = useState({
+		name: '',
+		category: '',
+		price: '',
+		description: '',
+	});
+	useEffect(() => {}, [productData]);
+
 	const fetchImages = () => {
 		if (prodData.imageUrl) {
 			const prefix = 'http://localhost:8080/';
@@ -48,6 +57,10 @@ const ProductForm = ({ method, prodData }) => {
 		setProductData((prevData) => ({
 			...prevData,
 			[e.target.name]: e.target.value,
+		}));
+		setErrorsBackend((prevErrors) => ({
+			...prevErrors,
+			[e.target.name]: '',
 		}));
 	};
 
@@ -90,13 +103,17 @@ const ProductForm = ({ method, prodData }) => {
 				method: method,
 				body: formData,
 			});
-			await response.json();
+			const data = await response.json();
 
 			if (response.ok) {
 				navigate(`/profil/${userId}`);
 				toast.success('Product has been created.');
 			} else {
 				toast.error('Product cannot be created.Something went wrong');
+				console.log(data); //<-------------
+				const errorObj = {};
+				data.errors.forEach((error) => (errorObj[error.param] = error.msg));
+				setErrorsBackend(errorObj);
 			}
 		} catch (err) {
 			console.log('Error adding product', err);
@@ -116,8 +133,16 @@ const ProductForm = ({ method, prodData }) => {
 								defaultValue={prodData ? prodData.name : ''}
 								type='text'
 								onChange={productDataHandler}
+								error={errorsBackend.name}
+								placeholder='Product name:'
 							/>
-							<div className={classes.select}>
+							<div className={classes.error}>
+								{errorsBackend.name && <p>{errorsBackend.name}</p>}
+							</div>
+							<div
+								className={`${classes.select} ${
+									errorsBackend.category ? classes.errorBorderInput : ''
+								}`}>
 								<select
 									onChange={productDataHandler}
 									name='category'
@@ -136,6 +161,9 @@ const ProductForm = ({ method, prodData }) => {
 									))}
 								</select>
 							</div>
+							<div className={classes.error}>
+								{errorsBackend.category && <p>{errorsBackend.category}</p>}
+							</div>
 
 							<div className={classes.photoContainer}>
 								<UploadFile onChange={handleFileSelect} imageSrcs={imageSrcs} />
@@ -143,12 +171,20 @@ const ProductForm = ({ method, prodData }) => {
 							<Input
 								data='price'
 								text=' Product price:'
-								defaultValue={prodData ? prodData.price : 1}
+								defaultValue={prodData ? prodData.price : ''}
 								type='number'
 								step={0.01}
 								onChange={productDataHandler}
+								error={errorsBackend.price}
+								placeholder='Product price:'
 							/>
-							<div className={classes.textareaBox}>
+							<div className={classes.error}>
+								{errorsBackend.price && <p>{errorsBackend.price}</p>}
+							</div>
+							<div
+								className={`${classes.textareaBox} ${
+									errorsBackend.description ? classes.errorBorder : ''
+								}`}>
 								<textarea
 									className={classes.textarea}
 									id='description'
@@ -156,10 +192,16 @@ const ProductForm = ({ method, prodData }) => {
 									defaultValue={prodData ? prodData.description : ''}
 									placeholder='Description:'
 									onChange={productDataHandler}
+									// value={errorsBackend.description ? 'text' : ''}
 								/>
 								<label className={classes.label} htmlFor='description'>
-									Description
+									Description:
 								</label>
+							</div>
+							<div className={classes.error}>
+								{errorsBackend.description && (
+									<p>{errorsBackend.description}</p>
+								)}
 							</div>
 						</div>
 						<div>
