@@ -4,6 +4,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import classes from '../styles/Login.module.css';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
+import Input from '../components/UI/Input';
 
 const Login = () => {
 	const navigate = useNavigate();
@@ -43,6 +44,7 @@ const Login = () => {
 
 		return isValid;
 	};
+	console.log(formData);
 
 	const isEmailValid = () => {
 		let isValid = true;
@@ -133,38 +135,31 @@ const Login = () => {
 
 			<form className={classes.loginContainer} onSubmit={onLogin}>
 				<h2>LOGIN</h2>
-				<div className={classes.emailBox}>
-					<label htmlFor='email'> E-mail:</label>
-					<input
-						name='email'
-						id='email'
+				<div className={classes.box}>
+					<Input
+						data='email'
+						text='E-mail:'
+						type='text'
+						placeholder='E-mail'
 						onChange={formDataHandler}
-						value={formData.email}
-						autoComplete='off'
-						className={
-							errors.email || backendErrors.email ? classes.inputError : ''
-						}></input>
+						error={errors.email}
+					/>
 					{(errors.email && <p>Please enter your email.</p>) ||
 						(backendErrors.email && <p>{backendErrors.email}</p>)}
 				</div>
-				<div className={classes.passwordBox}>
-					<label htmlFor='password'> Password:</label>
-
-					<input
+				<div className={classes.box}>
+					<Input
+						data='password'
+						text='Password:'
 						type='password'
-						name='password'
-						id='password'
+						placeholder='Password'
 						onChange={formDataHandler}
-						value={formData.password}
-						autoComplete='off'
-						className={
-							errors.password || backendErrors.password
-								? classes.inputError
-								: ''
-						}></input>
+						error={errors.password}
+					/>
 					{(errors.password && <p>Please enter your password.</p>) ||
 						(backendErrors.password && <p>{backendErrors.password}</p>)}
 				</div>
+
 				<button type='submit'>Login</button>
 				<div className={classes.createAccountBox}>
 					<p>Don't have account?</p>
