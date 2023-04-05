@@ -185,11 +185,11 @@ const ProductDetail = () => {
 					<h1>{productData?.name}</h1>
 					<div className={classes.reviews}>
 						<div>
-							<AiFillStar />
-							<AiFillStar />
-							<AiFillStar />
-							<AiFillStar />
-							<AiOutlineStar />
+							<AiFillStar className={classes.star} />
+							<AiFillStar className={classes.star} />
+							<AiFillStar className={classes.star} />
+							<AiFillStar className={classes.star} />
+							<AiOutlineStar className={classes.star} />
 						</div>
 						<p>(20)</p>
 					</div>
@@ -198,7 +198,7 @@ const ProductDetail = () => {
 					<div className={classes.quantity}>
 						<div>
 							<h3>Quantity:</h3>
-							<p className={classes.quantityDesc}>
+							<div className={classes.quantityDesc}>
 								<span className={classes.minus} onClick={decQuantity}>
 									<AiOutlineMinus />
 								</span>
@@ -206,11 +206,11 @@ const ProductDetail = () => {
 								<span className={classes.plus} onClick={incQuantity}>
 									<AiOutlinePlus />
 								</span>
-							</p>
+							</div>
 						</div>
 						<div>
 							<h3>Size:</h3>
-							<p className={classes.size}>
+							<div className={classes.size}>
 								<label htmlFor='size'> </label>
 								<select
 									name='size'
@@ -221,7 +221,7 @@ const ProductDetail = () => {
 									<option value='M'>M</option>
 									<option value='L'>L</option>
 								</select>
-							</p>
+							</div>
 						</div>
 					</div>
 					<div className={classes.buttons}>

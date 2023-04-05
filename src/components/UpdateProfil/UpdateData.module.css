@@ -40,7 +40,7 @@
 	align-items: flex-end;
 	position: relative;
 	text-align: center;
-	width: 50%;
+	width: 100%;
 }
 
 .icon {
@@ -50,10 +50,9 @@
 	border-radius: 50%;
 	transition: transform 0.3s, background-color 0.3s, color 0.3s;
 }
-.icon:hover {
-	transform: scale(1.1);
-	color: rgb(248, 222, 187);
-	background-color: rgba(0, 0, 0, 0.548);
+
+.rotate {
+	transform: rotate(180deg);
 }
 
 .optionBox {
@@ -61,15 +60,21 @@
 	margin-bottom: 2em;
 }
 .inputBox {
-	width: 50%;
+	width: 100%;
 	opacity: 0;
 	height: 0;
 	transition: opacity 1s, height 1s;
 }
+
 .active {
 	opacity: 1;
-	height: 300px;
+	height: 370px;
 }
+.activeEmail {
+	opacity: 1;
+	height: 250px;
+}
+
 .passwordBox,
 .emailBox {
 	/* position: sticky; */
@@ -89,14 +94,15 @@
 	letter-spacing: 2px;
 	background-color: var(--main-text-nav);
 	cursor: pointer;
+
 	transition: background-color 0.3s;
 }
 .optionBox:hover button {
 	background-color: rgb(248, 222, 187);
 }
 
-.optionBox p {
-	font-size: 1.1em;
+.optionTitle {
+	font-size: 1.3em;
 	letter-spacing: 1.2px;
 	margin-top: 1em;
 }
@@ -115,6 +121,12 @@
 }
 .return:hover {
 	right: 15px;
+}
+.errorInfo {
+	width: 100%;
+	font-size: 1em;
+	margin-bottom: 1.5em;
+	color: red;
 }
 
 @media only screen and (max-width: 1024px) {

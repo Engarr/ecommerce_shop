@@ -19,7 +19,9 @@
 	align-items: flex-start;
 	margin-right: 1em;
 }
-
+.star {
+	color: grey;
+}
 .buttonBox {
 	position: absolute;
 	height: 100%;
@@ -192,12 +194,12 @@
 }
 
 .quantityDesc,
-.select {
+.size {
 	border: 1px solid rgba(3, 3, 3, 0.288);
 	padding: 0.5em;
 }
 .quantityDesc span,
-.select {
+.size {
 	font-size: 1em;
 	padding: 0.5em 0.8em;
 	cursor: pointer;
