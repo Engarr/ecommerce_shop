@@ -6,7 +6,6 @@
 	min-height: 850px;
 }
 .mainContainer h2 {
-	text-transform: uppercase;
 	margin: 1em;
 	letter-spacing: 2px;
 }
@@ -83,24 +82,10 @@
 	margin-bottom: 2em;
 }
 
-.error {
-	position: absolute;
-	margin-top: 2em;
-	background-color: rgb(243, 179, 179);
-	padding: 10px 30px;
-	width: 50%;
-	border-radius: 5px;
-	text-align: center;
-}
 .inputError {
 	background-color: rgb(243, 179, 179);
 }
-.closeBtn {
-	position: absolute;
-	right: 2%;
-	top: 25%;
-	cursor: pointer;
-}
+
 @media screen and (max-width: 1024px) {
 	.loginContainer {
 		position: absolute;
@@ -114,11 +99,5 @@
 	.error {
 		width: 100%;
 		padding: 20px;
-	}
-	.closeBtn {
-		right: 5%;
-		font-size: 1.5em;
-		top: 50%;
-		transform: translateY(-50%);
 	}
 }

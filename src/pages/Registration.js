@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { AiOutlineClose } from 'react-icons/ai';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import Input from '../components/UI/Input';
 
 import classes from '../styles/Registration.module.css';
 const Registration = () => {
@@ -94,13 +94,6 @@ const Registration = () => {
 			}));
 		}
 	}, [formData]);
-
-	const erorrHandler = () => {
-		setErrors((prevErrors) => ({
-			...prevErrors,
-			error: false,
-		}));
-	};
 
 	const isDataValid = async () => {
 		let isValid = true;
@@ -225,88 +218,64 @@ const Registration = () => {
 
 	return (
 		<div className={classes.mainContainer}>
-			{errors.error && (
-				<div className={classes.error}>
-					<AiOutlineClose className={classes.closeBtn} onClick={erorrHandler} />
-					<p>The registration form contains errors.</p>
-				</div>
-			)}
 			<form className={classes.registerContainer} onSubmit={onSubmit}>
 				<h2>Registration</h2>
 
-				<div
-					className={
-						errors.name || backendErrors.name
-							? `${classes.nameBox} ${classes.inputError}`
-							: classes.nameBox
-					}>
-					<label htmlFor='name'>* Your name:</label>
-					<input
-						name='name'
-						id='name'
-						value={formData.name}
-						onChange={formDataHandler}></input>
+				<div className={classes.box}>
+					<Input
+						data='name'
+						text='Your name:'
+						type='text'
+						placeholder='Your name'
+						onChange={formDataHandler}
+						error={errors.name}
+					/>
 					{(errors.name && <p>Please write your name</p>) ||
 						(isBackendError.name && <p>{backendErrors.name}</p>)}
 				</div>
-
-				<div
-					className={
-						errors.email || backendErrors.email
-							? `${classes.emailBox} ${classes.inputError}`
-							: classes.emailBox
-					}>
-					<label htmlFor='email'>* E-mail:</label>
-					<input
-						name='email'
-						id='email'
-						value={formData.email}
+				<div className={classes.box}>
+					<Input
+						data='email'
+						text='E-mail:'
+						type='text'
+						placeholder='E-mail'
 						onChange={formDataHandler}
-						autoComplete='email'></input>
-					{(errors.email && <p>Invalid email address format</p>) ||
+						error={errors.email}
+					/>
+					{(errors.email && <p>Please write valid email</p>) ||
 						(isBackendError.email && <p>{backendErrors.email}</p>)}
 				</div>
-				<div
-					className={
-						errors.password || backendErrors.password
-							? `${classes.passwordBox} ${classes.inputError}`
-							: classes.passwordBox
-					}>
-					<label htmlFor='password'>* Password:</label>
-					<input
-						name='password'
-						id='password'
+				<div className={classes.box}>
+					<Input
+						data='password'
+						text='* Password:'
 						type='password'
-						value={formData.password}
+						placeholder='E-mail'
 						onChange={formDataHandler}
-						autoComplete='new-password'></input>
+						error={errors.password}
+					/>
 					{(errors.password && (
 						<p>The password must meet the described conditions</p>
 					)) ||
 						(isBackendError.password && <p>{backendErrors.password}</p>)}
 				</div>
-				<div
-					className={
-						errors.repeatPassword || backendErrors.repeatPassword
-							? `${classes.passwordBox} ${classes.inputError}`
-							: classes.passwordBox
-					}>
-					<label htmlFor='repeatPassword'>* Repeat password:</label>
-					<input
-						name='repeatPassword'
-						id='repeatPassword'
-						type='password'
-						value={formData.repeatPassword}
+				<div className={classes.box}>
+					<Input
+						data='repeatPassword'
+						text='Repeat Password:'
+						type='repeatPassword'
+						placeholder='Repeat Password'
 						onChange={formDataHandler}
-						autoComplete='new-password'
+						error={errors.repeatPassword}
 					/>
-					{(errors.repeatPassword && <p>The passwords are different</p>) ||
+					{(errors.repeatPassword && <p>Passwords are different</p>) ||
 						(isBackendError.repeatPassword && (
 							<p>{backendErrors.repeatPassword}</p>
 						))}
 				</div>
+
 				<p>Additional information:</p>
-				<div className={classes.checkBox}>
+				<div className={classes.box}>
 					<input
 						type='checkbox'
 						id='check'
@@ -318,9 +287,9 @@ const Registration = () => {
 						content.
 					</label>
 					{(errors.isChecked && <p>You have to accept the terms</p>) ||
-						(isBackendError.isChecked && <p>{backendErrors.repeatPassword}</p>)}
+						(isBackendError.isChecked && <p>{backendErrors.isChecked}</p>)}
 				</div>
-				<div>
+				<div className={classes.buttonBox}>
 					<button type='submit'>Register</button>
 				</div>
 				<div className={classes.moreInfoBox}>
@@ -333,24 +302,3 @@ const Registration = () => {
 };
 
 export default Registration;
-
-// export async function action({ request }) {
-// 	const data = await request.formData();
-// 	const registerData = {
-// 		name: data.get('name'),
-// 		email: data.get('email'),
-// 		password: data.get('password'),
-// 		repeatPassword: data.get('repeatPassword'),
-// 	};
-
-// 	const response = await fetch('http://localhost:8080/auth/signup', {
-// 		method: 'PUT',
-// 		headers: {
-// 			'Content-Type': 'application/json',
-// 		},
-// 		body: JSON.stringify(registerData),
-// 	});
-// 	if (!response.ok) {
-// 		throw json({ message: 'Could not register the user' }, { status: 500 });
-// 	}
-// }

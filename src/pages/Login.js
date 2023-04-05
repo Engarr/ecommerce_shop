@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AiOutlineClose } from 'react-icons/ai';
 import classes from '../styles/Login.module.css';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
@@ -8,13 +7,6 @@ import Input from '../components/UI/Input';
 
 const Login = () => {
 	const navigate = useNavigate();
-
-	const erorrHandler = () => {
-		setErrors((prevError) => ({
-			...prevError,
-			error: false,
-		}));
-	};
 
 	const [errors, setErrors] = useState({
 		error: false,
@@ -44,7 +36,6 @@ const Login = () => {
 
 		return isValid;
 	};
-	console.log(formData);
 
 	const isEmailValid = () => {
 		let isValid = true;
@@ -126,13 +117,6 @@ const Login = () => {
 
 	return (
 		<div className={classes.mainContainer}>
-			{errors.error && (
-				<div className={classes.error}>
-					<AiOutlineClose className={classes.closeBtn} onClick={erorrHandler} />
-					<p>Invalid login details.</p>
-				</div>
-			)}
-
 			<form className={classes.loginContainer} onSubmit={onLogin}>
 				<h2>LOGIN</h2>
 				<div className={classes.box}>
