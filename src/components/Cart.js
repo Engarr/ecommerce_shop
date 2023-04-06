@@ -3,7 +3,6 @@ import Modal from './Modal';
 import classes from './Cart.module.css';
 import { AiOutlineClose } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { urlFor } from '../utils/client';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartItemActions } from '../store/cartItems-slice';
@@ -11,7 +10,6 @@ import store from '../store/index';
 import { uiActions } from '../store/ui-slice';
 
 const Cart = (props) => {
-
 	const dispatch = useDispatch();
 	const cartIsVisible = useSelector((state) => state.ui.cartIsVisible);
 	const cartItems = useSelector((state) => state.cartItems.items);
@@ -76,7 +74,7 @@ const Cart = (props) => {
 							<div className={classes.productContainer} key={uuidv4()}>
 								<div className={classes.productBox}>
 									<img
-										src={urlFor(item.image)}
+										src={item.imageUrl}
 										height={100}
 										width={100}
 										className={classes.image}

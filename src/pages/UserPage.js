@@ -70,8 +70,6 @@ const UserPage = () => {
 			toast.success('Product has been successfully removed');
 			window.location.reload();
 		}
-
-		// return redirect(`/profil/${userId}`);
 	};
 
 	if (!userData) {

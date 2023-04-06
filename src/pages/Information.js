@@ -6,6 +6,7 @@ import Input from '../components/UI/Input';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { formActions } from '../store/form-slice';
+import { toast } from 'react-hot-toast';
 
 import Basket from '../components/Basket';
 const Information = () => {
@@ -109,7 +110,7 @@ const Information = () => {
 		if (isEmailValid() && !Object.values(errors).some((error) => error)) {
 			navigate('/shipping');
 		} else {
-			console.log('Validation failed');
+			toast.error('Please complete the required fields');
 		}
 	};
 	return (
@@ -122,6 +123,7 @@ const Information = () => {
 						<Input
 							text={`E-mail:`}
 							data={'email'}
+							placeholder={'email'}
 							value={email}
 							onChange={handleInputChange}
 							message={'Enter your Email'}
@@ -146,6 +148,7 @@ const Information = () => {
 							data={'name'}
 							onChange={handleInputChange}
 							message={'Enter your name'}
+							placeholder={'Enter your name'}
 							error={errors.name}
 							value={name}
 						/>
@@ -156,6 +159,7 @@ const Information = () => {
 							value={surname}
 							onChange={handleInputChange}
 							message={'Enter your surname'}
+							placeholder={'Enter your surname'}
 							error={errors.surname}
 						/>
 					</div>
@@ -163,6 +167,7 @@ const Information = () => {
 					<Input
 						text={`Street and house / apartment number:`}
 						data={'street'}
+						placeholder={'street'}
 						value={street}
 						onChange={handleInputChange}
 						message={'Enter your street adress'}
@@ -174,6 +179,7 @@ const Information = () => {
 						onChange={handleInputChange}
 						value={additional}
 						data={'additional'}
+						placeholder={'additional'}
 					/>
 
 					<div className={classes.box}>
@@ -183,6 +189,7 @@ const Information = () => {
 							value={zipCode}
 							onChange={handleInputChange}
 							message={'Enter your zip code'}
+							placeholder={'Enter your zip code'}
 							error={errors.zipCode}
 						/>
 						<Input
@@ -192,6 +199,7 @@ const Information = () => {
 							onChange={handleInputChange}
 							message={'Enter your city name'}
 							error={errors.city}
+							placeholder={'Cit'}
 						/>
 					</div>
 
@@ -202,6 +210,7 @@ const Information = () => {
 						onChange={handleInputChange}
 						message={'Enter your telefon number'}
 						error={errors.tel}
+						placeholder={'Telefon number'}
 						maxLength='9'
 					/>
 					<div className={classes.btn}>

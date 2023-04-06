@@ -97,7 +97,7 @@ const ProductDetail = () => {
 			cartItemActions.onAddItem({
 				_id: productData._id.concat(size),
 				price: productData.price,
-				image: productData.imageUrl[0],
+				imageUrl: productData.imageUrl[0],
 				size: size,
 				quantity: quantity,
 				name: productData.name,

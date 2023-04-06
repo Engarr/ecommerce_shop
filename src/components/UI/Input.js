@@ -13,6 +13,7 @@ const Input = ({
 	min,
 	placeholder,
 	step,
+	style,
 }) => {
 	return (
 		<div className={`${classes.inputBox} ${error ? classes.error : ''}`}>

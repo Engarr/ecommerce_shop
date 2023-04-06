@@ -4,6 +4,7 @@ import classes from '../styles/Login.module.css';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import Input from '../components/UI/Input';
+import { isEmailValid, isPasswordLengthValid } from '../utils/validation';
 
 const Login = () => {
 	const navigate = useNavigate();
@@ -28,34 +29,16 @@ const Login = () => {
 		}));
 	};
 
-	const isPasswordValid = () => {
-		let isValid = true;
-		if (formData.password.length < 8) {
-			isValid = false;
-		}
-
-		return isValid;
-	};
-
-	const isEmailValid = () => {
-		let isValid = true;
-		const re =
-			/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-		if (!re.test(formData.email)) {
-			isValid = false;
-		}
-		return isValid;
-	};
 	const validation = () => {
 		let isValid = true;
-		if (!isEmailValid()) {
+		if (!isEmailValid(formData.email)) {
 			isValid = false;
 			setErrors((prevError) => ({
 				...prevError,
 				email: true,
 			}));
 		}
-		if (!isPasswordValid()) {
+		if (!isPasswordLengthValid(formData.password)) {
 			isValid = false;
 			setErrors((prevError) => ({
 				...prevError,

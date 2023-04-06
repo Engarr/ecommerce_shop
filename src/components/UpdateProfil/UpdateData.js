@@ -19,9 +19,7 @@ const UpdateData = ({ optionHandler }) => {
 		repeatPasswrod: false,
 		newEmail: false,
 	});
-
 	const token = getAuthToken();
-
 	const [newPassword, setNewPassword] = useState({
 		email: '',
 		newPassword: '',
@@ -31,7 +29,6 @@ const UpdateData = ({ optionHandler }) => {
 		newEmail: '',
 		password: '',
 	});
-
 	const activePswHandler = () => {
 		setIsActiveChangePsw((prev) => (prev = !prev));
 		setIsActiveChangeEmail(false);
@@ -185,6 +182,42 @@ const UpdateData = ({ optionHandler }) => {
 				</div>
 
 				<div className={classes.optionBox}>
+					<form className={classes.emailBox} onSubmit={onSubmit}>
+						<div className={classes.changeTitle} onClick={activeEmailHandler}>
+							<p className={classes.optionTitle}>Change E-mail</p>
+							<MdKeyboardArrowDown
+								className={`${classes.icon} ${
+									isActiveChangeEmail ? classes.rotate : ''
+								}`}
+							/>
+						</div>
+
+						<div className={`${classes.inputBox} ${cssStyleEmail}`}>
+							<input type='hidden' name='type' value='changeEmail' />
+							<Input
+								data='newEmail'
+								placeholder='New e-mail'
+								text='New e-mail:'
+								type='text'
+								onChange={newEmailHandler}
+								error={errors.newEmail}
+							/>
+							{errors.newEmail && (
+								<p className={classes.errorInfo}>Please enter valid email.</p>
+							)}
+							<Input
+								data='password'
+								placeholder='password'
+								text='Password:'
+								type='password'
+								onChange={newEmailHandler}
+							/>
+
+							<div className={classes.btn}>
+								<button type='submit'>Change e-mail</button>
+							</div>
+						</div>
+					</form>
 					<form className={classes.passwordBox} onSubmit={onSubmit}>
 						<div className={classes.changeTitle} onClick={activePswHandler}>
 							<p className={classes.optionTitle}>Change password:</p>
@@ -241,43 +274,6 @@ const UpdateData = ({ optionHandler }) => {
 								<button type='submit' className={classes.btn}>
 									Change password
 								</button>
-							</div>
-						</div>
-					</form>
-
-					<form className={classes.emailBox} onSubmit={onSubmit}>
-						<div className={classes.changeTitle} onClick={activeEmailHandler}>
-							<p className={classes.optionTitle}>Change E-mail</p>
-							<MdKeyboardArrowDown
-								className={`${classes.icon} ${
-									isActiveChangeEmail ? classes.rotate : ''
-								}`}
-							/>
-						</div>
-
-						<div className={`${classes.inputBox} ${cssStyleEmail}`}>
-							<input type='hidden' name='type' value='changeEmail' />
-							<Input
-								data='newEmail'
-								placeholder='New e-mail'
-								text='New e-mail:'
-								type='text'
-								onChange={newEmailHandler}
-								error={errors.newEmail}
-							/>
-							{errors.newEmail && (
-								<p className={classes.errorInfo}>Please enter valid email.</p>
-							)}
-							<Input
-								data='password'
-								placeholder='password'
-								text='Password:'
-								type='password'
-								onChange={newEmailHandler}
-							/>
-
-							<div className={classes.btn}>
-								<button type='submit'>Change e-mail</button>
 							</div>
 						</div>
 					</form>

@@ -30,3 +30,18 @@ export const isRepeatPasswordValid = (password, repeatedPassword) => {
 	}
 	return isValid;
 };
+export const isPasswordLengthValid = (password) => {
+	let isValid = true;
+	if (password.length < 5) {
+		isValid = false;
+	}
+
+	return isValid;
+};
+export const isNameValid = (name) => {
+	let isValid = true;
+	if (name === '') {
+		isValid = false;
+	}
+	return isValid;
+};

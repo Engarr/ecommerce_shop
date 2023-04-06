@@ -2,6 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import Input from '../components/UI/Input';
+import {
+	isEmailValid,
+	isPasswordValid,
+	isRepeatPasswordValid,
+	isNameValid,
+} from '../utils/validation';
 
 import classes from '../styles/Registration.module.css';
 const Registration = () => {
@@ -31,22 +37,6 @@ const Registration = () => {
 		isChecked: '',
 		isEmailExistError: '',
 	});
-	const [isBackendError, setIsBackendError] = useState({
-		name: false,
-		email: false,
-		password: false,
-		repeatPassword: false,
-		isChecked: false,
-		isEmailExistError: false,
-	});
-
-	useEffect(() => {
-		const newValidation = {};
-		Object.keys(backendErrors).forEach((key) => {
-			newValidation[key] = backendErrors[key] !== '';
-		});
-		setIsBackendError(newValidation);
-	}, [backendErrors]);
 
 	const formDataHandler = (e) => {
 		setFormData((prevData) => ({
@@ -97,7 +87,7 @@ const Registration = () => {
 
 	const isDataValid = async () => {
 		let isValid = true;
-		if (!isNameValid()) {
+		if (!isNameValid(formData.name)) {
 			setErrors((prevErrors) => ({
 				...prevErrors,
 				name: true,
@@ -105,7 +95,7 @@ const Registration = () => {
 			}));
 			isValid = false;
 		}
-		if (!isEmailValid()) {
+		if (!isEmailValid(formData.email)) {
 			setErrors((prevErrors) => ({
 				...prevErrors,
 				email: true,
@@ -113,7 +103,7 @@ const Registration = () => {
 			}));
 			isValid = false;
 		}
-		if (!isPasswordValid()) {
+		if (!isPasswordValid(formData.password)) {
 			setErrors((prevErrors) => ({
 				...prevErrors,
 				password: true,
@@ -121,7 +111,7 @@ const Registration = () => {
 			}));
 			isValid = false;
 		}
-		if (!isRepeatPasswordValid()) {
+		if (!isRepeatPasswordValid(formData.password, formData.repeatPassword)) {
 			setErrors((prevErrors) => ({
 				...prevErrors,
 				repeatPassword: true,
@@ -138,48 +128,6 @@ const Registration = () => {
 			isValid = false;
 		}
 
-		return isValid;
-	};
-
-	const isNameValid = () => {
-		let isValid = true;
-		if (formData.name === '') {
-			isValid = false;
-		}
-		return isValid;
-	};
-	const isEmailValid = () => {
-		let isValid = true;
-		const re =
-			/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-		if (!re.test(formData.email)) {
-			isValid = false;
-		}
-
-		return isValid;
-	};
-
-	const isPasswordValid = () => {
-		let isValid = true;
-		if (formData.password.length < 5) {
-			isValid = false;
-		}
-		if (!/\d/.test(formData.password)) {
-			isValid = false;
-		}
-
-		if (!/[!@#$%^&*()+=._-]/.test(formData.password)) {
-			isValid = false;
-		} else {
-		}
-		return isValid;
-	};
-	const isRepeatPasswordValid = () => {
-		let isValid = true;
-		if (formData.password !== formData.repeatPassword) {
-			isValid = false;
-		}
 		return isValid;
 	};
 
@@ -231,7 +179,7 @@ const Registration = () => {
 						error={errors.name}
 					/>
 					{(errors.name && <p>Please write your name</p>) ||
-						(isBackendError.name && <p>{backendErrors.name}</p>)}
+						(backendErrors.name && <p>{backendErrors.name}</p>)}
 				</div>
 				<div className={classes.box}>
 					<Input
@@ -243,7 +191,7 @@ const Registration = () => {
 						error={errors.email}
 					/>
 					{(errors.email && <p>Please write valid email</p>) ||
-						(isBackendError.email && <p>{backendErrors.email}</p>)}
+						(backendErrors.email && <p>{backendErrors.email}</p>)}
 				</div>
 				<div className={classes.box}>
 					<Input
@@ -257,7 +205,7 @@ const Registration = () => {
 					{(errors.password && (
 						<p>The password must meet the described conditions</p>
 					)) ||
-						(isBackendError.password && <p>{backendErrors.password}</p>)}
+						(backendErrors.password && <p>{backendErrors.password}</p>)}
 				</div>
 				<div className={classes.box}>
 					<Input
@@ -269,7 +217,7 @@ const Registration = () => {
 						error={errors.repeatPassword}
 					/>
 					{(errors.repeatPassword && <p>Passwords are different</p>) ||
-						(isBackendError.repeatPassword && (
+						(backendErrors.repeatPassword && (
 							<p>{backendErrors.repeatPassword}</p>
 						))}
 				</div>
@@ -287,7 +235,7 @@ const Registration = () => {
 						content.
 					</label>
 					{(errors.isChecked && <p>You have to accept the terms</p>) ||
-						(isBackendError.isChecked && <p>{backendErrors.isChecked}</p>)}
+						(backendErrors.isChecked && <p>{backendErrors.isChecked}</p>)}
 				</div>
 				<div className={classes.buttonBox}>
 					<button type='submit'>Register</button>
