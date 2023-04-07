@@ -18,7 +18,6 @@ import classes from './ProductDetail.module.css';
 import Spinner from '../components/Spinner';
 import { GrNext, GrPrevious } from 'react-icons/gr';
 import { MdKeyboardArrowDown } from 'react-icons/md';
-import Transition from 'react-transition-group/Transition';
 import { cartItemActions } from '../store/cartItems-slice';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-hot-toast';
@@ -144,6 +143,9 @@ const ProductDetail = () => {
 		setIsActive((prev) => (prev = !prev));
 	}, [setIsActive]);
 
+	const classesCss = isActive ? classes.active : '';
+	const classesArrowCss = isActive ? classes.activeArrow : '';
+
 	if (!productData) return <Spinner message='Loading...' />;
 
 	return (
@@ -202,7 +204,7 @@ const ProductDetail = () => {
 								<span className={classes.minus} onClick={decQuantity}>
 									<AiOutlineMinus />
 								</span>
-								<span className={classes.num}>{quantity}</span>
+								<div className={classes.num}>{quantity}</div>
 								<span className={classes.plus} onClick={incQuantity}>
 									<AiOutlinePlus />
 								</span>
@@ -224,6 +226,21 @@ const ProductDetail = () => {
 							</div>
 						</div>
 					</div>
+
+					<div className={classes.descriptionContainer}>
+						<div
+							className={classes.descriptionTitle}
+							onClick={activeDetailHandler}>
+							<p>Description:</p>
+							<MdKeyboardArrowDown
+								className={`${classes.arrow} ${classesArrowCss}`}
+							/>
+						</div>
+						<div className={`${classes.descriptionTextBox} ${classesCss}`}>
+							<p>{productData.description}</p>
+						</div>
+					</div>
+
 					<div className={classes.buttons}>
 						<button
 							type='button'
@@ -240,48 +257,6 @@ const ProductDetail = () => {
 							</button>
 						</Link>
 					</div>
-
-					<Transition in={isActive} timeout={300}>
-						{(state) => {
-							const classesCssArrow = [
-								state === 'entered'
-									? classes.rotateUp
-									: state === 'exiting'
-									? classes.rotateDown
-									: null,
-							];
-
-							return (
-								<div
-									className={classes.detailBox}
-									onClick={activeDetailHandler}>
-									<h4>Details: </h4>
-									<MdKeyboardArrowDown
-										className={`${classes.arrow} ${classesCssArrow}`}
-									/>
-								</div>
-							);
-						}}
-					</Transition>
-					<Transition in={isActive} timeout={500}>
-						{(state) => {
-							const classesCssBox = [
-								state === 'entered'
-									? classes.showBox
-									: state === 'exiting'
-									? classes.hideBox
-									: null,
-							];
-
-							return (
-								<div className={`${classes.descBox} ${classesCssBox}`}>
-									<p className={classes.description}>
-										{productData.description}
-									</p>
-								</div>
-							);
-						}}
-					</Transition>
 				</div>
 			</div>
 
