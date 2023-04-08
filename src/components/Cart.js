@@ -114,8 +114,12 @@ const Cart = (props) => {
 
 						<div className={classes.actionBox}>
 							<div className={classes.totalPrice}>
-								<p>Total price:</p>
-								<p>${totalPrice.toFixed(2)}</p>
+								<div>
+									<p>Total price:</p>
+								</div>
+								<div>
+									<p>${totalPrice.toFixed(2)}</p>
+								</div>
 							</div>
 							<Link to='/information'>
 								<button type='button' onClick={showCartHandler}>

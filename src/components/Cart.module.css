@@ -138,18 +138,24 @@
 	padding: 2em;
 	width: 100%;
 }
+.actionBox p {
+	font-size: 1.2em;
+}
 .actionBox button {
 	position: absolute;
 	margin-top: 2em;
 	left: 50%;
 	transform: translate(-50%);
-	width: 90%;
-	border: none;
-	text-transform: uppercase;
+	width: 80%;
 	padding: 10px 20px;
-	cursor: pointer;
-	background-color: rgb(233, 231, 229);
+	border: none;
+	font-family: Josefin Sans;
+	font-size: 1em;
+	box-shadow: 0 0 2px black;
+	letter-spacing: 2px;
+	background-color: var(--main-text-nav);
 	transition: background-color 0.3s;
+	cursor: pointer;
 }
 .actionBox button:hover {
 	background-color: rgb(201, 199, 198);
@@ -157,7 +163,7 @@
 .totalPrice {
 	display: flex;
 	justify-content: space-between;
-	width: 100%;
+	width: 50%;
 }
 .active {
 	opacity: 1;
