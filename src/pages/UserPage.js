@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, redirect } from 'react-router-dom';
 import classes from '../styles/UserPage.module.css';
 import { RiImageAddLine } from 'react-icons/ri';
 import { SlOptions } from 'react-icons/sl';
@@ -31,17 +31,22 @@ const UserPage = () => {
 
 			setUserData(user.userData);
 			const data = await user.products;
-			const products = data.map((product) => {
-				return {
-					id: product._id,
-					name: product.name,
-					price: product.price,
-					imageUrl: `http://localhost:8080/${product.imageUrl[0]}`,
-					description: product.description,
-					userId: product.creator,
-				};
-			});
-			setProductsData(products);
+			if (response.ok) {
+				const products = data.map((product) => {
+					return {
+						id: product._id,
+						name: product.name,
+						price: product.price,
+						imageUrl: `http://localhost:8080/${product.imageUrl[0]}`,
+						description: product.description,
+						userId: product.creator,
+					};
+				});
+				setProductsData(products);
+			} else {
+				localStorage.removeItem('token');
+				return redirect('/');
+			}
 		} catch (err) {
 			console.log('Error loggingin:', err);
 		}
