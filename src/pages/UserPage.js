@@ -151,6 +151,10 @@ const UserPage = () => {
 					</div>
 				)}
 			</div>
+			<div className={classes.paginationBox}>
+				<Link to='?page=1'>1</Link>
+				<Link to='?page=2'>2</Link>
+			</div>
 		</div>
 	);
 };
