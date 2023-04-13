@@ -79,7 +79,11 @@ const UserPage = () => {
 	};
 
 	const handlePageChange = (pageNumber) => {
-		setCurrentPage(pageNumber);
+		if (pageNumber < 1) {
+			setCurrentPage(1);
+		} else {
+			setCurrentPage(pageNumber);
+		}
 	};
 	if (!userData) {
 		return <div>Loading...</div>;
@@ -156,6 +160,10 @@ const UserPage = () => {
 				)}
 			</div>
 			<div className={classes.paginationBox}>
+				{currentPage !== 1 && (
+					<button onClick={() => handlePageChange(1)}>1</button>
+				)}
+
 				<button onClick={() => handlePageChange(currentPage - 1)}>
 					{currentPage}
 				</button>

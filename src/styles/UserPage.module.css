@@ -154,15 +154,17 @@
 
 .paginationBox button {
 	font-size: 1em;
+	padding: 5px;
 	margin: 0.5em;
 	cursor: pointer;
 	background: none;
-	border: none;
-	transition: color 0.3s;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-radius: 2px;
+	transition: background-color 0.3s;
 }
 
 .paginationBox button:hover {
-	color: grey;
+	background-color: var(--main-text-nav);
 }
 
 @media only screen and (max-width: 1024px) {
