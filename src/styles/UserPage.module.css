@@ -152,13 +152,16 @@
 	margin-bottom: 1em;
 }
 
-.paginationBox a {
-	font-size: 1.2em;
+.paginationBox button {
+	font-size: 1em;
 	margin: 0.5em;
+	cursor: pointer;
+	background: none;
+	border: none;
 	transition: color 0.3s;
 }
 
-.paginationBox a:hover {
+.paginationBox button:hover {
 	color: grey;
 }
 

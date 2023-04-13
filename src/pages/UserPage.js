@@ -13,6 +13,7 @@ const UserPage = () => {
 	const [userData, setUserData] = useState(null);
 	const [productsData, setProductsData] = useState([]);
 	const [isActive, setIsActive] = useState(false);
+	const [currentPage, setCurrentPage] = useState(1);
 	const params = useParams();
 	const userId = params.userId;
 	const token = getAuthToken();
@@ -20,7 +21,7 @@ const UserPage = () => {
 	const fetchUserData = async () => {
 		try {
 			const response = await fetch(
-				`http://localhost:8080/feed/user/` + userId,
+				`http://localhost:8080/feed/user/${userId}?page=${currentPage}`,
 				{
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -55,7 +56,7 @@ const UserPage = () => {
 	useEffect(() => {
 		fetchUserData();
 		// eslint-disable-next-line
-	}, [userId]);
+	}, [userId, currentPage]);
 	const optionHandler = () => {
 		setIsActive((prev) => (prev = !prev));
 	};
@@ -77,6 +78,9 @@ const UserPage = () => {
 		}
 	};
 
+	const handlePageChange = (pageNumber) => {
+		setCurrentPage(pageNumber);
+	};
 	if (!userData) {
 		return <div>Loading...</div>;
 	}
@@ -152,8 +156,12 @@ const UserPage = () => {
 				)}
 			</div>
 			<div className={classes.paginationBox}>
-				<Link to='?page=1'>1</Link>
-				<Link to='?page=2'>2</Link>
+				<button onClick={() => handlePageChange(currentPage - 1)}>
+					{currentPage}
+				</button>
+				<button onClick={() => handlePageChange(currentPage + 1)}>
+					{currentPage + 1}
+				</button>
 			</div>
 		</div>
 	);
