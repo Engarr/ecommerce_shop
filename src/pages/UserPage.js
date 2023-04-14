@@ -14,6 +14,8 @@ const UserPage = () => {
 	const [productsData, setProductsData] = useState([]);
 	const [isActive, setIsActive] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
+	const [totalProducts, setTotalProducts] = useState(0);
+	const [limit, setLimit] = useState(2);
 	const params = useParams();
 	const userId = params.userId;
 	const token = getAuthToken();
@@ -32,6 +34,7 @@ const UserPage = () => {
 
 			setUserData(user.userData);
 			const data = await user.products;
+
 			if (response.ok) {
 				const products = data.map((product) => {
 					return {
@@ -43,6 +46,8 @@ const UserPage = () => {
 						userId: product.creator,
 					};
 				});
+				const count = await user.totalProducts;
+				setTotalProducts(count);
 				setProductsData(products);
 			} else {
 				localStorage.removeItem('token');
@@ -81,10 +86,13 @@ const UserPage = () => {
 	const handlePageChange = (pageNumber) => {
 		if (pageNumber < 1) {
 			setCurrentPage(1);
+		} else if (limit * currentPage < totalProducts) {
+			setCurrentPage(pageNumber);
 		} else {
 			setCurrentPage(pageNumber);
 		}
 	};
+
 	if (!userData) {
 		return <div>Loading...</div>;
 	}
@@ -164,12 +172,20 @@ const UserPage = () => {
 					<button onClick={() => handlePageChange(1)}>1</button>
 				)}
 
+				{currentPage > 2 && (
+					<button onClick={() => handlePageChange(currentPage - 1)}>
+						{currentPage - 1}
+					</button>
+				)}
 				<button onClick={() => handlePageChange(currentPage - 1)}>
 					{currentPage}
 				</button>
-				<button onClick={() => handlePageChange(currentPage + 1)}>
-					{currentPage + 1}
-				</button>
+
+				{currentPage * limit < totalProducts && (
+					<button onClick={() => handlePageChange(currentPage + 1)}>
+						{currentPage + 1}
+					</button>
+				)}
 			</div>
 		</div>
 	);
