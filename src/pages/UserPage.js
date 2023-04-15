@@ -3,12 +3,11 @@ import { useParams, Link, redirect } from 'react-router-dom';
 import classes from '../styles/UserPage.module.css';
 import { RiImageAddLine } from 'react-icons/ri';
 import { SlOptions } from 'react-icons/sl';
-import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import { getAuthToken } from '../utils/auth';
 import { toast } from 'react-hot-toast';
 import Modal from '../components/Modal';
 import UpdateData from '../components/UpdateProfil/UpdateData';
-import Confirm from '../components/Confirm/Confirm';
+import UserProduct from '../components/UserProduct/UserProduct';
 
 const UserPage = () => {
 	const [userData, setUserData] = useState(null);
@@ -142,44 +141,18 @@ const UserPage = () => {
 					<div className={classes.productsContainer}>
 						{productsData.map((product) => {
 							return (
-								<div key={product.id} className={classes.productBox}>
-									<div className={classes.productData}>
-										<div>
-											<Link to={`/product/${product.id}`}>
-												<img
-													src={product.imageUrl}
-													height={80}
-													alt={product.name}
-												/>
-											</Link>
-										</div>
-										<div className={classes.nameBox}>
-											<p>id: {product.id}</p>
-											<p>{product.name}</p>
-										</div>
-									</div>
-
-									<div className={classes.buttonBox}>
-										<Link to={`/product/${product.id}/edit`}>
-											<AiOutlineEdit />
-										</Link>
-
-										<button onClick={confirmHandler}>
-											<AiOutlineDelete />
-										</button>
-									</div>
-									<Confirm
-										deleteProduct={deleteProduct}
-										productId={product.id}
-										isDeleting={isDeleting}
-										confirmHandler={confirmHandler}
-									/>
-								</div>
+								<UserProduct
+									product={product}
+									deleteProduct={deleteProduct}
+									isDeleting={isDeleting}
+									confirmHandler={confirmHandler}
+								/>
 							);
 						})}
 					</div>
 				)}
 			</div>
+			<Modal show={isDeleting} handler={confirmHandler} />
 			<div className={classes.paginationBox}>
 				{currentPage !== 1 && (
 					<button onClick={() => handlePageChange(1)}>1</button>
@@ -200,7 +173,6 @@ const UserPage = () => {
 					</button>
 				)}
 			</div>
-			<Modal show={isDeleting} handler={confirmHandler} />
 		</div>
 	);
 };
