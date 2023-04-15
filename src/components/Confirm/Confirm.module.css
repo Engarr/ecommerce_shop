@@ -1,0 +1,30 @@
+.confirmContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%);
+	background-color: #fff;
+	box-shadow: 0 0 1px black;
+	height: 150px;
+	width: auto;
+	padding: 10px 20px;
+    z-index: 100;
+}
+.confirmContainer p {
+	margin: 1em 0;
+}
+.confirmContainer button {
+	padding: 5px 10px;
+	border: none;
+	font-family: Josefin Sans;
+	box-shadow: 0 0 2px black;
+	letter-spacing: 2px;
+	background-color: var(--main-text-nav);
+	cursor: pointer;
+	transition: background-color 0.3s;
+	margin: 0.5em;
+}

@@ -8,6 +8,7 @@ import { getAuthToken } from '../utils/auth';
 import { toast } from 'react-hot-toast';
 import Modal from '../components/Modal';
 import UpdateData from '../components/UpdateProfil/UpdateData';
+import Confirm from '../components/Confirm/Confirm';
 
 const UserPage = () => {
 	const [userData, setUserData] = useState(null);
@@ -16,6 +17,7 @@ const UserPage = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalProducts, setTotalProducts] = useState(0);
 	const [limit, setLimit] = useState(2);
+	const [isDeleting, setIsDeleting] = useState(false);
 	const params = useParams();
 	const userId = params.userId;
 	const token = getAuthToken();
@@ -61,9 +63,13 @@ const UserPage = () => {
 	useEffect(() => {
 		fetchUserData();
 		// eslint-disable-next-line
-	}, [userId, currentPage]);
+	}, [userId, currentPage, totalProducts]);
 	const optionHandler = () => {
 		setIsActive((prev) => (prev = !prev));
+	};
+
+	const confirmHandler = () => {
+		setIsDeleting((prev) => (prev = !prev));
 	};
 
 	const deleteProduct = async (id) => {
@@ -79,8 +85,9 @@ const UserPage = () => {
 			toast.error('Product cannot be removed. Something went wrong');
 		} else {
 			toast.success('Product has been successfully removed');
-			window.location.reload();
+			// window.location.reload();
 		}
+		setIsDeleting(false);
 	};
 
 	const handlePageChange = (pageNumber) => {
@@ -157,10 +164,16 @@ const UserPage = () => {
 											<AiOutlineEdit />
 										</Link>
 
-										<button onClick={() => deleteProduct(product.id)}>
+										<button onClick={confirmHandler}>
 											<AiOutlineDelete />
 										</button>
 									</div>
+									<Confirm
+										deleteProduct={deleteProduct}
+										productId={product.id}
+										isDeleting={isDeleting}
+										confirmHandler={confirmHandler}
+									/>
 								</div>
 							);
 						})}
@@ -187,6 +200,7 @@ const UserPage = () => {
 					</button>
 				)}
 			</div>
+			<Modal show={isDeleting} handler={confirmHandler} />
 		</div>
 	);
 };
