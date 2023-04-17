@@ -98,11 +98,14 @@
 }
 
 .paginationBox {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	text-align: center;
 	margin-bottom: 1em;
 }
 
-.paginationBox button {
+.paginationBox a {
 	font-size: 1em;
 	padding: 5px;
 	margin: 0.5em;
@@ -110,11 +113,17 @@
 	background: none;
 	border: 1px solid rgba(0, 0, 0, 0.1);
 	border-radius: 2px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	transition: background-color 0.3s;
 }
 
-.paginationBox button:hover {
+.paginationBox a:hover {
 	background-color: var(--main-text-nav);
+}
+.active {
+	color: rgb(230, 160, 32);
 }
 
 /* ////////////////////// */

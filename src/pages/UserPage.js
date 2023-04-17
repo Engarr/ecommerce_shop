@@ -3,6 +3,7 @@ import { useParams, Link, redirect } from 'react-router-dom';
 import classes from '../styles/UserPage.module.css';
 import { RiImageAddLine } from 'react-icons/ri';
 import { SlOptions } from 'react-icons/sl';
+import { BiFirstPage } from 'react-icons/bi';
 import { getAuthToken } from '../utils/auth';
 import { toast } from 'react-hot-toast';
 import Modal from '../components/Modal';
@@ -154,23 +155,31 @@ const UserPage = () => {
 			</div>
 			<Modal show={isDeleting} handler={confirmHandler} />
 			<div className={classes.paginationBox}>
-				{currentPage !== 1 && (
-					<button onClick={() => handlePageChange(1)}>1</button>
+				{currentPage > 2 && (
+					<Link to={`?page=1`} onClick={() => handlePageChange(1)}>
+						<BiFirstPage />
+					</Link>
+				)}
+				{currentPage - 1 > 0 && (
+					<Link
+						to={`?page=${currentPage - 1}`}
+						onClick={() => handlePageChange(currentPage - 1)}>
+						<p>{currentPage - 1}</p>
+					</Link>
 				)}
 
-				{currentPage > 2 && (
-					<button onClick={() => handlePageChange(currentPage - 1)}>
-						{currentPage - 1}
-					</button>
-				)}
-				<button onClick={() => handlePageChange(currentPage - 1)}>
-					{currentPage}
-				</button>
+				<Link
+					to={`?page=${currentPage}`}
+					onClick={() => handlePageChange(currentPage)}>
+					<p className={classes.active}>{currentPage} </p>
+				</Link>
 
 				{currentPage * limit < totalProducts && (
-					<button onClick={() => handlePageChange(currentPage + 1)}>
-						{currentPage + 1}
-					</button>
+					<Link
+						to={`?page=${currentPage + 1}`}
+						onClick={() => handlePageChange(currentPage + 1)}>
+						<p>{currentPage + 1}</p>
+					</Link>
 				)}
 			</div>
 		</div>
