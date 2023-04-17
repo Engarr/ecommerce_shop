@@ -41,11 +41,18 @@
 	position: absolute;
 	top: 5%;
 	right: 10px;
+	padding: 5px 5px;
+	background: none;
+	border: none;
+	font-size: 25px;
 	cursor: pointer;
-	transition: color 0.3s;
+	border-radius: 50%;
+	transition: transform 0.3s, background-color 0.3s, color 0.3s;
 }
 .delete:hover {
-	color: red;
+	transform: scale(1.1);
+	color: rgb(248, 222, 187);
+	background-color: rgba(0, 0, 0, 0.548);
 }
 
 .productsContainer {
