@@ -18,7 +18,6 @@ import { useStateContext } from '../context/StateContext';
 import Cart from './Cart';
 import { toast } from 'react-hot-toast';
 import ProfilCard from './ProfilCard';
-import Transition from 'react-transition-group/Transition';
 import { client, urlFor } from '../utils/client';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,6 +29,7 @@ const NavBar = () => {
 	const [showProfilCard, setShowProfilCard] = useState(false);
 	const [isClassAdded, setIsClassAdded] = useState(false);
 	const [image, setImage] = useState([]);
+	const [cartCssStyle, setcartCssStyle] = useState('');
 	const { setUserData } = useStateContext();
 	const cardRef = useRef();
 	////////////// REDUX
@@ -43,6 +43,7 @@ const NavBar = () => {
 
 	const showCartHandler = () => {
 		dispatch(uiActions.cartHandler());
+		setcartCssStyle(cartIsVisible ? classes.inactive : classes.active);
 	};
 
 	////////////// REDUX
@@ -222,9 +223,7 @@ const NavBar = () => {
 					))}
 				</div>
 			</div>
-			<Transition mountOnEnter unmountOnExit in={cartIsVisible} timeout={400}>
-				{(state) => <Cart show={state} />}
-			</Transition>
+			<Cart cartCssStyle={cartCssStyle} showCartHandler={showCartHandler} />
 		</div>
 	);
 };

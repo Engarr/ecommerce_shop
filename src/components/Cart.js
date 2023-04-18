@@ -7,11 +7,12 @@ import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartItemActions } from '../store/cartItems-slice';
 import store from '../store/index';
-import { uiActions } from '../store/ui-slice';
 
-const Cart = (props) => {
+const Cart = ({ cartCssStyle, showCartHandler }) => {
 	const dispatch = useDispatch();
+
 	const cartIsVisible = useSelector((state) => state.ui.cartIsVisible);
+
 	const cartItems = useSelector((state) => state.cartItems.items);
 	const totalPrice = useSelector((state) => {
 		return state.cartItems.items.reduce((total, item) => {
@@ -36,25 +37,12 @@ const Cart = (props) => {
 		dispatch(cartItemActions.removeItem(id));
 		updateLocalStorage();
 	};
-	const showCartHandler = () => {
-		dispatch(uiActions.cartHandler());
-	};
 
 	const length = cartItems.length;
-	// const newTotalPrice = totalPrice.toFixed(2);
-
-	const classesCss = [
-		props.show === 'entering'
-			? classes.active
-			: props.show === 'exiting'
-			? classes.inactive
-			: null,
-	];
 	return (
 		<div>
-			<Modal show={cartIsVisible} handler={showCartHandler} />
-
-			<div className={`${classes.cartContainer} ${classesCss}`}>
+			<Modal show={cartIsVisible} handler={showCartHandler} />(
+			<div className={`${classes.cartContainer} ${cartCssStyle}`}>
 				<div className={classes.controlPanel}>
 					<AiOutlineClose
 						className={classes.closeBtn}
@@ -130,6 +118,7 @@ const Cart = (props) => {
 					</div>
 				)}
 			</div>
+			)
 		</div>
 	);
 };

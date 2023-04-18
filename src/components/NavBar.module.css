@@ -131,8 +131,6 @@
 	margin-top: 6em;
 }
 
-
-
 .searchBox input,
 .searchBoxSmall input {
 	background-color: transparent;
@@ -243,6 +241,39 @@
 .logoSmall a,
 .accountBoxBig {
 	color: var(--main-text-nav);
+}
+.active {
+	opacity: 1;
+	transform: translate(0%);
+	animation: showCart 0.4s ease-out forwards;
+}
+.inactive {
+	opacity: 0;
+	transform: translate(100%);
+	animation: hideCart 0.4s ease-in-out forwards;
+}
+
+@keyframes showCart {
+	0% {
+		opacity: 0;
+		transform: translate(100%);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translate(0%);
+	}
+}
+@keyframes hideCart {
+	0% {
+		opacity: 1;
+		transform: translate(0);
+	}
+
+	100% {
+		opacity: 0;
+		transform: translate(100%);
+	}
 }
 
 @keyframes shake {
