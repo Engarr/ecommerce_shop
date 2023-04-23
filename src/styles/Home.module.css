@@ -1,64 +1,67 @@
 .productsHeading {
-	text-align: center;
-	margin: 6em 0px;
+  text-align: center;
+  margin: 6em 0px;
 }
 
 .productsHeading div {
-	margin-top: 1em;
+  margin-top: 1em;
 }
 .productsHeading button {
-	position: absolute;
-	margin-top: 2em;
-	left: 50%;
-	transform: translate(-50%);
-	width: 200px;
-	padding: 10px 20px;
-	border: none;
-	font-family: Josefin Sans;
-	font-size: 1em;
-	box-shadow: 0 0 2px black;
-	letter-spacing: 2px;
-	background-color: var(--main-text-nav);
-	transition: background-color 0.3s;
-	cursor: pointer;
+  position: absolute;
+  margin-top: 2em;
+  left: 50%;
+  transform: translate(-50%);
+  width: 200px;
+  padding: 10px 20px;
+  border: none;
+  font-family: Josefin Sans;
+  font-size: 1em;
+  box-shadow: 0 0 2px black;
+  letter-spacing: 2px;
+  background-color: var(--main-text-nav);
+  transition: background-color 0.3s;
+  cursor: pointer;
 }
 .productsHeading button:hover {
-	background-color: rgb(248, 222, 187);
+  background-color: rgb(248, 222, 187);
 }
 
 .container {
-	position: relative;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-	left: 50%;
-	transform: translate(-50%);
-	gap: 15px;
-	margin-top: 2em;
-	margin-bottom: 4em;
-	width: 100%;
-	max-width: 1600px;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  left: 50%;
+  transform: translate(-50%);
+  gap: 15px;
+  margin-top: 2em;
+  margin-bottom: 4em;
+  width: 100%;
+  max-width: 1600px;
 }
 
 .productsHeading h2 {
-	font-size: 2em;
-	text-transform: uppercase;
+  font-size: 2em;
+  text-transform: uppercase;
 
-	font-family: 'Lexend Tera';
+  font-family: 'Lexend Tera';
 }
 .productsHeading p {
-	font-size: 16px;
-	font-family: 'Lexend Tera';
+  font-size: 16px;
+  font-family: 'Lexend Tera';
+}
+.loading {
+  margin-bottom: 2em;
 }
 
 @media only screen and (max-width: 1024px) {
-	.productsHeading {
-		text-align: center;
-		margin: 2em 0px;
-	}
-	.productsHeading h2 {
-		font-size: 1.7em;
-	}
+  .productsHeading {
+    text-align: center;
+    margin: 2em 0px;
+  }
+  .productsHeading h2 {
+    font-size: 1.7em;
+  }
 }

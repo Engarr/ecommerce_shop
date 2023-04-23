@@ -1,11 +1,15 @@
 import './App.css';
-import { Navigate, RouterProvider } from 'react-router-dom';
-import { createBrowserRouter } from 'react-router-dom';
+import {
+  Navigate,
+  RouterProvider,
+  createBrowserRouter,
+} from 'react-router-dom';
+
 
 import Home from './pages/Home';
 import Products from './pages/Products';
 import ProductDetail, {
-	loader as loaderDetails,
+  loader as loaderDetails,
 } from './components/ProductDetail';
 import Login from './pages/Login';
 import Registration from './pages/Registration'; // {action as registrationAction}
@@ -23,55 +27,55 @@ import EditProduct from './pages/EditProduct';
 //////REDUX
 
 function App() {
-	const router = createBrowserRouter([
-		{
-			path: '/',
-			element: <RootLayout />,
-			errorElement: <ErrorPage />,
-			id: 'root',
-			loader: tokenLoader,
-			children: [
-				{ path: '', element: <Navigate to='/home' /> },
-				{ path: '/home', element: <Home /> },
-				{ path: '/category/:category', element: <Products /> },
-				{ path: '/products', element: <Products /> },
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <RootLayout />,
+      errorElement: <ErrorPage />,
+      id: 'root',
+      loader: tokenLoader,
+      children: [
+        { path: '', element: <Navigate to='/home' /> },
+        { path: '/home', element: <Home /> },
+        { path: '/category/:category', element: <Products /> },
+        { path: '/products', element: <Products /> },
 
-				{
-					path: '/product/:productId',
-					id: 'product-detail',
-					loader: loaderDetails,
-					children: [
-						{
-							index: true,
-							element: <ProductDetail />,
-							// action: deleteProduct,
-						},
-						{ path: 'edit', element: <EditProduct /> },
-					],
-				},
+        {
+          path: '/product/:productId',
+          id: 'product-detail',
+          loader: loaderDetails,
+          children: [
+            {
+              index: true,
+              element: <ProductDetail />,
+              // action: deleteProduct,
+            },
+            { path: 'edit', element: <EditProduct /> },
+          ],
+        },
 
-				{ path: '/login', element: <Login /> },
-				{
-					path: '/registration',
-					element: <Registration />,
-					// action: registrationAction,
-				},
-				{ path: '/information', element: <Information /> },
-				{ path: '/shipping', element: <Shipping /> },
+        { path: '/login', element: <Login /> },
+        {
+          path: '/registration',
+          element: <Registration />,
+          // action: registrationAction,
+        },
+        { path: '/information', element: <Information /> },
+        { path: '/shipping', element: <Shipping /> },
 
-				{ path: '/logout', action: logoutaAction },
+        { path: '/logout', action: logoutaAction },
 
-				{
-					path: '/profil/:userId',
-					element: <UserPage />,
-					loader: checkAuthToken,
-				},
-				{ path: '/add-product/:userId', element: <NewProduct /> },
-			],
-		},
-	]);
+        {
+          path: '/profil/:userId',
+          element: <UserPage />,
+          loader: checkAuthToken,
+        },
+        { path: '/add-product/:userId', element: <NewProduct /> },
+      ],
+    },
+  ]);
 
-	return <RouterProvider router={router} />;
+  return <RouterProvider router={router} />;
 }
 
 export default App;
